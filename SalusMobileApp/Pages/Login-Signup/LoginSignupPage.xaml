@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SalusMobileApp.Pages"
+             x:Class="SalusMobileApp.Pages.Login_Signup.LoginSignupPage"
+             Title="LoginSignupPage">
+    <local:LoginPage Title="Login"/>
+    <local:RegistrationPage Title="Sign Up"/>
+</TabbedPage>
