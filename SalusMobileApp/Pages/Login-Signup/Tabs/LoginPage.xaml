@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SalusMobileApp.Pages"
+             x:Class="SalusMobileApp.Pages.LoginPage"
+             Title="LoginPage">
+    <StackLayout MaximumWidthRequest="250">
+        <Label Text="E-mail:"/>
+        <Entry x:Name="emailEntry" TextChanged="emailEntry_TextChanged"/>
+        <Label x:Name="emailErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
+        <Label Text="Password:" Margin="0, 10, 0, 0"/>
+        <Entry x:Name="passwordEntry" IsPassword="True" TextChanged="passwordEntry_TextChanged"/>
+        <Label x:Name="passwordErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
+        <Button x:Name="passwordForgotten" Clicked="passwordForgotten_Clicked" BorderColor="Transparent" BackgroundColor="Transparent" Text="Did you forget your password?" FontSize="8" VerticalOptions="End" Margin="0, 3, 0, 7" WidthRequest="150" HorizontalOptions="Start"/>
+        <Button x:Name="loginButton" Clicked="loginButton_Clicked" Text="Log in"/>
+    </StackLayout>
+</ContentPage>

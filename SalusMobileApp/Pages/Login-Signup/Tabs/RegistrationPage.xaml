@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SalusMobileApp.Pages"
+             x:Class="SalusMobileApp.Pages.RegistrationPage"
+             Title="RegistrationPage">
+    <StackLayout>
+        <Label Text="E-mail:"/>
+        <Entry x:Name="emailEntry"/>
+        <Label Text="Username:"/>
+        <Entry x:Name="usernameEntry"/>
+        <Label Text="Password:"/>
+        <Entry x:Name="passwordEntry" IsPassword="True"/>
+        <Label Text="Confirm password:"/>
+        <Entry x:Name="confirmPasswordEntry" IsPassword="True"/>
+        <Button x:Name="registerButton" Clicked="registerButton_Clicked" Text="Sign up"/>
+    </StackLayout>
+</ContentPage>
