@@ -11,10 +11,24 @@ public partial class ForgotPasswordPage : ContentPage
 
     private async void forgottenPasswordButton_Clicked(object sender, EventArgs e)
     {
-		if(ServiceValidation.validateEmailAddress(emailEntry.Text)) 
+		if(ServiceValidation.InternetConnectionValidator())
 		{
-			await RestServices.passwordResetPatch(emailEntry.Text);
-            await Navigation.PushAsync(new ResetPasswordPage());
+            if (ServiceValidation.ValidateEmailAddress(emailEntry.Text))
+            {
+                var forgottenPasswordRequest = await RestServices.GetResetToken(emailEntry.Text);
+                if (forgottenPasswordRequest)
+                {
+                    await Navigation.PushAsync(new ResetPasswordPage());
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Internal server error, try again later!", "Ok");
+                }
+            }
+        }
+		else
+        {
+            await DisplayAlert("Error", "You are offline!", "Ok");
         }
     }
 }
