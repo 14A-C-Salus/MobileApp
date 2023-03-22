@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalusMobileApp.Pages.UserProfile.EditProfilePage"
+             Title="EditProfilePage">
+    <VerticalStackLayout>
+        <Label 
+            Text="To get started set up your profile first!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        
+        <Label Text="Weight:"/>
+        <Entry x:Name="weightEntry" TextChanged="weightEntry_TextChanged" Placeholder="Your weight in kilograms"/>
+        <Label x:Name="weightErrorMessage" Text="Must be between 20 and 1000!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
+        
+        <Label Text="Height:"/>
+        <Entry x:Name="heightEntry" TextChanged="heightEntry_TextChanged" Placeholder="Your height in centimeters"/>
+        <Label x:Name="heightErrorMessage" Text="Must be between 40 and 250!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
+        
+        <Label Text="Birthdate:"/>
+        <DatePicker x:Name="birthdatePicker" DateSelected="birthdatePicker_DateSelected"/>
+        <Label x:Name="birthdateErrorMessage" Text="Between 12 and 100 years old!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
+        
+        <Label Text="Gender:"/>
+        <Label Text="Disclaimer: If you picked other we can't calculate your ideal weight accurately." FontSize="Small"/>
+        <Picker x:Name="genderPicker" SelectedIndexChanged="genderPicker_SelectedIndexChanged" Title="Select your gender">
+            <Picker.Items>
+                <x:String>Male</x:String>
+                <x:String>Female</x:String>
+                <x:String>Other</x:String>
+            </Picker.Items>
+        </Picker>
+        <Label x:Name="genderErrorMessage" Text="Must select a gender!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
+        
+        <Label Text="Goal weight:"/>
+        <Label Text="If you don't have a goal weight then we will calculate your ideal weight for you based on the data you've provided." FontSize="Small"/>
+        <Entry x:Name="goalWeightEntry" TextChanged="goalWeightEntry_TextChanged" Placeholder="Your goal weight in kilograms"/>
+        <Label x:Name="goalWeightErrorMessage" Text="Must be between 20 and 1000!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
+        
+        <Button x:Name="confirmBtn" Text="Confirm" Clicked="confirmBtn_Clicked"/>
+    </VerticalStackLayout>
+</ContentPage>

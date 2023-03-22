@@ -1,5 +1,6 @@
 using Microsoft.Maui.Networking;
 using SalusMobileApp.Data;
+using SalusMobileApp.Models;
 using SalusMobileApp.Pages.Login_Signup;
 
 namespace SalusMobileApp.Pages;
@@ -13,23 +14,39 @@ public partial class LoginPage : ContentPage
 
     private async void loginButton_Clicked(object sender, EventArgs e)
     {
-        NetworkAccess accessType = Connectivity.Current.NetworkAccess;
-        if(accessType == NetworkAccess.Internet) 
+        if(ServiceValidation.InternetConnectionValidator()) 
         {
-            if (ServiceValidation.validateLoginData(emailEntry.Text, passwordEntry.Text))
+            if (ServiceValidation.ValidateLoginData(emailEntry.Text, passwordEntry.Text))
             {
-                await RestServices.loginPost(emailEntry.Text, passwordEntry.Text);
-                await DisplayAlert("Success", "Login successful", "Ok");
+                var loginRequest = await RestServices.LoginPost(emailEntry.Text, passwordEntry.Text);
+                if(loginRequest)
+                {
+                    await DisplayAlert("Success", "Login successful", "Ok");
+                    if(rememberPassword.IsChecked)
+                    {
+                        var login = new LoginModel
+                        {
+                            email = emailEntry.Text,
+                            password = passwordEntry.Text,
+                            jwtToken = App.jwtToken,
+                        };
+                        App.database.SaveLoginData(login);
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Internal server error, try again later!", "Ok");
+                }
             }
             else
             {
                 await DisplayAlert("Error", "You must fill in both fields correctly!", "Ok");
             }
-            if (!ServiceValidation.validateEmailAddress(emailEntry.Text))
+            if (!ServiceValidation.ValidateEmailAddress(emailEntry.Text))
             {
                 emailErrorMessage.IsVisible = true;
             }
-            if (!ServiceValidation.validatePassword(passwordEntry.Text))
+            if (!ServiceValidation.ValidatePassword(passwordEntry.Text))
             {
                 passwordErrorMessage.IsVisible = true;
             }

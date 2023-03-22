@@ -9,13 +9,11 @@ namespace SalusMobileApp.Data
 {
     public class ServiceValidation
     {
-        public static bool checkRegistrationData(string username, string email, string password, string confirmPassword)
+        public static bool CheckRegistrationData(string username, string email, string password, string confirmPassword)
         {
-            if (username != null
+            if (ValidateUsername(username)
                 && email != null
-                && password != null
-                && confirmPassword != null
-                && password == confirmPassword)
+                && ValidateConfirmedPassword(password, confirmPassword))
             {
                 return true;
             }
@@ -25,16 +23,16 @@ namespace SalusMobileApp.Data
             }
         }
 
-        public static bool validateLoginData(string email, string password)
+        public static bool ValidateLoginData(string email, string password)
         {
-            if(validateEmailAddress(email) && validatePassword(password))
+            if(ValidateEmailAddress(email) && ValidatePassword(password))
             { 
                 return true; 
             }
             return false;
         }
 
-        public static bool validateUsername(string username)
+        public static bool ValidateUsername(string username)
         {
             if(username != null && username.Length >= 8 && username.Length <= 20)
             {
@@ -43,7 +41,7 @@ namespace SalusMobileApp.Data
             return false;
         }
 
-        public static bool validatePassword(string password)
+        public static bool ValidatePassword(string password)
         {
             if (password != null && password.Length >= 8 && password.Length <= 20)
             {
@@ -55,9 +53,18 @@ namespace SalusMobileApp.Data
             }
         }
 
-        public static bool validateEmailAddress(string email)
+        public static bool ValidateConfirmedPassword(string password, string confirmPassword)
         {
-            if (email != null && isValidEmail(email))
+            if(ValidatePassword(password) && ValidatePassword(confirmPassword) && password == confirmPassword)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool ValidateEmailAddress(string email)
+        {
+            if (email != null && IsValidEmail(email))
             {
                 return true;
             }
@@ -67,7 +74,7 @@ namespace SalusMobileApp.Data
             }
         }
 
-        private static bool isValidEmail(string email)
+        private static bool IsValidEmail(string email)
         {
             var valid = true;
 
@@ -81,6 +88,73 @@ namespace SalusMobileApp.Data
             }
 
             return valid;
+        }
+
+
+        public static bool UserProfileValidator(int weight, int height, DateTime birthDate, string gender, int goalWeight)
+        {
+            if(ValidateUserWeight(weight) && ValidateUserHeight(height) && ValidateUserBirthDate(birthDate) && ValidateUserGender(gender) && ValidateUserGoalWeight(goalWeight))  
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool ValidateUserWeight(int weight)
+        {
+            return IsBetween(weight, 20, 1000);
+        }
+
+        public static bool ValidateUserHeight(int height)
+        {
+            return IsBetween(height, 40, 250);
+        }
+
+        public static bool ValidateUserBirthDate(DateTime birthDate)
+        {
+            return DateTime.Today.AddYears(-100) <= birthDate && DateTime.Today.AddYears(-12) >= birthDate;
+        }
+
+        public static bool ValidateUserGender(string gender)
+        {
+            return IsBetween(GenderToNumber(gender), 1, 3);
+        }
+
+        public static bool ValidateUserGoalWeight(int goalWeight)
+        {
+            return IsBetween(goalWeight, 20, 1000);
+        }
+
+        public static int GenderToNumber(string gender)
+        {
+            if (gender == "Male")
+            {
+                return 1;
+            }
+            if (gender == "Female")
+            {
+                return 2;
+            }
+            if (gender == "Other")
+            {
+                return 3;
+            }
+            return 0;
+        }
+
+        private static bool IsBetween(int number, int start, int end)
+        {
+            return number >= start && number <= end;
+        }
+
+        public static bool InternetConnectionValidator()
+        {
+            NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+            if(accessType == NetworkAccess.Internet) 
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
