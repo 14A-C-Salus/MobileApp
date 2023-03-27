@@ -1,5 +1,6 @@
 ﻿using SalusMobileApp.Pages;
 using SalusMobileApp.Pages.Login_Signup;
+using SalusMobileApp.Pages.MainMenu;
 using SalusMobileApp.Pages.UserProfile;
 
 namespace SalusMobileApp;
@@ -15,6 +16,7 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute("loginSignupPage", typeof(LoginSignupPage));
 		Routing.RegisterRoute("forgotPasswordPage", typeof(ForgotPasswordPage));
 		Routing.RegisterRoute("resetPasswordPage", typeof(ResetPasswordPage));
-		Routing.RegisterRoute("profilePage", typeof(ProfilePage));
+		Routing.RegisterRoute("editProfilePage", typeof(EditProfilePage));
+		Routing.RegisterRoute("MainMenuPage", typeof(MainMenuPage));
     }
 }

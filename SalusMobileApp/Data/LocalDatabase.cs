@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CloudKit;
 
 namespace SalusMobileApp.Data
 {
@@ -18,6 +17,7 @@ namespace SalusMobileApp.Data
             _connection = new SQLiteAsyncConnection(dbPath);
             _connection.CreateTableAsync<LoginModel>().Wait();
             _connection.CreateTableAsync<UserProfileModel>().Wait();
+            _connection.CreateTableAsync<EncryptionModel>().Wait();
         }
 
         public void SaveLoginData(LoginModel login)
@@ -38,6 +38,26 @@ namespace SalusMobileApp.Data
         public void DeleteLoginData()
         {
             _connection.DeleteAllAsync<LoginModel>();
+        }
+
+        public void SaveEncryptionData(EncryptionModel data)
+        {
+            _connection.InsertAsync(data);
+        }
+
+        public EncryptionModel GetEncryptionData()
+        {
+            var data = _connection.Table<EncryptionModel>().ToListAsync().Result;
+            if (data.Count != 0)
+            {
+                return data[0];
+            }
+            return null;
+        }
+
+        public void DeleteEncryptionData()
+        {
+            _connection.DeleteAllAsync<EncryptionModel>();
         }
 
         public void SaveLocalUserProfileData(UserProfileModel profileModel)
