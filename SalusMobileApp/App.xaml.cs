@@ -1,5 +1,6 @@
 ﻿using SalusMobileApp.Data;
 using SalusMobileApp.Models;
+using System.Text;
 
 namespace SalusMobileApp;
 
@@ -28,9 +29,23 @@ public partial class App : Application
 		MainPage = new AppShell();
 	}
 
-    protected override void OnStart()
+    protected override async void OnStart()
     {
+		//database.DeleteLoginData();
+		//database.DeleteEncryptionData();
 		LoginModel loggedIn = database.GetLoginData();
+		if(loggedIn != null)
+		{
+			if(ServiceValidation.InternetConnectionValidator())
+			{
+				var decryptedPassword = EncryptionModel.DecryptAsync(Encoding.Unicode.GetBytes(loggedIn.password));
+				await RestServices.LoginPost(loggedIn.email, decryptedPassword.Result);
+            }
+			else
+			{
+				// -----------------------------------------------------------------------------------------------------------------------------------------------
+			}
+		}
         UserProfileModel userProfile = database.GetLocalUserProfileData();
 		_userProfile = userProfile;
     }

@@ -2,6 +2,7 @@ using Microsoft.Maui.Networking;
 using SalusMobileApp.Data;
 using SalusMobileApp.Models;
 using SalusMobileApp.Pages.Login_Signup;
+using System.Text;
 
 namespace SalusMobileApp.Pages;
 
@@ -22,15 +23,22 @@ public partial class LoginPage : ContentPage
                 if(loginRequest)
                 {
                     await DisplayAlert("Success", "Login successful", "Ok");
-                    if(rememberPassword.IsChecked)
+                    // await Navigation.PushAsync(new MainMenu.MainMenuPage());
+                    if (rememberPassword.IsChecked)
                     {
+                        var encryptedPassword = await EncryptionModel.EncryptAsync(passwordEntry.Text);
+                        var encryptedPasswordAsString = Encoding.Unicode.GetString(encryptedPassword);
                         var login = new LoginModel
                         {
                             email = emailEntry.Text,
-                            password = passwordEntry.Text,
+                            password = encryptedPasswordAsString,
                             jwtToken = App.jwtToken,
                         };
                         App.database.SaveLoginData(login);
+                    }
+                    else
+                    {
+                        App.database.DeleteLoginData();
                     }
                 }
                 else
