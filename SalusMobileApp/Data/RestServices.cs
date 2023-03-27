@@ -13,10 +13,11 @@ namespace SalusMobileApp.Data
     public class RestServices
     {
         static HttpClient _client;
-        private static string _uri = "http://salusprojekt-001-site1.dtempurl.com/api/";
+        private static string _uri = "http://salushl-001-site1.dtempurl.com/api/";
         private static string _contentType = "application/json";
         private static string _registerUri = "Auth/register";
         private static string _loginUri = "Auth/login";
+        private static string _userDataUri = "Auth/get-auth?authId=";
         private static string _forgotPasswordUri = "Auth/forgot-password?email=";
         private static string _passwordResetUri = "Auth/reset-password";
         private static string _createUserProfileUri = "UserProfile/create-profile";
@@ -42,6 +43,15 @@ namespace SalusMobileApp.Data
             {
                 return false;
             }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject(returnedData);
+            string keyWord = "id";
+            App.userId = ReturnElementFromJson(result.ToString(), keyWord);
+            var id = new AuthModel
+            {
+                id = int.Parse(App.userId)
+            };
+            App.database.SaveUserId(id);
             return true;
         }
         public static async Task<bool> LoginPost(string email, string password)
@@ -63,6 +73,24 @@ namespace SalusMobileApp.Data
             return true;
         }
 
+        public static async Task<bool> GetUserData(int id)
+        {
+            _client = new HttpClient();
+
+            string requestUri = _uri + _userDataUri + id.ToString();
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if(!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject(returnedData);
+            string keyWord = "userProfile";
+            App.userProfileExists = ReturnElementFromJson(result.ToString(), keyWord);
+            return true;
+        }
+
         public static async Task<bool> GetResetToken(string email)
         { 
             _client = new HttpClient();
@@ -79,13 +107,17 @@ namespace SalusMobileApp.Data
             }
             var returnedData = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject(returnedData);
-            App.passwordResetToken = ReturnPasswordResetToken(result.ToString());
+            string keyWord = "passwordResetToken";
+            App.passwordResetToken = ReturnElementFromJson(result.ToString(), keyWord);
             return true;
         }
 
-        private static string ReturnPasswordResetToken(string source)
+        private static string ReturnElementFromJson(string source, string keyWord)
         {
-            var regex = new Regex(@"""passwordResetToken""\s*:\s*""([^""]+)""");
+            //var regex = new Regex(@"""" + keyWord + @"""\s*:\s*""([^""]+)""");
+            var regex = new Regex(@"""" + keyWord + @""":\s*(\d+)");
+            //var regex = new Regex(@"""passwordResetToken""\s*:\s*""([^""]+)""");
+            //var regex = new Regex(regexText);
             return regex.Match(source).Groups[1].Value;
         }
 

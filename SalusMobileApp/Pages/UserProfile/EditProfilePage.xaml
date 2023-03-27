@@ -33,7 +33,7 @@
         <Label x:Name="genderErrorMessage" Text="Must select a gender!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
         
         <Label Text="Goal weight:"/>
-        <Label Text="If you don't have a goal weight then we will calculate your ideal weight for you based on the data you've provided." FontSize="Small"/>
+        <Label Text="If you don't have a goal weight then we will calculate your ideal weight for you based on the data you've provided." FontSize="4"/>
         <Entry x:Name="goalWeightEntry" TextChanged="goalWeightEntry_TextChanged" Placeholder="Your goal weight in kilograms"/>
         <Label x:Name="goalWeightErrorMessage" Text="Must be between 20 and 1000!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
         
