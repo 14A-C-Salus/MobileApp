@@ -35,6 +35,7 @@ namespace SalusMobileApp.Models
         public static async Task<byte[]> EncryptAsync(string password)
         {
             using Aes aes = Aes.Create();
+            aes.Padding = PaddingMode.PKCS7;
             var saveEncryption = new EncryptionModel(aes.Key, aes.IV);
             App.database.SaveEncryptionData(saveEncryption);
             using MemoryStream output = new();
@@ -46,6 +47,7 @@ namespace SalusMobileApp.Models
         public static async Task<string> DecryptAsync(byte[] password)
         {
             using Aes aes = Aes.Create();
+            aes.Padding = PaddingMode.PKCS7;
             //aes.Key = DeriveKeyFromPassword(Encoding.Unicode.GetString(password));
             //aes.IV = IV;
             var encryptionData = App.database.GetEncryptionData();

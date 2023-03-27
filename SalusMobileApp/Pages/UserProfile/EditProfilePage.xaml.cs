@@ -9,11 +9,18 @@ public partial class EditProfilePage : ContentPage
 		InitializeComponent();
 	}
 
+    private static string successfullySaved = "Your profile data has been successfully saved";
+    private static string serverError = "Something went wrong, please try again later";
+    private static string filledInError = "Invalid data, all fields must be filled in";
+    private static string offlineError = "You are offline!";
+
     private async void confirmBtn_Clicked(object sender, EventArgs e)
     {
         if (ServiceValidation.InternetConnectionValidator())
         {
-            if(ServiceValidation.UserProfileValidator(int.Parse(weightEntry.Text), int.Parse(heightEntry.Text), birthdatePicker.Date, genderPicker.SelectedItem.ToString(), int.Parse(goalWeightEntry.Text)))
+            //birthdatePicker.Date,
+            //Convert.ToString(genderPicker.SelectedItem), 
+            if (ServiceValidation.UserProfileValidator(int.Parse(weightEntry.Text), int.Parse(heightEntry.Text),  int.Parse(goalWeightEntry.Text)))
             {
                 bool profileExists;
                 if(App._userProfile != null)
@@ -27,16 +34,16 @@ public partial class EditProfilePage : ContentPage
                 var userProfileEditRequest = await RestServices.EditProfile(profileExists, int.Parse(weightEntry.Text), int.Parse(heightEntry.Text), birthdatePicker.Date, ServiceValidation.GenderToNumber(genderPicker.SelectedItem.ToString()), int.Parse(goalWeightEntry.Text));
                 if(userProfileEditRequest)
                 {
-                    await DisplayAlert("Success", "Your profile data has been successfully saved", "Ok");
+                    await DisplayAlert("Success", successfullySaved, "Ok");
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Something went wrong, please try again later", "Ok");
+                    await DisplayAlert("Error", serverError, "Ok");
                 }
             }
             else
             {
-                await DisplayAlert("Error", "Invalid data", "Ok");
+                await DisplayAlert("Error", filledInError, "Ok");
             }
             if (!ServiceValidation.ValidateUserWeight(int.Parse(weightEntry.Text)))
             {
@@ -61,7 +68,7 @@ public partial class EditProfilePage : ContentPage
         }
         else
         {
-            await DisplayAlert("Error", "You are offline!", "Ok");
+            await DisplayAlert("Error", offlineError, "Ok");
         }
     }
 

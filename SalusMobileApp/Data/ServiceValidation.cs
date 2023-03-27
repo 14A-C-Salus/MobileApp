@@ -89,11 +89,13 @@ namespace SalusMobileApp.Data
 
             return valid;
         }
-
-
-        public static bool UserProfileValidator(int weight, int height, DateTime birthDate, string gender, int goalWeight)
+        // && ValidateUserBirthDate(birthDate)
+        // DateTime birthDate,
+        // && ValidateUserGender(gender)
+        // && string gender, 
+        public static bool UserProfileValidator(int weight, int height,  int goalWeight)
         {
-            if(ValidateUserWeight(weight) && ValidateUserHeight(height) && ValidateUserBirthDate(birthDate) && ValidateUserGender(gender) && ValidateUserGoalWeight(goalWeight))  
+            if (ValidateUserWeight(weight) && ValidateUserHeight(height)   && ValidateUserGoalWeight(goalWeight))
             {
                 return true;
             }
@@ -102,27 +104,27 @@ namespace SalusMobileApp.Data
 
         public static bool ValidateUserWeight(int weight)
         {
-            return IsBetween(weight, 20, 1000);
+            return IsBetween(weight, 20, 1000) && IsNothingNull(weight);
         }
 
         public static bool ValidateUserHeight(int height)
         {
-            return IsBetween(height, 40, 250);
+            return IsBetween(height, 40, 250) && IsNothingNull(height);
         }
 
         public static bool ValidateUserBirthDate(DateTime birthDate)
         {
-            return DateTime.Today.AddYears(-100) <= birthDate && DateTime.Today.AddYears(-12) >= birthDate;
+            return DateTime.Today.AddYears(-100) <= birthDate && DateTime.Today.AddYears(-12) >= birthDate && IsNothingNull(birthDate);
         }
 
         public static bool ValidateUserGender(string gender)
         {
-            return IsBetween(GenderToNumber(gender), 1, 3);
+            return IsBetween(GenderToNumber(gender), 1, 3) && IsNothingNull(gender);
         }
 
         public static bool ValidateUserGoalWeight(int goalWeight)
         {
-            return IsBetween(goalWeight, 20, 1000);
+            return IsBetween(goalWeight, 20, 1000) && IsNothingNull(goalWeight);
         }
 
         public static int GenderToNumber(string gender)
@@ -155,6 +157,18 @@ namespace SalusMobileApp.Data
                 return true;
             }
             return false;
+        }
+
+        private static bool IsNothingNull(params object[] args)
+        {
+            foreach (object arg in args)
+            {
+                if(arg == null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

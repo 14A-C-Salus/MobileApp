@@ -13,5 +13,7 @@ namespace SalusMobileApp.Models
         public DateTime birthDate { get; set; }
         public int gender { get; set; }
         public int goalWeight { get; set; }
+
+        public UserProfileModel() { }
     }
 }

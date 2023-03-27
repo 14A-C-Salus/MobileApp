@@ -18,7 +18,7 @@ public partial class ForgotPasswordPage : ContentPage
                 var forgottenPasswordRequest = await RestServices.GetResetToken(emailEntry.Text);
                 if (forgottenPasswordRequest)
                 {
-                    await Navigation.PushAsync(new ResetPasswordPage());
+                    await Shell.Current.GoToAsync(nameof(ResetPasswordPage));
                 }
                 else
                 {

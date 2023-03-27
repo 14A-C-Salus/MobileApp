@@ -15,9 +15,15 @@ namespace SalusMobileApp.Data
         public LocalDatabase(string dbPath)
         {
             _connection = new SQLiteAsyncConnection(dbPath);
+            _connection.CreateTableAsync<AuthModel>().Wait();
             _connection.CreateTableAsync<LoginModel>().Wait();
             _connection.CreateTableAsync<UserProfileModel>().Wait();
             _connection.CreateTableAsync<EncryptionModel>().Wait();
+        }
+
+        public void SaveUserId(AuthModel id)
+        {
+            _connection.InsertAsync(id);
         }
 
         public void SaveLoginData(LoginModel login)
