@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace SalusMobileApp.Models
     {
         public int weight { get; set; }
         public int height { get; set; }
-        public DateTime birthDate { get; set; }
+        public string birthDate { get; set; }
         public int gender { get; set; }
         public int goalWeight { get; set; }
 

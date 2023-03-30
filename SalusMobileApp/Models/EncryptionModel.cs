@@ -32,12 +32,23 @@ namespace SalusMobileApp.Models
             //                                 desiredKeyLength);
             
         //}
-        public static async Task<byte[]> EncryptAsync(string password)
+        public static async Task<byte[]> EncryptAsync(string password, bool isPassword = true)
         {
             using Aes aes = Aes.Create();
             aes.Padding = PaddingMode.PKCS7;
-            var saveEncryption = new EncryptionModel(aes.Key, aes.IV);
-            App.database.SaveEncryptionData(saveEncryption);
+            EncryptionModel saveEncryption;
+            if(isPassword)
+            {
+                saveEncryption = new EncryptionModel(aes.Key, aes.IV);
+                App.database.SaveEncryptionData(saveEncryption);
+            }
+            else
+            {
+                saveEncryption = App.database.GetEncryptionData();
+                aes.Key = saveEncryption.Key;
+                aes.IV = saveEncryption.IV;
+            }
+            
             using MemoryStream output = new();
             using CryptoStream cryptoStream = new(output, aes.CreateEncryptor(), CryptoStreamMode.Write);
             await cryptoStream.WriteAsync(Encoding.Unicode.GetBytes(password));

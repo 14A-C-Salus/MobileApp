@@ -3,6 +3,7 @@ using SalusMobileApp.Data;
 using SalusMobileApp.Models;
 using SalusMobileApp.Pages.Login_Signup;
 using SalusMobileApp.Pages.MainMenu;
+using SalusMobileApp.Pages.MainMenu.Tabs;
 using SalusMobileApp.Pages.UserProfile;
 using System.Formats.Asn1;
 using System.Text;
@@ -21,6 +22,8 @@ public partial class LoginPage : ContentPage
 
     private async void loginButton_Clicked(object sender, EventArgs e)
     {
+        loginButton.IsEnabled = false;
+        passwordForgotten.IsEnabled = false;
         if(ServiceValidation.InternetConnectionValidator()) 
         {
             if (ServiceValidation.ValidateLoginData(emailEntry.Text, passwordEntry.Text))
@@ -41,6 +44,8 @@ public partial class LoginPage : ContentPage
         {
             await DisplayAlert("Error", "You are offline!", "Ok");
         }
+        loginButton.IsEnabled = true;
+        passwordForgotten.IsEnabled = true;
     }
 
     private void emailEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -63,7 +68,7 @@ public partial class LoginPage : ContentPage
     public async Task<bool> CompleteLogin(string email, string password, bool isChecked, bool alreadySaved)
     {
         var loginRequest = await RestServices.LoginPost(email, password);
-        var thisUserProfile = await RestServices.GetUserData(int.Parse(App.userId));
+        var thisUserProfile = await RestServices.GetUserProfileData(int.Parse(App.userId));
         if (loginRequest)
         {
             if(!alreadySaved)
@@ -84,11 +89,14 @@ public partial class LoginPage : ContentPage
         if (isChecked)
         {
             var encryptedPassword = await EncryptionModel.EncryptAsync(password);
+            var encryptedJwtToken = await EncryptionModel.EncryptAsync(App.jwtToken, false);
             var login = new LoginModel
             {
                 email = email,
                 encryptedPassword = encryptedPassword,
-                jwtToken = App.jwtToken,
+                jwtToken = encryptedJwtToken,
+                userId = App.userId,
+                tokenExpires = App.tokenExpires,
             };
             App.database.SaveLoginData(login);
         }
@@ -98,20 +106,17 @@ public partial class LoginPage : ContentPage
         }
     }
 
-    private async Task NavigateToNextPage(bool doesProfileExist)
+    public async Task NavigateToNextPage(bool doesProfileExist)
     {
-        if (doesProfileExist)
+        if (!doesProfileExist)
         {
-            if (App.userProfileExists == "")
-            {
                 await Shell.Current.GoToAsync(nameof(EditProfilePage));
                 //await Navigation.PushAsync(new UserProfile.EditProfilePage());
-            }
-            else
-            {
+        }
+        else
+        {
                 await Shell.Current.GoToAsync(nameof(MainMenuPage));
                 //await Navigation.PushAsync(new MainMenu.MainMenuPage());
-            }
         }
     }
 

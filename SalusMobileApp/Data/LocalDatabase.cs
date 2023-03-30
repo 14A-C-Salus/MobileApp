@@ -15,15 +15,14 @@ namespace SalusMobileApp.Data
         public LocalDatabase(string dbPath)
         {
             _connection = new SQLiteAsyncConnection(dbPath);
-            _connection.CreateTableAsync<AuthModel>().Wait();
             _connection.CreateTableAsync<LoginModel>().Wait();
             _connection.CreateTableAsync<UserProfileModel>().Wait();
             _connection.CreateTableAsync<EncryptionModel>().Wait();
         }
 
-        public void SaveUserId(AuthModel id)
+        public void DeleteUserTable()
         {
-            _connection.InsertAsync(id);
+            _connection.DropTableAsync<UserProfileModel>().Wait();
         }
 
         public void SaveLoginData(LoginModel login)
@@ -44,6 +43,11 @@ namespace SalusMobileApp.Data
         public void DeleteLoginData()
         {
             _connection.DeleteAllAsync<LoginModel>();
+        }
+
+        public void OfflineLogin()
+        {
+            
         }
 
         public void SaveEncryptionData(EncryptionModel data)
@@ -70,12 +74,10 @@ namespace SalusMobileApp.Data
         {
             if(App._userProfile != null)
             {
-                _connection.UpdateAsync(profileModel);
+                //_connection.UpdateAsync(profileModel);
+                _connection.DeleteAllAsync<UserProfileModel>();
             }
-            else
-            {
-                _connection.InsertAsync(profileModel);
-            }
+            _connection.InsertAsync(profileModel);
             
         }
 

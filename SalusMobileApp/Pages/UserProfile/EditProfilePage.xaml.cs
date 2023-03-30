@@ -18,21 +18,10 @@ public partial class EditProfilePage : ContentPage
     {
         if (ServiceValidation.InternetConnectionValidator())
         {
-            //birthdatePicker.Date,
-            //Convert.ToString(genderPicker.SelectedItem), 
-            if (ServiceValidation.UserProfileValidator(int.Parse(weightEntry.Text), int.Parse(heightEntry.Text),  int.Parse(goalWeightEntry.Text)))
+            if (ServiceValidation.UserProfileValidator(CanBeConvertedToInt(weightEntry.Text), CanBeConvertedToInt(heightEntry.Text), birthdatePicker.Date, Convert.ToString(genderPicker.SelectedItem), CanBeConvertedToInt(goalWeightEntry.Text)))
             {
-                bool profileExists;
-                if(App._userProfile != null)
-                {
-                    profileExists = true;
-                }
-                else
-                {
-                    profileExists = false;
-                }
-                var userProfileEditRequest = await RestServices.EditProfile(profileExists, int.Parse(weightEntry.Text), int.Parse(heightEntry.Text), birthdatePicker.Date, ServiceValidation.GenderToNumber(genderPicker.SelectedItem.ToString()), int.Parse(goalWeightEntry.Text));
-                if(userProfileEditRequest)
+                var userProfileEditRequest = await SendEditRequest();
+                if (userProfileEditRequest)
                 {
                     await DisplayAlert("Success", successfullySaved, "Ok");
                 }
@@ -45,26 +34,7 @@ public partial class EditProfilePage : ContentPage
             {
                 await DisplayAlert("Error", filledInError, "Ok");
             }
-            if (!ServiceValidation.ValidateUserWeight(int.Parse(weightEntry.Text)))
-            {
-                weightErrorMessage.IsVisible = true;
-            }
-            if (!ServiceValidation.ValidateUserHeight(int.Parse(heightEntry.Text)))
-            {
-                heightErrorMessage.IsVisible = true;
-            }
-            if (!ServiceValidation.ValidateUserBirthDate(birthdatePicker.Date))
-            {
-                weightErrorMessage.IsVisible = true;
-            }
-            if (!ServiceValidation.ValidateUserGender(genderPicker.SelectedItem.ToString()))
-            {
-                weightErrorMessage.IsVisible = true;
-            }
-            if (!ServiceValidation.ValidateUserGoalWeight(int.Parse(goalWeightEntry.Text)))
-            {
-                weightErrorMessage.IsVisible = true;
-            }
+            ErrorMessageIfFilledInIncorrectly();
         }
         else
         {
@@ -95,5 +65,55 @@ public partial class EditProfilePage : ContentPage
     private void goalWeightEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
         goalWeightErrorMessage.IsVisible = false;
+    }
+
+    private int CanBeConvertedToInt(string value)
+    {
+        if(int.TryParse(value, out int result))
+        {
+            return result;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private async Task<bool> SendEditRequest()
+    {
+        bool profileExists;
+        if (App._userProfile != null)
+        {
+            profileExists = true;
+        }
+        else
+        {
+            profileExists = false;
+        }
+        return await RestServices.EditProfile(profileExists, CanBeConvertedToInt(weightEntry.Text), CanBeConvertedToInt(heightEntry.Text), birthdatePicker.Date, ServiceValidation.GenderToNumber(genderPicker.SelectedItem.ToString()), CanBeConvertedToInt(goalWeightEntry.Text));
+    }
+
+    private void ErrorMessageIfFilledInIncorrectly()
+    {
+        if (!ServiceValidation.ValidateUserWeight(CanBeConvertedToInt(weightEntry.Text)))
+        {
+            weightErrorMessage.IsVisible = true;
+        }
+        if (!ServiceValidation.ValidateUserHeight(CanBeConvertedToInt(heightEntry.Text)))
+        {
+            heightErrorMessage.IsVisible = true;
+        }
+        if (!ServiceValidation.ValidateUserBirthDate(birthdatePicker.Date))
+        {
+            birthdateErrorMessage.IsVisible = true;
+        }
+        if (!ServiceValidation.ValidateUserGender(genderPicker.SelectedItem))
+        {
+            genderErrorMessage.IsVisible = true;
+        }
+        if (!ServiceValidation.ValidateUserGoalWeight(CanBeConvertedToInt(goalWeightEntry.Text)))
+        {
+            goalWeightErrorMessage.IsVisible = true;
+        }
     }
 }

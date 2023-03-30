@@ -12,7 +12,8 @@ public partial class MainPage : ContentPage
 
     private async void loginSignupNavigationButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new LoginSignupPage());
+        //await Navigation.PushAsync(new LoginSignupPage());
+        await Shell.Current.GoToAsync(nameof(LoginSignupPage));
     }
 }
 

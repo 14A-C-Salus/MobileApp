@@ -13,6 +13,6 @@
         <Entry x:Name="passwordEntry" IsPassword="True"/>
         <Label Text="Confirm password:"/>
         <Entry x:Name="confirmPasswordEntry" IsPassword="True"/>
-        <Button x:Name="registerButton" Clicked="registerButton_Clicked" Text="Sign up"/>
+        <Button x:Name="registerButton" Clicked="registerButton_Clicked" Text="Sign up" IsEnabled="True"/>
     </StackLayout>
 </ContentPage>
