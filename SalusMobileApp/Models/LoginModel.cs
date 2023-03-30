@@ -9,10 +9,12 @@ namespace SalusMobileApp.Models
 {
     public class LoginModel
     {
+        public string userId { get; set; }
         public string email { get; set; }
         public string password { get; set; }
         public byte[] encryptedPassword { get; set; }
-        public string jwtToken { get; set; }
+        public byte[] jwtToken { get; set; }
+        public long tokenExpires { get; set; }
         
         public LoginModel(string email, string password) 
         {
@@ -21,6 +23,10 @@ namespace SalusMobileApp.Models
         }
         public LoginModel() { }
 
+        public static bool IsTokenExpired()
+        {
+            return App.tokenExpires - DateTimeOffset.Now.ToUnixTimeSeconds() <= 0;
+        }
         
     }
 }

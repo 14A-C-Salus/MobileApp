@@ -11,8 +11,8 @@
         <Label Text="Password:" Margin="0, 10, 0, 0"/>
         <Entry x:Name="passwordEntry" IsPassword="True" TextChanged="passwordEntry_TextChanged"/>
         <Label x:Name="passwordErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
-        <Button x:Name="passwordForgotten" Clicked="passwordForgotten_Clicked" BorderColor="Transparent" BackgroundColor="Transparent" Text="Did you forget your password?" FontSize="8" VerticalOptions="End" Margin="0, 3, 0, 7" WidthRequest="150" HorizontalOptions="Start"/>
-        <Button x:Name="loginButton" Clicked="loginButton_Clicked" Text="Log in"/>
+        <Button x:Name="passwordForgotten" Clicked="passwordForgotten_Clicked" BorderColor="Transparent" BackgroundColor="Transparent" Text="Did you forget your password?" FontSize="8" VerticalOptions="End" Margin="0, 3, 0, 7" WidthRequest="150" HorizontalOptions="Start" IsEnabled="True"/>
+        <Button x:Name="loginButton" Clicked="loginButton_Clicked" Text="Log in" IsEnabled="True"/>
         <Label Text="Remember me:"/>
         <CheckBox x:Name="rememberPassword" IsChecked="False"/>
     </StackLayout>

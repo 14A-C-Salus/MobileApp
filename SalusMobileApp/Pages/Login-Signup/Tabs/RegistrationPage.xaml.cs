@@ -15,6 +15,7 @@ public partial class RegistrationPage : ContentPage
 
     private async void registerButton_Clicked(object sender, EventArgs e)
     {
+        registerButton.IsEnabled = false;
         if (ServiceValidation.InternetConnectionValidator())
         {
             if (ServiceValidation.CheckRegistrationData(usernameEntry.Text, emailEntry.Text, passwordEntry.Text, confirmPasswordEntry.Text))
@@ -34,5 +35,6 @@ public partial class RegistrationPage : ContentPage
                 await DisplayAlert("Error", fillAllFields, "OK");
             }
         }
+        registerButton.IsEnabled = true;
     }
 }

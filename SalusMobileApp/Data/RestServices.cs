@@ -3,6 +3,7 @@ using SalusMobileApp.Models;
 using SalusMobileApp.Pages.Login_Signup;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -18,6 +19,7 @@ namespace SalusMobileApp.Data
         private static string _registerUri = "Auth/register";
         private static string _loginUri = "Auth/login";
         private static string _userDataUri = "Auth/get-auth?authId=";
+        private static string _userProfileDataUri = "Auth/get-userprofile?authId=";
         private static string _forgotPasswordUri = "Auth/forgot-password?email=";
         private static string _passwordResetUri = "Auth/reset-password";
         private static string _createUserProfileUri = "UserProfile/create-profile";
@@ -43,15 +45,6 @@ namespace SalusMobileApp.Data
             {
                 return false;
             }
-            var returnedData = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject(returnedData);
-            string keyWord = "id";
-            App.userId = ReturnElementFromJson(result.ToString(), keyWord);
-            var id = new AuthModel
-            {
-                id = int.Parse(App.userId)
-            };
-            App.database.SaveUserId(id);
             return true;
         }
         public static async Task<bool> LoginPost(string email, string password)
@@ -68,9 +61,23 @@ namespace SalusMobileApp.Data
             {
                 return false;
             }
-            var returnedData = await response.Content.ReadAsStringAsync();
-            App.jwtToken = returnedData;
+            await ReturnUserId(response);
             return true;
+        }
+
+        private static async Task ReturnUserId(HttpResponseMessage response, string tokenValue = null)
+        {
+            if(tokenValue == null)
+            {
+                var returnedData = await response.Content.ReadAsStringAsync();
+                App.jwtToken = returnedData;
+            }
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(App.jwtToken);
+            var tokenContentList = token.Claims.ToList();
+            App.userId = tokenContentList[0].Value;
+            var expires = long.Parse(tokenContentList[2].Value);
+            App.tokenExpires = expires;
         }
 
         public static async Task<bool> GetUserData(int id)
@@ -91,6 +98,22 @@ namespace SalusMobileApp.Data
             return true;
         }
 
+        public static async Task<bool> GetUserProfileData(int id)
+        {
+            _client = new HttpClient();
+
+            string requestUri = _uri + _userProfileDataUri + id.ToString();
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject(returnedData);
+            return true;
+        }
+
         public static async Task<bool> GetResetToken(string email)
         { 
             _client = new HttpClient();
@@ -105,10 +128,12 @@ namespace SalusMobileApp.Data
             {
                 return false;
             }
+            // Ez itt végleges változatban nem kell:
             var returnedData = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject(returnedData);
             string keyWord = "passwordResetToken";
             App.passwordResetToken = ReturnElementFromJson(result.ToString(), keyWord);
+            // --------------------------------------------------------------------------
             return true;
         }
 
@@ -120,7 +145,7 @@ namespace SalusMobileApp.Data
             //var regex = new Regex(regexText);
             return regex.Match(source).Groups[1].Value;
         }
-
+        // Ez itt végleges változatban nem kell:
         public static async Task<bool> PasswordResetPatch(string token, string password, string confirmPassword)
         {
             _client = new HttpClient();
@@ -143,16 +168,18 @@ namespace SalusMobileApp.Data
             App.passwordResetToken = null;
             return true;
         }
-
+        // ----------------------------------------------------------------------------------------------------------------
         public static async Task<bool> EditProfile(bool doesExist, int weight, int height, DateTime birthDate, int gender, int goalWeight)
         {
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            DateTime myDateTime = birthDate;
+            string isoBirthDateString = myDateTime.ToString("o");
             var newUserProfile = new UserProfileModel
             {
                 weight = weight,
                 height = height,
-                birthDate = birthDate,
+                birthDate = isoBirthDateString,
                 gender = gender,
                 goalWeight = goalWeight
             };
@@ -165,6 +192,7 @@ namespace SalusMobileApp.Data
             if(doesExist)
             {
                 response = await _client.PatchAsync(modifyRequestUri, content);
+                App.database.SaveLocalUserProfileData(App.database.GetLocalUserProfileData());
             }
             else
             {

@@ -89,13 +89,9 @@ namespace SalusMobileApp.Data
 
             return valid;
         }
-        // && ValidateUserBirthDate(birthDate)
-        // DateTime birthDate,
-        // && ValidateUserGender(gender)
-        // && string gender, 
-        public static bool UserProfileValidator(int weight, int height,  int goalWeight)
+        public static bool UserProfileValidator(int weight, int height, DateTime birthDate, string gender, int goalWeight)
         {
-            if (ValidateUserWeight(weight) && ValidateUserHeight(height)   && ValidateUserGoalWeight(goalWeight))
+            if (ValidateUserWeight(weight) && ValidateUserHeight(height) && ValidateUserBirthDate(birthDate) && ValidateUserGender(gender) && ValidateUserGoalWeight(goalWeight))
             {
                 return true;
             }
@@ -117,9 +113,18 @@ namespace SalusMobileApp.Data
             return DateTime.Today.AddYears(-100) <= birthDate && DateTime.Today.AddYears(-12) >= birthDate && IsNothingNull(birthDate);
         }
 
-        public static bool ValidateUserGender(string gender)
+        public static bool ValidateUserGender(object gender)
         {
-            return IsBetween(GenderToNumber(gender), 1, 3) && IsNothingNull(gender);
+            string genderString;
+            if (gender != null)
+            {
+                genderString = gender.ToString();
+            }
+            else
+            {
+                genderString = "";
+            }
+            return IsBetween(GenderToNumber(genderString), 1, 3) && IsNothingNull(genderString);
         }
 
         public static bool ValidateUserGoalWeight(int goalWeight)
