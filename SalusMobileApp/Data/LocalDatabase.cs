@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace SalusMobileApp.Data
 {
@@ -89,6 +90,16 @@ namespace SalusMobileApp.Data
                 return profile[0];
             }
             return null;
+        }
+
+        public void DeleteLocalUserProfile()
+        {
+            _connection.DeleteAllAsync<UserProfileModel>();
+        }
+
+        public ObservableCollection<UserProfileModel> GetLocalUserProfileDataForViewModel()
+        {
+            return new ObservableCollection<UserProfileModel>(_connection.Table<UserProfileModel>().ToListAsync().Result);
         }
     }
 }

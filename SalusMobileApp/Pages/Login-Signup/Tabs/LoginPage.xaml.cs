@@ -89,6 +89,7 @@ public partial class LoginPage : ContentPage
         if (isChecked)
         {
             var encryptedPassword = await EncryptionModel.EncryptAsync(password);
+            Thread.Sleep(10);
             var encryptedJwtToken = await EncryptionModel.EncryptAsync(App.jwtToken, false);
             var login = new LoginModel
             {

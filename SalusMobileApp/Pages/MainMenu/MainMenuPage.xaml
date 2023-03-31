@@ -5,5 +5,5 @@
              x:Class="SalusMobileApp.Pages.MainMenu.MainMenuPage"
              Title="MainMenuPage">
     <local:NutritionPage/>
-    <local:PostsPage/>
+    <local:ProfilePage/>
 </TabbedPage>

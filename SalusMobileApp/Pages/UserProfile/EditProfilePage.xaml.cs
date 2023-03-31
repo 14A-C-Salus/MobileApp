@@ -90,7 +90,7 @@ public partial class EditProfilePage : ContentPage
         {
             profileExists = false;
         }
-        return await RestServices.EditProfile(profileExists, CanBeConvertedToInt(weightEntry.Text), CanBeConvertedToInt(heightEntry.Text), birthdatePicker.Date, ServiceValidation.GenderToNumber(genderPicker.SelectedItem.ToString()), CanBeConvertedToInt(goalWeightEntry.Text));
+        return await RestServices.EditProfile(profileExists, CanBeConvertedToInt(weightEntry.Text), CanBeConvertedToInt(heightEntry.Text), birthdatePicker.Date, ServiceValidation.GenderToNumber(genderPicker.SelectedItem.ToString()), genderPicker.SelectedItem.ToString(), CanBeConvertedToInt(goalWeightEntry.Text));
     }
 
     private void ErrorMessageIfFilledInIncorrectly()
