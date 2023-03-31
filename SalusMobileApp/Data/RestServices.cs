@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SalusMobileApp.Models;
 using SalusMobileApp.Pages.Login_Signup;
 using System;
@@ -110,7 +111,20 @@ namespace SalusMobileApp.Data
                 return false;
             }
             var returnedData = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject(returnedData);
+            var result = (JObject)JsonConvert.DeserializeObject(returnedData);
+            var saveProfileData = new UserProfileModel
+            {
+                weight = int.Parse(result.SelectToken("weight").ToString()),
+                height = int.Parse(result.SelectToken("height").ToString()),
+                birthDate = result.SelectToken("birthDate").ToString(),
+                gender = int.Parse(result.SelectToken("gender").ToString()),
+                genderString = UserProfileModel.genderToString(int.Parse(result.SelectToken("gender").ToString())),
+                goalWeight = int.Parse(result.SelectToken("goalWeight").ToString())
+            };
+            if(saveProfileData != null)
+            {
+                App.database.SaveLocalUserProfileData(saveProfileData);
+            }
             return true;
         }
 
@@ -169,25 +183,25 @@ namespace SalusMobileApp.Data
             return true;
         }
         // ----------------------------------------------------------------------------------------------------------------
-        public static async Task<bool> EditProfile(bool doesExist, int weight, int height, DateTime birthDate, int gender, int goalWeight)
+        public static async Task<bool> EditProfile(bool doesExist, int weight, int height, DateTime birthDate, int gender, string genderString, int goalWeight)
         {
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
-            DateTime myDateTime = birthDate;
-            string isoBirthDateString = myDateTime.ToString("o");
-            var newUserProfile = new UserProfileModel
-            {
-                weight = weight,
-                height = height,
-                birthDate = isoBirthDateString,
-                gender = gender,
-                goalWeight = goalWeight
-            };
+            string isoBirthDateString = birthDate.ToString("o");
+            var newUserProfile = new UserProfileModel(weight, height, isoBirthDateString, gender, goalWeight);
             string createRequestUri = _uri + _createUserProfileUri;
             string modifyRequestUri = _uri + _modifyUserProfileUri;
 
             var json = JsonConvert.SerializeObject(newUserProfile);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
+            newUserProfile = new UserProfileModel
+            {
+                weight = weight,
+                height = height,
+                birthDate = isoBirthDateString,
+                genderString = genderString,
+                goalWeight = goalWeight
+            };
             HttpResponseMessage response;
             if(doesExist)
             {

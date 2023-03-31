@@ -93,16 +93,12 @@
 	  <MauiXaml Update="Pages\MainMenu\Tabs\NutritionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\MainMenu\Tabs\PostsPage.xaml">
+	  <MauiXaml Update="Pages\MainMenu\Tabs\ProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\UserProfile\EditProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 
 </Project>

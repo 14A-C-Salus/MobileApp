@@ -40,6 +40,8 @@ public partial class App : Application
     {
 		//database.DeleteLoginData();
 		//database.DeleteEncryptionData();
+		//database.DeleteLocalUserProfile();
+
 		LoginModel loggedIn = database.GetLoginData();
         UserProfileModel userProfile = database.GetLocalUserProfileData();
         _userProfile = userProfile;
