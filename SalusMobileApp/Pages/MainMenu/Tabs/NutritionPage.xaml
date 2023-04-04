@@ -26,9 +26,11 @@
                     <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30"/>
                     <Button x:Name="filterByTagsButton" HeightRequest="40" WidthRequest="40" Margin="0, 0, 10, 0"/>
 
-                    <Button x:Name="decrementDateButton" Text="&lt;" FontAttributes="Bold"/>
-                    <DatePicker x:Name="datePicker" Grid.Row="1" Grid.Column="1"/>
-                    <Button x:Name="incrementDateButton" Text=">" FontAttributes="Bold"/>
+                    <HorizontalStackLayout>
+                        <Button x:Name="decrementDateButton" Text="&lt;" FontAttributes="Bold"/>
+                        <DatePicker x:Name="datePicker" Grid.Row="1" Grid.Column="1"/>
+                        <Button x:Name="incrementDateButton" Text=">" FontAttributes="Bold"/>
+                    </HorizontalStackLayout>
                 </HorizontalStackLayout>
 
                 <Button x:Name="searchButton" Grid.Row="2" Grid.Column="1" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Search"/>

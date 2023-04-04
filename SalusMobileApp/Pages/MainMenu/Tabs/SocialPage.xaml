@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SalusMobileApp.Pages.MainMenu.Tabs"
+             x:Class="SalusMobileApp.Pages.MainMenu.Tabs.SocialPage"
+             Title="SocialPage">
+    <VerticalStackLayout>
+        <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30"/>
+
+        <ListView x:Name="commentListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout>
+                            <Label x:Name="followedName" />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>

@@ -27,6 +27,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120"/>
@@ -61,6 +62,8 @@
                         <Label Text="Goal weight: "/>
                         <Label x:Name="goalWeightLabelPast" Text="{Binding goalWeight}"/>
                     </HorizontalStackLayout>
+                    
+                    <Button x:Name="editButton" Clicked="editButton_Clicked" Grid.Row="6" Grid.Column="0" Text="Edit" HeightRequest="35" WidthRequest="60"/>
 
                     <Label Text="Now:" Grid.Row="0" Grid.Column="2"/>
                     <Label x:Name="weightLabel" Text="Weight: " Grid.Row="1" Grid.Column="2"/>

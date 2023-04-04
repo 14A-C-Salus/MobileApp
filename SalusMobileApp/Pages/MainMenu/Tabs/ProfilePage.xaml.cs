@@ -1,3 +1,4 @@
+using SalusMobileApp.Pages.UserProfile;
 using SalusMobileApp.ViewModels;
 
 namespace SalusMobileApp.Pages.MainMenu.Tabs;
@@ -16,5 +17,10 @@ public partial class ProfilePage : ContentPage
         BindingContext = viewModel;
         viewModel.GetUserProfileFromViewModel();
         BindableLayout.SetItemsSource(userProfileBindableLayout, viewModel.UserProfile);
+    }
+
+    private async void editButton_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(EditProfilePage));
     }
 }

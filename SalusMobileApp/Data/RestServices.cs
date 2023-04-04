@@ -26,6 +26,8 @@ namespace SalusMobileApp.Data
         private static string _createUserProfileUri = "UserProfile/create-profile";
         private static string _modifyUserProfileUri = "UserProfile/modify-profile";
         private static string _setProfilePictureUri = "UserProfile/set-profile-picture";
+        private static string _writeCommentUri = "SocialMedia/write-comment";
+        private static string _getCommentsByEmailUri = "SocialMedia/get-all-comment-by-authenticated-email";
         public static async Task<bool> RegistrationPut(string username, string email, string password, string confirmPassword)
         {
             _client = new HttpClient();
@@ -81,23 +83,23 @@ namespace SalusMobileApp.Data
             App.tokenExpires = expires;
         }
 
-        public static async Task<bool> GetUserData(int id)
-        {
-            _client = new HttpClient();
+        //public static async Task<bool> GetUserData(int id)
+        //{
+        //    _client = new HttpClient();
 
-            string requestUri = _uri + _userDataUri + id.ToString();
-            var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
-            if(!response.IsSuccessStatusCode)
-            {
-                return false;
-            }
-            var returnedData = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject(returnedData);
-            string keyWord = "userProfile";
-            App.userProfileExists = ReturnElementFromJson(result.ToString(), keyWord);
-            return true;
-        }
+        //    string requestUri = _uri + _userDataUri + id.ToString();
+        //    var response = await _client.GetAsync(requestUri);
+        //    _client.Dispose();
+        //    if(!response.IsSuccessStatusCode)
+        //    {
+        //        return false;
+        //    }
+        //    var returnedData = await response.Content.ReadAsStringAsync();
+        //    var result = JsonConvert.DeserializeObject(returnedData);
+        //    string keyWord = "userProfile";
+        //    App.userProfileExists = ReturnElementFromJson(result.ToString(), keyWord);
+        //    return true;
+        //}
 
         public static async Task<bool> GetUserProfileData(int id)
         {
@@ -206,7 +208,7 @@ namespace SalusMobileApp.Data
             if(doesExist)
             {
                 response = await _client.PatchAsync(modifyRequestUri, content);
-                App.database.SaveLocalUserProfileData(App.database.GetLocalUserProfileData());
+                App.database.SaveLocalUserProfileData(newUserProfile);
             }
             else
             {
@@ -238,6 +240,38 @@ namespace SalusMobileApp.Data
             var json = JsonConvert.SerializeObject(profilePicture);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PatchAsync(requestUri, content);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static async Task<bool> SaveComment(string email, string body)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            var comment = new CommentModel(email, body);
+            string requestUri = _uri + _writeCommentUri;
+
+            var json = JsonConvert.SerializeObject(comment);
+            var content = new StringContent(json, Encoding.UTF8, _contentType);
+            var response = await _client.PutAsync(requestUri, content);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static async Task<bool> GetCommentsByEmail()
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri + _getCommentsByEmailUri;
+            var response = await _client.GetAsync(requestUri);
             _client.Dispose();
             if (!response.IsSuccessStatusCode)
             {
