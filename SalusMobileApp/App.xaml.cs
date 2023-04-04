@@ -54,7 +54,7 @@ public partial class App : Application
 				{
                     var decryptedPassword = EncryptionModel.DecryptAsync(loggedIn.encryptedPassword);
                     var login = new LoginPage();
-                    await login.CompleteLogin(loggedIn.email, decryptedPassword.Result, false, true);
+                    await login.CompleteLogin(loggedIn.email, decryptedPassword.Result, false);
                 }
 				else
 				{

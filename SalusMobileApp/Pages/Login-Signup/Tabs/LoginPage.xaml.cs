@@ -28,7 +28,7 @@ public partial class LoginPage : ContentPage
         {
             if (ServiceValidation.ValidateLoginData(emailEntry.Text, passwordEntry.Text))
             {
-                var login = await CompleteLogin(emailEntry.Text, passwordEntry.Text, rememberPassword.IsChecked, false);
+                var login = await CompleteLogin(emailEntry.Text, passwordEntry.Text, rememberPassword.IsChecked);
                 if(!login)
                 {
                     await DisplayAlert("Error", loginErrorMessage, "Ok");
@@ -65,16 +65,13 @@ public partial class LoginPage : ContentPage
     // Methods:
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    public async Task<bool> CompleteLogin(string email, string password, bool isChecked, bool alreadySaved)
+    public async Task<bool> CompleteLogin(string email, string password, bool isChecked)
     {
         var loginRequest = await RestServices.LoginPost(email, password);
-        var thisUserProfile = await RestServices.GetUserProfileData(int.Parse(App.userId));
         if (loginRequest)
         {
-            if(!alreadySaved)
-            {
-                await RememberPassword(isChecked, email, password);
-            }
+            var thisUserProfile = await RestServices.GetUserProfileData(int.Parse(App.userId));
+            await RememberPassword(isChecked, email, password);
             await NavigateToNextPage(thisUserProfile);
             return true;
         }
@@ -116,7 +113,9 @@ public partial class LoginPage : ContentPage
         }
         else
         {
-                await Shell.Current.GoToAsync(nameof(MainMenuPage));
+            UserProfileModel userProfile = App.database.GetLocalUserProfileData();
+            App._userProfile = userProfile;
+            await Shell.Current.GoToAsync(nameof(MainMenuPage));
                 //await Navigation.PushAsync(new MainMenu.MainMenuPage());
         }
     }

@@ -6,4 +6,5 @@
              Title="MainMenuPage">
     <local:NutritionPage/>
     <local:ProfilePage/>
+    <local:SocialPage/>
 </TabbedPage>

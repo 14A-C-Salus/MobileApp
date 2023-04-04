@@ -4,15 +4,20 @@ namespace SalusMobileApp.Pages.UserProfile;
 
 public partial class EditProfilePage : ContentPage
 {
-	public EditProfilePage()
+    public EditProfilePage()
 	{
 		InitializeComponent();
-	}
+    }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        SetEntryData();
+    }
     private static string successfullySaved = "Your profile data has been successfully saved";
     private static string serverError = "Something went wrong, please try again later";
     private static string filledInError = "Invalid data, all fields must be filled in";
-    private static string offlineError = "You are offline!";
+    private static string offlineError = "This action isn't available while you are offline";
 
     private async void confirmBtn_Clicked(object sender, EventArgs e)
     {
@@ -24,6 +29,7 @@ public partial class EditProfilePage : ContentPage
                 if (userProfileEditRequest)
                 {
                     await DisplayAlert("Success", successfullySaved, "Ok");
+                    SetEntryData();
                 }
                 else
                 {
@@ -33,8 +39,8 @@ public partial class EditProfilePage : ContentPage
             else
             {
                 await DisplayAlert("Error", filledInError, "Ok");
+                ErrorMessageIfFilledInIncorrectly();
             }
-            ErrorMessageIfFilledInIncorrectly();
         }
         else
         {
@@ -115,5 +121,14 @@ public partial class EditProfilePage : ContentPage
         {
             goalWeightErrorMessage.IsVisible = true;
         }
+    }
+
+    private void SetEntryData()
+    {
+        weightEntry.Text = App._userProfile.weight.ToString();
+        heightEntry.Text = App._userProfile.height.ToString();
+        birthdatePicker.Date = DateTime.Parse(App._userProfile.birthDate);
+        genderPicker.SelectedItem = App._userProfile.genderString;
+        goalWeightEntry.Text = App._userProfile.goalWeight.ToString();
     }
 }
