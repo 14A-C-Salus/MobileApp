@@ -6,4 +6,11 @@
              Title="LoginSignupPage">
     <local:LoginPage Title="Login"/>
     <local:RegistrationPage Title="Sign Up"/>
+    <!--<TabBar>
+        <Tab>
+            <ShellContent Title="Login" ContentTemplate="{DataTemplate local:LoginPage}" Route="LoginPage"/>
+            <ShellContent Title="Registration" ContentTemplate="{DataTemplate local:RegistrationPage}" Route="RegistrationPage"/>
+        </Tab>
+    </TabBar>-->
+    
 </TabbedPage>

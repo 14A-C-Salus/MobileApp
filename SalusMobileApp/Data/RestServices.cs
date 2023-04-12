@@ -19,7 +19,7 @@ namespace SalusMobileApp.Data
         private static string _contentType = "application/json";
         private static string _registerUri = "Auth/register";
         private static string _loginUri = "Auth/login";
-        private static string _userDataUri = "Auth/get-auth?authId=";
+        //private static string _userDataUri = "Auth/get-auth?authId=";
         private static string _userProfileDataUri = "Auth/get-userprofile?authId=";
         private static string _forgotPasswordUri = "Auth/forgot-password?email=";
         private static string _passwordResetUri = "Auth/reset-password";
@@ -28,6 +28,8 @@ namespace SalusMobileApp.Data
         private static string _setProfilePictureUri = "UserProfile/set-profile-picture";
         private static string _writeCommentUri = "SocialMedia/write-comment";
         private static string _getCommentsByEmailUri = "SocialMedia/get-all-comment-by-authenticated-email";
+
+        private static string _getFoodInformationByBarcodeUri = "https://world.openfoodfacts.org/api/v2/product/";
         public static async Task<bool> RegistrationPut(string username, string email, string password, string confirmPassword)
         {
             _client = new HttpClient();
@@ -277,6 +279,25 @@ namespace SalusMobileApp.Data
             {
                 return false;
             }
+            return true;
+        }
+
+        public static async Task<bool> GetFoodInformationByBarcode(string barcode)
+        {
+            _client = new HttpClient();
+            string requestUri = _getFoodInformationByBarcodeUri + barcode;
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            var result = (JObject)JsonConvert.DeserializeObject(returnedData);
+            var kcal = int.Parse(result.SelectToken("product.nutriments.energy-kcal_100g").ToString());
+            var protein = int.Parse(result.SelectToken("product.nutriments.proteins_100g").ToString());
+            var carbohydrate = int.Parse(result.SelectToken("product.nutriments.carbohydrates_100g").ToString());
+            var recipe = new RecipeModel(kcal, protein, carbohydrate);
             return true;
         }
     }

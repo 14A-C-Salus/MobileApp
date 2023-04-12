@@ -33,8 +33,11 @@
                     </HorizontalStackLayout>
                 </HorizontalStackLayout>
 
+                <HorizontalStackLayout>
                 <Button x:Name="searchButton" Grid.Row="2" Grid.Column="1" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Search"/>
-
+                <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Grid.Row="2" Grid.Column="2" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Add new"/>
+                </HorizontalStackLayout>
+                
             </VerticalStackLayout>
         </Grid>
 
