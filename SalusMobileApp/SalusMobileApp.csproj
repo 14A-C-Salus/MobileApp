@@ -59,7 +59,10 @@
 	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.4" />
 	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
+	  <PackageReference Include="ZXing.Net.Maui" Version="0.2.0-preview.2" />
+	  <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.2.0-preview.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,6 +75,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\AddFood\AddFoodPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\AddFood\FoodScannerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Error\ErrorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

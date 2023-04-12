@@ -115,8 +115,8 @@ public partial class LoginPage : ContentPage
         {
             UserProfileModel userProfile = App.database.GetLocalUserProfileData();
             App._userProfile = userProfile;
-            await Shell.Current.GoToAsync(nameof(MainMenuPage));
-                //await Navigation.PushAsync(new MainMenu.MainMenuPage());
+            //await Shell.Current.GoToAsync(nameof(MainMenuPage));
+            await Navigation.PushAsync(new MainMenuPage());
         }
     }
 
