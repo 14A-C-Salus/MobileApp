@@ -1,4 +1,5 @@
 ﻿using SalusMobileApp.Data;
+using SalusMobileApp.Pages.Login_Signup;
 using ZXing.Net.Maui.Controls;
 
 namespace SalusMobileApp;
@@ -16,7 +17,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 		builder.Services.AddSingleton<RestServices>();
-		builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddSingleton<LoginSignupPage>();
 
 		return builder.Build();
 	}

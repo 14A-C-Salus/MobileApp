@@ -37,6 +37,7 @@ public partial class LoginPage : ContentPage
             else
             {
                 await DisplayAlert("Error", incorrectFieldsErrorMessage, "Ok");
+                loginButton.IsEnabled = true;
             }
             ErrorMessageIfFilledInIncorrectly();
         }
@@ -108,8 +109,8 @@ public partial class LoginPage : ContentPage
     {
         if (!doesProfileExist)
         {
-                await Shell.Current.GoToAsync(nameof(EditProfilePage));
-                //await Navigation.PushAsync(new UserProfile.EditProfilePage());
+            //await Shell.Current.GoToAsync(nameof(EditProfilePage));
+            await Navigation.PushAsync(new EditProfilePage());
         }
         else
         {
