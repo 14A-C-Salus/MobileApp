@@ -18,9 +18,9 @@ public partial class ProfilePage : ContentPage
         viewModel.GetUserProfileFromViewModel();
         BindableLayout.SetItemsSource(userProfileBindableLayout, viewModel.UserProfile);
     }
-
+    
     private async void editButton_Clicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(EditProfilePage));
+        await Navigation.PushAsync(new EditProfilePage());
     }
 }

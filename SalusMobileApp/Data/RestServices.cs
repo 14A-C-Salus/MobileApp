@@ -297,7 +297,7 @@ namespace SalusMobileApp.Data
             var kcal = int.Parse(result.SelectToken("product.nutriments.energy-kcal_100g").ToString());
             var protein = int.Parse(result.SelectToken("product.nutriments.proteins_100g").ToString());
             var carbohydrate = int.Parse(result.SelectToken("product.nutriments.carbohydrates_100g").ToString());
-            var recipe = new RecipeModel(kcal, protein, carbohydrate);
+            App.mostRecentRecipe = new RecipeModel(kcal, protein, carbohydrate);
             return true;
         }
     }

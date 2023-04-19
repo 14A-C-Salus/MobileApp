@@ -1,4 +1,5 @@
 using SalusMobileApp.Data;
+using SalusMobileApp.Pages.MainMenu.Tabs;
 
 namespace SalusMobileApp.Pages.UserProfile;
 
@@ -14,7 +15,6 @@ public partial class EditProfilePage : ContentPage
         base.OnAppearing();
         SetEntryData();
     }
-    private static string successfullySaved = "Your profile data has been successfully saved";
     private static string serverError = "Something went wrong, please try again later";
     private static string filledInError = "Invalid data, all fields must be filled in";
     private static string offlineError = "This action isn't available while you are offline";
@@ -28,8 +28,7 @@ public partial class EditProfilePage : ContentPage
                 var userProfileEditRequest = await SendEditRequest();
                 if (userProfileEditRequest)
                 {
-                    await DisplayAlert("Success", successfullySaved, "Ok");
-                    SetEntryData();
+                    await Navigation.PopAsync();
                 }
                 else
                 {

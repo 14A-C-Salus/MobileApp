@@ -13,6 +13,6 @@ public partial class NutritionPage : ContentPage
     private async void addNewButton_Clicked(object sender, EventArgs e)
     {
         //await Shell.Current.GoToAsync(nameof(AddFoodPage));
-        await Navigation.PushAsync(new AddFoodPage());
+        await Navigation.PushAsync(new AddFoodPage(App.mostRecentRecipe));
     }
 }

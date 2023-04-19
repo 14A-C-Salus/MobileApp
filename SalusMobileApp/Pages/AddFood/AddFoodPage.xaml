@@ -8,13 +8,13 @@
         <Label Text="Protein:"/>
         <Entry x:Name="proteinEntry"/>
         
-        <Label Text="Fat:"/>
-        <Entry x:Name="fatEntry"/>
+        <Label Text="Kcal:"/>
+        <Entry x:Name="kcalEntry"/>
         
         <Label Text="Carbohydrate:"/>
         <Entry x:Name="carbohydrateEntry"/>
 
-        <Button x:Name="addFoodButton" Text="Save food" WidthRequest="50" HeightRequest="40" Margin="0, 0, 0, 10"/>
+        <Button x:Name="addFoodButton" Clicked="addFoodButton_Clicked" Text="Save food" WidthRequest="50" HeightRequest="40" Margin="0, 0, 0, 10"/>
         <Button x:Name="enableScannerButton" Clicked="enableScannerButton_Clicked" Text="Scan barcode" WidthRequest="50" HeightRequest="40"/>
     </VerticalStackLayout>
 </ContentPage>

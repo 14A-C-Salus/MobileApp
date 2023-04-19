@@ -14,5 +14,6 @@ public partial class FoodScannerPage : ContentPage
         var barcode = e.Results[0].Value;
         barcodeReader.IsDetecting = false;
         await RestServices.GetFoodInformationByBarcode(barcode);
+        await Navigation.PushAsync(new AddFoodPage(App.mostRecentRecipe));
     }
 }
