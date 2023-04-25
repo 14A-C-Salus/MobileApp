@@ -38,6 +38,7 @@ public partial class LoginPage : ContentPage
             {
                 await DisplayAlert("Error", incorrectFieldsErrorMessage, "Ok");
                 loginButton.IsEnabled = true;
+                passwordForgotten.IsEnabled = true;
             }
             ErrorMessageIfFilledInIncorrectly();
         }
@@ -130,6 +131,20 @@ public partial class LoginPage : ContentPage
         if (!ServiceValidation.ValidatePassword(passwordEntry.Text))
         {
             passwordErrorMessage.IsVisible = true;
+        }
+    }
+
+    private void passwordVisibleButton_Clicked(object sender, EventArgs e)
+    {
+        if(passwordEntry.IsPassword == true)
+        {
+            passwordEntry.IsPassword = false;
+            passwordVisibleButton.Source = "eyeactive.png";
+        }
+        else
+        {
+            passwordEntry.IsPassword = true;
+            passwordVisibleButton.Source = "eyeinactive.png";
         }
     }
 }

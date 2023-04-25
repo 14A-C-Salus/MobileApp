@@ -21,48 +21,44 @@ public partial class SplashScreenPage : ContentPage
 
         fadeIn.Commit(this, "fadeIn", length: 5000, easing: Easing.Linear, finished: async (d, b) =>
         {
-            await OnApplicationStartupCustom();
-        });
-    }
-
-    private async Task OnApplicationStartupCustom()
-    {
-        LoginModel loggedIn = App.database.GetLoginData();
-        UserProfileModel userProfile = App.database.GetLocalUserProfileData();
-        App._userProfile = userProfile;
-        var login = new LoginPage();
-        if (loggedIn != null)
-        {
-            App.tokenExpires = loggedIn.tokenExpires;
-            if (ServiceValidation.InternetConnectionValidator())
+            LoginModel loggedIn = App.database.GetLoginData();
+            UserProfileModel userProfile = App.database.GetLocalUserProfileData();
+            var login = new LoginPage();
+            if (loggedIn != null)
             {
-                if (LoginModel.IsTokenExpired())
+                App.userId = loggedIn.userId;
+                App._userProfile = userProfile;
+                App.tokenExpires = loggedIn.tokenExpires;
+                if (ServiceValidation.InternetConnectionValidator())
                 {
-                    var decryptedPassword = EncryptionModel.DecryptAsync(loggedIn.encryptedPassword);
-                    await login.CompleteLogin(loggedIn.email, decryptedPassword.Result, false);
-                }
-                else
-                {
-                    if (userProfile != null)
+                    if (LoginModel.IsTokenExpired())
                     {
-                        var decryptedJwtToken = EncryptionModel.DecryptAsync(App.database.GetLoginData().jwtToken);
-                        App.jwtToken = decryptedJwtToken.Result;
-                        await Navigation.PushAsync(new MainMenuPage());
+                        var decryptedPassword = EncryptionModel.DecryptAsync(loggedIn.encryptedPassword);
+                        await login.CompleteLogin(loggedIn.email, decryptedPassword.Result, false);
                     }
                     else
                     {
-                        await Navigation.PushAsync(new ErrorPage());
+                        if (userProfile != null)
+                        {
+                            var decryptedJwtToken = EncryptionModel.DecryptAsync(App.database.GetLoginData().jwtToken);
+                            App.jwtToken = decryptedJwtToken.Result;
+                            await Navigation.PushAsync(new MainMenuPage());
+                        }
+                        else
+                        {
+                            await Navigation.PushAsync(new ErrorPage());
+                        }
                     }
+                }
+                else
+                {
+                    App.database.OfflineLogin();
                 }
             }
             else
             {
-                App.database.OfflineLogin();
+                await Navigation.PushAsync(new LoginSignupPage());
             }
-        }
-        else
-        {
-            await Navigation.PushAsync(new LoginSignupPage());
-        }
+        });
     }
 }

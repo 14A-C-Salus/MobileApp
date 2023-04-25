@@ -3,13 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SalusMobileApp.Pages"
              x:Class="SalusMobileApp.Pages.LoginPage"
-             Title="LoginPage">
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <StackLayout MaximumWidthRequest="250">
         <Label Text="E-mail:"/>
         <Entry x:Name="emailEntry" TextChanged="emailEntry_TextChanged"/>
         <Label x:Name="emailErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
         <Label Text="Password:" Margin="0, 10, 0, 0"/>
-        <Entry x:Name="passwordEntry" IsPassword="True" TextChanged="passwordEntry_TextChanged"/>
+        <HorizontalStackLayout>
+            <Entry x:Name="passwordEntry" IsPassword="True" TextChanged="passwordEntry_TextChanged" WidthRequest="220" Margin="0, 0, 5, 0"/>
+            <ImageButton x:Name="passwordVisibleButton" CornerRadius="7" Source="eyeinactive.png" BackgroundColor="White" Clicked="passwordVisibleButton_Clicked" WidthRequest="25" HeightRequest="25"/>
+        </HorizontalStackLayout>
         <Label x:Name="passwordErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
         <Button x:Name="passwordForgotten" Clicked="passwordForgotten_Clicked" BorderColor="Transparent" BackgroundColor="Transparent" Text="Did you forget your password?" FontSize="8" VerticalOptions="End" Margin="0, 3, 0, 7" WidthRequest="150" HorizontalOptions="Start" IsEnabled="True"/>
         <Button x:Name="loginButton" Clicked="loginButton_Clicked" Text="Log in" IsEnabled="True"/>

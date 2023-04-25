@@ -13,7 +13,14 @@ public partial class FoodScannerPage : ContentPage
     {
         var barcode = e.Results[0].Value;
         barcodeReader.IsDetecting = false;
-        await RestServices.GetFoodInformationByBarcode(barcode);
-        await Navigation.PushAsync(new AddFoodPage(App.mostRecentRecipe));
+        var doesBarcodeExist = await RestServices.GetFoodInformationByBarcode(barcode);
+        if(doesBarcodeExist)
+        {
+            await Navigation.PushAsync(new AddFoodPage(App.mostRecentRecipe.name, App.mostRecentRecipe.kcal.ToString(), App.mostRecentRecipe.protein.ToString(), App.mostRecentRecipe.fat.ToString(), App.mostRecentRecipe.carbohydrate.ToString()));
+        }
+        else
+        {
+            await Navigation.PopAsync();
+        }
     }
 }

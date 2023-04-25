@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalusMobileApp.Pages.MainMenu.Tabs.RecipePage"
+             Title="RecipePage" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <HorizontalStackLayout Grid.Row="0" Margin="0, 0, 0, 5">
+                <Entry x:Name="Search" Margin="0, 0, 5, 0" Placeholder="Search"/>
+                <Button x:Name="searchButton" Clicked="searchButton_Clicked" Text="Search"/>
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout Grid.Row="1" Margin="0, 0, 0, 5">
+                <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Margin="0, 0, 5, 0" Text="Add recipe" HeightRequest="40" WidthRequest="60"/>
+                <Button x:Name="filterByFavourites" Clicked="filterByFavourites_Clicked" Margin="0, 0, 5, 0" Text="Show favourites" HeightRequest="40" WidthRequest="60"/>
+                <Button x:Name="reloadButton" Clicked="reloadButton_Clicked" Margin="0, 0, 5, 0" Text="Reload page" HeightRequest="40" WidthRequest="60"/>
+            </HorizontalStackLayout>
+
+            <ListView Grid.Row="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        
+    </ScrollView>
+</ContentPage>

@@ -1,4 +1,5 @@
-﻿using SalusMobileApp.Models;
+﻿using SalusMobileApp.Data;
+using SalusMobileApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,14 +12,38 @@ namespace SalusMobileApp.ViewModels
     public class ProfilePageViewModel
     {
         public ObservableCollection<UserProfileModel> UserProfile { get; set; }
+        public event EventHandler UserProfileLoaded;
         public ProfilePageViewModel()
         {
             UserProfile = new ObservableCollection<UserProfileModel>();
         }
 
-        public void GetUserProfileFromViewModel()
+        public async void GetUserProfileFromViewModel()
         {
-            UserProfile = App.database.GetLocalUserProfileDataForViewModel();
+            if(ServiceValidation.InternetConnectionValidator())
+            {
+                var data = await RestServices.GetUserProfileDataAsObject(int.Parse(App.userId));
+                if(data != null)
+                {
+                    UserProfile = new ObservableCollection<UserProfileModel>
+                    {
+                        data
+                    };
+                    if (UserProfileLoaded != null)
+                    {
+                        UserProfileLoaded(this, EventArgs.Empty);
+                    }
+                }
+            }
+            else
+            {
+                UserProfile = App.database.GetLocalUserProfileDataForViewModel();
+                if(UserProfileLoaded != null) 
+                { 
+                    UserProfileLoaded(this, EventArgs.Empty);
+                }
+            }
+            
         }
     }
 }

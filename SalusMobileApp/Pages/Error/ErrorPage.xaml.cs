@@ -13,6 +13,6 @@ public partial class ErrorPage : ContentPage
 
     private async void backToLoginButton_Clicked(object sender, EventArgs e)
     {
-		await Shell.Current.GoToAsync(nameof(LoginSignupPage));
+		await Navigation.PushAsync(new LoginSignupPage());
     }
 }
