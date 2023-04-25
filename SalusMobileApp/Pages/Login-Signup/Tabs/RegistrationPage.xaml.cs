@@ -28,13 +28,31 @@ public partial class RegistrationPage : ContentPage
                 else
                 {
                     await DisplayAlert("Error", serverError, "Ok");
+                    registerButton.IsEnabled = true;
                 }
             }
             else
             {
                 await DisplayAlert("Error", fillAllFields, "OK");
+                registerButton.IsEnabled = true;
             }
         }
         registerButton.IsEnabled = true;
+    }
+
+    private void passwordVisibleButton_Clicked(object sender, EventArgs e)
+    {
+        if (passwordEntry.IsPassword == true)
+        {
+            passwordEntry.IsPassword = false;
+            confirmPasswordEntry.IsPassword = false;
+            passwordVisibleButton.Source = "eyeactive.png";
+        }
+        else
+        {
+            passwordEntry.IsPassword = true; 
+            confirmPasswordEntry.IsPassword = true;
+            passwordVisibleButton.Source = "eyeinactive.png";
+        }
     }
 }

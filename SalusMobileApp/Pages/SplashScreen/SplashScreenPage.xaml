@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SalusMobileApp.Pages.SplashScreen.SplashScreenPage"
-             Title="SplashScreenPage">
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
         <Image x:Name="logoImage" Source="saluslogotransparentbg.png" WidthRequest="256" HeightRequest="256"/>
     </VerticalStackLayout>

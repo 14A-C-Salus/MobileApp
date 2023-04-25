@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
              x:Class="SalusMobileApp.Pages.AddFood.FoodScannerPage"
-             Title="FoodScannerPage">
+             Title="FoodScannerPage" NavigationPage.HasBackButton="False">
     <VerticalStackLayout>
         <zxing:CameraBarcodeReaderView x:Name="barcodeReader" Scale="2" IsDetecting="True" IsTorchOn="False" BarcodesDetected="barcodeReader_BarcodesDetected"/>
     </VerticalStackLayout>

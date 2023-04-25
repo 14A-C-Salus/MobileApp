@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:SalusMobileApp.Pages.MainMenu.Tabs"
              xmlns:viewmodels="clr-namespace:SalusMobileApp.ViewModels"
              x:Class="SalusMobileApp.Pages.MainMenu.Tabs.ProfilePage"
-             Title="Profile">
+             Title="Profile" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <ContentPage.BindingContext>
         <viewmodels:ProfilePageViewModel/>
     </ContentPage.BindingContext>
@@ -16,7 +16,7 @@
             <Setter Property="Margin" Value="0, 0, 3, 0"/>
         </Style>
     </ContentPage.Resources>
-    <VerticalStackLayout x:Name="userProfileBindableLayout" BindableLayout.ItemsSource="{Binding UserProfile}">
+    <VerticalStackLayout x:Name="userProfileBindableLayout" BindableLayout.ItemsSource="{Binding UserProfile}" Margin="15, 0, 0, 0">
         <BindableLayout.ItemTemplate>
             <DataTemplate>
                 <Grid>
@@ -62,13 +62,15 @@
                         <Label Text="Goal weight: "/>
                         <Label x:Name="goalWeightLabelPast" Text="{Binding goalWeight}"/>
                     </HorizontalStackLayout>
-                    
+
                     <Button x:Name="editButton" Clicked="editButton_Clicked" Grid.Row="6" Grid.Column="0" Text="Edit" HeightRequest="35" WidthRequest="60"/>
 
                     <Label Text="Now:" Grid.Row="0" Grid.Column="2"/>
                     <Label x:Name="weightLabel" Text="Weight: " Grid.Row="1" Grid.Column="2"/>
 
                     <Label x:Name="goalWeightLabel" Text="Goal weight: " Grid.Row="2" Grid.Column="2"/>
+                    
+                    <Button x:Name="logoutButton" Clicked="logoutButton_Clicked" Grid.Row="6" Grid.Column="1" BackgroundColor="Red" TextColor="White" Text="Logout"/>
                 </Grid>
             </DataTemplate>
         </BindableLayout.ItemTemplate>

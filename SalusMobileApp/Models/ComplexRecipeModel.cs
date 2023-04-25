@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SalusMobileApp.Models
 {
-    public class RecipeModel
+    public class ComplexRecipeModel
     {
         public int id { get; set; }
         public int fat { get; set; }
@@ -15,20 +15,17 @@ namespace SalusMobileApp.Models
         public int carbohydrate { get; set; }
         public int verified { get; set; }
         public int timeInMinutes { get; set; }
-        public int oilPortionMl { get; set; }
+        public int? oilPortionMl { get; set; }
         public string description { get; set; }
         public string name { get; set; }
-        public int method { get; set; }
-        public int oilId { get; set; }
-
-        public RecipeModel() { }
-        public RecipeModel(string name, int kcal, int protein, int fat, int carbohydrate)
-        {
-            this.name = name;
-            this.kcal = kcal;
-            this.protein = protein;
-            this.fat = fat;
-            this.carbohydrate = carbohydrate;
-        }
+        public int? method { get; set; }
+        public int? oilId { get; set; }
+        public int[] ingredientIds { get; set; }
+        public int[] ingredientPortionGramm { get; set; }
+        public bool generateDescription { get; set; }
+        public AuthorModel author { get; set; }
+        public int[] usersWhoLiked { get; set; }
+        public int[] tags { get; set; }
+        public int? last24h { get; set; }
     }
 }

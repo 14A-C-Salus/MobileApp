@@ -175,5 +175,12 @@ namespace SalusMobileApp.Data
             }
             return true;
         }
+
+        public static bool IsEverythingDeleted()
+        {
+            return App.database.GetLoginData() == null 
+                && App.database.GetEncryptionData() == null 
+                && App.database.GetLocalUserProfileData() == null;
+        }
     }
 }

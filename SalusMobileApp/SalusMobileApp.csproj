@@ -40,8 +40,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
+		<MauiIcon Include="Resources\AppIcon\salusicon.png" Color="#6DF4B3" />
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
@@ -57,7 +56,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\salusicon.png" />
+	  <None Remove="Resources\Images\eyeactive.png" />
+	  <None Remove="Resources\Images\eyeinactive.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\SalusLogoTransparentBg.png" />
+	  <None Remove="Resources\Images\tagsicon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -80,6 +86,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\AddFood\AddFoodPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\AddFood\AddIngredientPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\AddFood\FoodScannerPage.xaml">
@@ -107,6 +116,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainMenu\Tabs\ProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\MainMenu\Tabs\RecipePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainMenu\Tabs\SocialPage.xaml">

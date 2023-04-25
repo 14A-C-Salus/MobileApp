@@ -3,43 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SalusMobileApp.Pages.MainMenu.Tabs"
              x:Class="SalusMobileApp.Pages.MainMenu.Tabs.NutritionPage"
-             Title="Nutrition">
-    <FlexLayout>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ScrollView>
+        <VerticalStackLayout>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <HorizontalStackLayout>
+                <Image IsVisible="False"/>
+                <Label Text="You are offline!" IsVisible="False"/>
+            </HorizontalStackLayout>
 
-            <VerticalStackLayout>
-                <Image Grid.Row="0" IsVisible="False"/>
-                <Label Grid.Row="0" Text="You are offline!" IsVisible="False"/>
-                
-                <HorizontalStackLayout Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
-                    <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30"/>
-                    <Button x:Name="filterByTagsButton" HeightRequest="40" WidthRequest="40" Margin="0, 0, 10, 0"/>
-
-                    <HorizontalStackLayout>
+            <HorizontalStackLayout Margin="15, 0, 0, 0" VerticalOptions="Start" HorizontalOptions="Start">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Margin="0, 0, 0, 5">
                         <Button x:Name="decrementDateButton" Text="&lt;" FontAttributes="Bold"/>
-                        <DatePicker x:Name="datePicker" Grid.Row="1" Grid.Column="1"/>
+                        <DatePicker x:Name="datePicker"/>
                         <Button x:Name="incrementDateButton" Text=">" FontAttributes="Bold"/>
                     </HorizontalStackLayout>
-                </HorizontalStackLayout>
 
-                <HorizontalStackLayout>
-                <Button x:Name="searchButton" Grid.Row="2" Grid.Column="1" Margin="0, 5, 10, 0" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Search"/>
-                <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Grid.Row="2" Grid.Column="2" Margin="0, 5, 0, 0" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Add new"/>
-                </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30"/>
+                        <ImageButton x:Name="filterByTagsButton" Source="tagsicon.png" BackgroundColor="White" CornerRadius="5" HeightRequest="40" WidthRequest="40" Margin="0, 0, 10, 0"/>
+                    </HorizontalStackLayout>
+                    
+                </VerticalStackLayout>
                 
-            </VerticalStackLayout>
-        </Grid>
 
-    </FlexLayout>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="15, 0, 0, 0">
+                <Button x:Name="searchButton" Margin="0, 5, 10, 0" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Search"/>
+                <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Margin="0, 5, 0, 0" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Add new"/>
+            </HorizontalStackLayout>
+
+            <ListView x:Name="todaysMealsListView" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout HorizontalOptions="Center" WidthRequest="150" HeightRequest="100">
+                                <Label Text=""/>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

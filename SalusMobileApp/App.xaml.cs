@@ -19,17 +19,19 @@ public partial class App : Application
 	public static string userProfileExists;
 	public static string userId;
 	public static UserProfileModel _userProfile;
-	public static RecipeModel mostRecentRecipe = new RecipeModel(0, 0, 0);
+	public static RecipeModel mostRecentRecipe = new RecipeModel("", 0, 0, 0, 0);
+	public static List<int> currentAddedIngredientIds = new List<int>();
+	public static List<int> currentAddedIngredientGrams = new List<int>();
 	public static LocalDatabase database
 	{
 		get
 		{
 			if (_database == null)
 			{
-				// This is a faster method but it doesn't work for some reason. I will try to make it work if everything else is done.
+				// This is a faster method, but it only works when i debug it on mobile. This will be in the final version.
 				//_database = new LocalDatabase(Path.Combine(FileSystem.AppDataDirectory, "SalusMobileApp.db3"));
-                _database = new LocalDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SalusMobileApp.db3"));
-            }
+				_database = new LocalDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SalusMobileApp.db3"));
+			}
 			return _database;
 		}
 
@@ -37,6 +39,10 @@ public partial class App : Application
     public App()
 	{
 		InitializeComponent();
+
+		//database.DeleteLoginData();
+		//database.DeleteEncryptionData();
+		//database.DeleteLocalUserProfile();
 
 		MainPage = new NavigationPage(new SplashScreenPage());
     }

@@ -16,6 +16,8 @@ namespace SalusMobileApp.Data
     {
         static HttpClient _client;
         private static string _uri = "http://salushl-001-site1.dtempurl.com/api/";
+        //private static string _uri = "https://localhost:7138/api/";
+
         private static string _contentType = "application/json";
         private static string _registerUri = "Auth/register";
         private static string _loginUri = "Auth/login";
@@ -23,9 +25,16 @@ namespace SalusMobileApp.Data
         private static string _userProfileDataUri = "Auth/get-userprofile?authId=";
         private static string _forgotPasswordUri = "Auth/forgot-password?email=";
         private static string _passwordResetUri = "Auth/reset-password";
+
         private static string _createUserProfileUri = "UserProfile/create-profile";
         private static string _modifyUserProfileUri = "UserProfile/modify-profile";
         private static string _setProfilePictureUri = "UserProfile/set-profile-picture";
+
+        private static string _getRecipeByNameUri = "Recipe/get-recipes-by-name?name=";
+        private static string _getAllRecipeByAuthIdUri = "Recipe/get-all-recipe-by-auth-id?authId=";
+        private static string _createNewFoodSimple = "Recipe/create-simple";
+        private static string _createNewFood = "Recipe/create";
+
         private static string _writeCommentUri = "SocialMedia/write-comment";
         private static string _getCommentsByEmailUri = "SocialMedia/get-all-comment-by-authenticated-email";
 
@@ -125,11 +134,37 @@ namespace SalusMobileApp.Data
                 genderString = UserProfileModel.genderToString(int.Parse(result.SelectToken("gender").ToString())),
                 goalWeight = int.Parse(result.SelectToken("goalWeight").ToString())
             };
-            if(saveProfileData != null)
+            if (saveProfileData != null && App.database.GetLoginData != null)
             {
                 App.database.SaveLocalUserProfileData(saveProfileData);
+                App._userProfile = saveProfileData;
             }
             return true;
+        }
+
+        public static async Task<UserProfileModel> GetUserProfileDataAsObject(int id)
+        {
+            _client = new HttpClient();
+
+            string requestUri = _uri + _userProfileDataUri + id.ToString();
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if(!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            var result = (JObject)JsonConvert.DeserializeObject(returnedData);
+            var profileData = new UserProfileModel
+            {
+                weight = int.Parse(result.SelectToken("weight").ToString()),
+                height = int.Parse(result.SelectToken("height").ToString()),
+                birthDate = result.SelectToken("birthDate").ToString(),
+                gender = int.Parse(result.SelectToken("gender").ToString()),
+                genderString = UserProfileModel.genderToString(int.Parse(result.SelectToken("gender").ToString())),
+                goalWeight = int.Parse(result.SelectToken("goalWeight").ToString())
+            };
+            return profileData;
         }
 
         public static async Task<bool> GetResetToken(string email)
@@ -210,12 +245,19 @@ namespace SalusMobileApp.Data
             if(doesExist)
             {
                 response = await _client.PatchAsync(modifyRequestUri, content);
-                App.database.SaveLocalUserProfileData(newUserProfile);
+                if(App.database.GetLoginData() != null)
+                {
+                    App.database.SaveLocalUserProfileData(newUserProfile);
+                }
+                
             }
             else
             {
                 response = await _client.PutAsync(createRequestUri, content);
-                App.database.SaveLocalUserProfileData(newUserProfile);
+                if (App.database.GetLoginData() != null)
+                {
+                    App.database.SaveLocalUserProfileData(newUserProfile);
+                }
             }
             
             _client.Dispose();
@@ -293,12 +335,109 @@ namespace SalusMobileApp.Data
                 return false;
             }
             var returnedData = await response.Content.ReadAsStringAsync();
-            var result = (JObject)JsonConvert.DeserializeObject(returnedData);
-            var kcal = int.Parse(result.SelectToken("product.nutriments.energy-kcal_100g").ToString());
-            var protein = int.Parse(result.SelectToken("product.nutriments.proteins_100g").ToString());
-            var carbohydrate = int.Parse(result.SelectToken("product.nutriments.carbohydrates_100g").ToString());
-            App.mostRecentRecipe = new RecipeModel(kcal, protein, carbohydrate);
+            GetDataOutOfBarcodeResponse(returnedData);
             return true;
+        }
+
+        private static void GetDataOutOfBarcodeResponse(string returnedData)
+        {
+            var result = (JObject)JsonConvert.DeserializeObject(returnedData);
+            var name = result.SelectToken("product.ecoscore_data.agribalyse.name_en").ToString();
+            var kcal = Convert.ToInt32(result.SelectToken("product.nutriments.energy-kcal_100g").ToString());
+            var protein = Convert.ToInt32(result.SelectToken("product.nutriments.proteins_100g").ToString());
+            var carbohydrate = Convert.ToInt32(result.SelectToken("product.nutriments.carbohydrates_100g").ToString());
+            var fat = Convert.ToInt32(result.SelectToken("product.nutriments.fat_100g").ToString());
+            App.mostRecentRecipe = new RecipeModel(name, kcal, protein, fat, carbohydrate);
+        }
+
+        public static async Task<bool> CreateRecipeSimple(string name, int kcal, int protein, int fat, int carbohydrate)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            var recipe = new RecipeModel(name, kcal, protein, fat, carbohydrate);
+            string requestUri = _uri + _createNewFoodSimple;
+            
+            var json = JsonConvert.SerializeObject(recipe);
+            var content = new StringContent(json, Encoding.UTF8, _contentType);
+            var response = await _client.PutAsync(requestUri, content);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            return true;
+        }
+
+        public static async Task<bool> CreateRecipe(int[] igredientIds, int[] ingredientPortionGram, int method, int oilId, int oilPortionMl, int timeInMinutes, string name, bool generateDescription, string description, int fat, int protein, int kcal, int  carbohydrate)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            var descriptionValue = " ";
+            if(description != null)
+            {
+                descriptionValue = description;
+            }
+            var recipe = new ComplexRecipeModel
+            {
+                ingredientIds = igredientIds,
+                ingredientPortionGramm = ingredientPortionGram,
+                method = method,
+                oilId = oilId,
+                oilPortionMl = oilPortionMl,
+                timeInMinutes = timeInMinutes,
+                name = name,
+                description = descriptionValue,
+                generateDescription = generateDescription,
+                fat = fat,
+                protein = protein,
+                kcal = kcal,
+                carbohydrate = carbohydrate
+            };
+            string requestUri = _uri + _createNewFood;
+
+            var json = JsonConvert.SerializeObject(recipe);
+            var content = new StringContent(json, Encoding.UTF8, _contentType);
+            var response = await _client.PutAsync(requestUri, content);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            return true;
+        }
+
+        public static async Task<bool> GetAllRecipeByAuthId(int id)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri + _getAllRecipeByAuthIdUri;
+
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static async Task<List<ComplexRecipeModel>> GetRecipeByName(string name)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri + _getRecipeByNameUri + name;
+
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<ComplexRecipeModel>>(returnedData);
+            return result;
         }
     }
 }

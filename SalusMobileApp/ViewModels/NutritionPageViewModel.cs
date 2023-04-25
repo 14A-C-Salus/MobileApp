@@ -10,6 +10,15 @@ namespace SalusMobileApp.ViewModels
 {
     public class NutritionPageViewModel
     {
-        
+        public ObservableCollection<RecipeModel> Recipe { get; set; }
+        public NutritionPageViewModel()
+        {
+            Recipe = new ObservableCollection<RecipeModel>();
+        }
+
+        public void GetUserProfileFromViewModel()
+        {
+            Recipe = App.database.GetRecipe();
+        }
     }
 }

@@ -3,14 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SalusMobileApp.Pages"
              x:Class="SalusMobileApp.Pages.Login_Signup.LoginSignupPage"
-             Title="LoginSignupPage">
+             Title="LoginSignupPage" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
     <local:LoginPage Title="Login"/>
     <local:RegistrationPage Title="Sign Up"/>
-    <!--<TabBar>
-        <Tab>
-            <ShellContent Title="Login" ContentTemplate="{DataTemplate local:LoginPage}" Route="LoginPage"/>
-            <ShellContent Title="Registration" ContentTemplate="{DataTemplate local:RegistrationPage}" Route="RegistrationPage"/>
-        </Tab>
-    </TabBar>-->
-    
+
 </TabbedPage>

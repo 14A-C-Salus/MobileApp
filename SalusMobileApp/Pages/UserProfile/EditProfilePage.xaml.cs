@@ -1,10 +1,12 @@
 using SalusMobileApp.Data;
+using SalusMobileApp.Pages.MainMenu;
 using SalusMobileApp.Pages.MainMenu.Tabs;
 
 namespace SalusMobileApp.Pages.UserProfile;
 
 public partial class EditProfilePage : ContentPage
 {
+    private bool profileExists;
     public EditProfilePage()
 	{
 		InitializeComponent();
@@ -28,7 +30,14 @@ public partial class EditProfilePage : ContentPage
                 var userProfileEditRequest = await SendEditRequest();
                 if (userProfileEditRequest)
                 {
-                    await Navigation.PopAsync();
+                    if(profileExists)
+                    {
+                        await Navigation.PopAsync();
+                    }
+                    else
+                    {
+                        await Navigation.PushAsync(new MainMenuPage());
+                    }
                 }
                 else
                 {
@@ -86,7 +95,7 @@ public partial class EditProfilePage : ContentPage
 
     private async Task<bool> SendEditRequest()
     {
-        bool profileExists;
+        App._userProfile = App.database.GetLocalUserProfileData();
         if (App._userProfile != null)
         {
             profileExists = true;
@@ -124,10 +133,23 @@ public partial class EditProfilePage : ContentPage
 
     private void SetEntryData()
     {
-        weightEntry.Text = App._userProfile.weight.ToString();
-        heightEntry.Text = App._userProfile.height.ToString();
-        birthdatePicker.Date = DateTime.Parse(App._userProfile.birthDate);
-        genderPicker.SelectedItem = App._userProfile.genderString;
-        goalWeightEntry.Text = App._userProfile.goalWeight.ToString();
+        var userProfile = App.database.GetLocalUserProfileData();
+        if(userProfile != null) 
+        {
+            weightEntry.Text = userProfile.weight.ToString();
+            heightEntry.Text = userProfile.height.ToString();
+            birthdatePicker.Date = DateTime.Parse(userProfile.birthDate);
+            genderPicker.SelectedItem = userProfile.genderString;
+            goalWeightEntry.Text = userProfile.goalWeight.ToString();
+
+        }
+    }
+
+    private async void cancelBtn_Clicked(object sender, EventArgs e)
+    {
+        if(await DisplayAlert("Cancel", "Are you sure?", "Yes", "No"))
+        {
+            await Navigation.PopAsync();
+        }
     }
 }

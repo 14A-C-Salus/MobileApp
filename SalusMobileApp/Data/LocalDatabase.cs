@@ -73,9 +73,8 @@ namespace SalusMobileApp.Data
 
         public void SaveLocalUserProfileData(UserProfileModel profileModel)
         {
-            if(App._userProfile != null)
+            if(App.database.GetLocalUserProfileData() != null)
             {
-                //_connection.UpdateAsync(profileModel);
                 _connection.DeleteAllAsync<UserProfileModel>();
             }
             _connection.InsertAsync(profileModel);
@@ -100,6 +99,18 @@ namespace SalusMobileApp.Data
         public ObservableCollection<UserProfileModel> GetLocalUserProfileDataForViewModel()
         {
             return new ObservableCollection<UserProfileModel>(_connection.Table<UserProfileModel>().ToListAsync().Result);
+        }
+
+        public ObservableCollection<RecipeModel> GetRecipe()
+        {
+            throw new Exception();
+        }
+
+        public void DeleteAll()
+        {
+            App.database.DeleteLoginData();
+            App.database.DeleteEncryptionData();
+            App.database.DeleteUserTable();
         }
     }
 }

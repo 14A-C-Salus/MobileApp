@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SalusMobileApp.Pages.MainMenu.Tabs"
              x:Class="SalusMobileApp.Pages.MainMenu.Tabs.SocialPage"
-             Title="SocialPage">
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <VerticalStackLayout>
         <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30"/>
 
