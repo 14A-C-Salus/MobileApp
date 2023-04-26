@@ -2,8 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SalusMobileApp.Pages.MainMenu.Tabs"
+             xmlns:viewmodels="clr-namespace:SalusMobileApp.ViewModels"
              x:Class="SalusMobileApp.Pages.MainMenu.Tabs.NutritionPage"
              NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.BindingContext>
+        <viewmodels:NutritionPageViewModel/>
+    </ContentPage.BindingContext>
     <ScrollView>
         <VerticalStackLayout>
 
@@ -15,9 +19,9 @@
             <HorizontalStackLayout Margin="15, 0, 0, 0" VerticalOptions="Start" HorizontalOptions="Start">
                 <VerticalStackLayout>
                     <HorizontalStackLayout Margin="0, 0, 0, 5">
-                        <Button x:Name="decrementDateButton" Text="&lt;" FontAttributes="Bold"/>
-                        <DatePicker x:Name="datePicker"/>
-                        <Button x:Name="incrementDateButton" Text=">" FontAttributes="Bold"/>
+                        <Button x:Name="decrementDateButton" Clicked="decrementDateButton_Clicked" Text="&lt;" FontAttributes="Bold"/>
+                        <DatePicker x:Name="datePicker" DateSelected="datePicker_DateSelected"/>
+                        <Button x:Name="incrementDateButton" Clicked="incrementDateButton_Clicked" Text=">" FontAttributes="Bold"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout>
@@ -35,13 +39,27 @@
                 <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Margin="0, 5, 0, 0" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Add new"/>
             </HorizontalStackLayout>
 
-            <ListView x:Name="todaysMealsListView" HasUnevenRows="True">
+            <ListView x:Name="todaysMealsListView" ItemsSource="{Binding ConsumedMeals}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <VerticalStackLayout HorizontalOptions="Center" WidthRequest="150" HeightRequest="100">
-                                <Label Text=""/>
-                            </VerticalStackLayout>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <HorizontalStackLayout Grid.Row="0" Margin="0, 0, 3, 0">
+                                    <Label Text="Name: "/>
+                                    <Label Text="{Binding name}"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Grid.Row="1" Margin="0, 0, 3, 0">
+                                    <Label Text="Kcal: "/>
+                                    <Label Text="{Binding kcal}"/>
+                                </HorizontalStackLayout>
+                                
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
