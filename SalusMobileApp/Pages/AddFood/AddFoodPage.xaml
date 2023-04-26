@@ -62,7 +62,7 @@
                     <Label Text="Carbohydrate:"/>
                     <Entry x:Name="carbohydrateEntry" Keyboard="Numeric"/>
                     <Label x:Name="foodIsScanned" Text="You have successfully scanned your product!" IsVisible="False"/>
-                    <Button x:Name="showAdvancedButton" Clicked="showAdvancedButton_Clicked" IsVisible="True" IsEnabled="True" Text="Advanced options" Margin="0, 30, 0, 0"/>
+                    <Button x:Name="showAdvancedButton" Clicked="showAdvancedButton_Clicked" IsVisible="True" IsEnabled="True" BackgroundColor="Gray" Text="Advanced options" Margin="0, 30, 0, 0"/>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
@@ -120,7 +120,10 @@
                     <Label Text="Ingredients:"/>
                     <Label x:Name="ingredientListLabel" Text=""/>
                 </HorizontalStackLayout>
-                <Button x:Name="addIngredient" Clicked="addIngredient_Clicked" HorizontalOptions="Start" CornerRadius="360" WidthRequest="60" HeightRequest="35" Text="New"/>
+                <HorizontalStackLayout>
+                    <Button x:Name="addIngredient" Clicked="addIngredient_Clicked" HorizontalOptions="Start" CornerRadius="360" WidthRequest="60" HeightRequest="35" Text="New"/>
+                    <Button x:Name="viewIngredients" Clicked="viewIngredients_Clicked" CornerRadius="360" WidthRequest="60" HeightRequest="35" Text="View"/>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
 
 
@@ -128,6 +131,7 @@
                 <Button x:Name="addFoodButton" Clicked="addFoodButton_Clicked" Text="Save food" WidthRequest="100" HeightRequest="40" Margin="0, 0, 10, 0"/>
                 <Button x:Name="enableScannerButton" Clicked="enableScannerButton_Clicked" Text="Scan barcode" WidthRequest="125" HeightRequest="40"/>
             </HorizontalStackLayout>
+            <Button x:Name="cancelButton" Clicked="cancelButton_Clicked" Grid.Row="11" Text="Cancel"/>
         </Grid>
         
     </ScrollView>

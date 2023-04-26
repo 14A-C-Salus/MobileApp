@@ -2,21 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SalusMobileApp.Pages.MainMenu.Tabs"
+             xmlns:viewmodels="clr-namespace:SalusMobileApp.ViewModels"
              x:Class="SalusMobileApp.Pages.MainMenu.Tabs.SocialPage"
              NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
-    <VerticalStackLayout>
-        <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30"/>
+    <ContentPage.BindingContext>
+        <viewmodels:GetUserProfilesByNameViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView Margin="5, 0, 0, 0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <HorizontalStackLayout Grid.Row="0">
+                <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30" Margin="0, 0, 5, 0"/>
+                <Button x:Name="searchButton" Clicked="searchButton_Clicked" Text="Search" Margin="0, 0, 5, 0"/>
+                <Button x:Name="ownProfile" Clicked="ownProfile_Clicked" Text="My profile"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Grid.Row="1">
+                <Label Text="Admins only: "/>
+                <CheckBox x:Name="adminsOnly" IsChecked="False"/>
+            </HorizontalStackLayout>
+            <ListView x:Name="profilesListView" Grid.Row="2" HeightRequest="300" HasUnevenRows="True" RowHeight="40" ItemSelected="commentListView_ItemSelected" ItemsSource="{Binding UserProfiles}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <HorizontalStackLayout Grid.Row="0">
+                                    <Label Text="Name: "/>
+                                    <Label Text="{Binding username}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Row="1" IsVisible="{Binding isAdmin}">
+                                    <Label Text="Admin"/>
+                                </HorizontalStackLayout>
+                            </Grid>
 
-        <ListView x:Name="commentListView">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <HorizontalStackLayout>
-                            <Label x:Name="followedName" />
-                        </HorizontalStackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ScrollView>
 </ContentPage>

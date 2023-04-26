@@ -18,7 +18,7 @@ namespace SalusMobileApp.ViewModels
 
         public void GetUserProfileFromViewModel()
         {
-            Recipe = App.database.GetRecipe();
+            
         }
     }
 }

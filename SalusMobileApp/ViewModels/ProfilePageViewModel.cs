@@ -18,11 +18,11 @@ namespace SalusMobileApp.ViewModels
             UserProfile = new ObservableCollection<UserProfileModel>();
         }
 
-        public async void GetUserProfileFromViewModel()
+        public async void GetUserProfileFromViewModel(int userId)
         {
             if(ServiceValidation.InternetConnectionValidator())
             {
-                var data = await RestServices.GetUserProfileDataAsObject(int.Parse(App.userId));
+                var data = await RestServices.GetUserProfileDataAsObject(userId);
                 if(data != null)
                 {
                     UserProfile = new ObservableCollection<UserProfileModel>
@@ -37,10 +37,13 @@ namespace SalusMobileApp.ViewModels
             }
             else
             {
-                UserProfile = App.database.GetLocalUserProfileDataForViewModel();
-                if(UserProfileLoaded != null) 
-                { 
-                    UserProfileLoaded(this, EventArgs.Empty);
+                if(userId == int.Parse(App.userId))
+                {
+                    UserProfile = App.database.GetLocalUserProfileDataForViewModel();
+                    if (UserProfileLoaded != null)
+                    {
+                        UserProfileLoaded(this, EventArgs.Empty);
+                    }
                 }
             }
             
