@@ -19,7 +19,7 @@ public partial class SplashScreenPage : ContentPage
     {
         base.OnAppearing();
 
-        fadeIn.Commit(this, "fadeIn", length: 5000, easing: Easing.Linear, finished: async (d, b) =>
+        fadeIn.Commit(this, "fadeIn", length: 3000, easing: Easing.Linear, finished: async (d, b) =>
         {
             LoginModel loggedIn = App.database.GetLoginData();
             UserProfileModel userProfile = App.database.GetLocalUserProfileData();

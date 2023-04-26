@@ -32,6 +32,9 @@ namespace SalusMobileApp.Data
         private static string _setProfilePictureUri = "UserProfile/set-profile-picture";
         private static string _getUserProfilesByNameUri = "UserProfile/get-userprofiles-by-name?name=";
 
+        private static string _getAllLast24hUri = "Last24h/get-all";
+        private static string _getLast24hByDateUri = "Last24h/get-all?date=";
+
         private static string _getRecipeByNameUri = "Recipe/get-recipes-by-name?name=";
         private static string _getAllRecipeByAuthIdUri = "Recipe/get-all-recipe-by-auth-id?authId=";
         private static string _createNewFoodSimple = "Recipe/create-simple";
@@ -537,5 +540,30 @@ namespace SalusMobileApp.Data
             return true;
         }
         // ------------------------------------ Recipe END ------------------------------------------------------------------------
+        public static async Task<JArray> GetLast24h(DateTime? date = null)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = "";
+            if (date != null)
+            {
+                requestUri = _uri + _getLast24hByDateUri + date;
+            }
+            else
+            {
+                requestUri = _uri + _getAllLast24hUri + date;
+            }
+
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            //var result = JsonConvert.DeserializeObject<List<ComplexLast24hModel>>(returnedData);
+            var result = (JArray)JsonConvert.DeserializeObject(returnedData);
+            return result;
+        }
     }
 }
