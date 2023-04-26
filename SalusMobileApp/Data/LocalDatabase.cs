@@ -19,6 +19,7 @@ namespace SalusMobileApp.Data
             _connection.CreateTableAsync<LoginModel>().Wait();
             _connection.CreateTableAsync<UserProfileModel>().Wait();
             _connection.CreateTableAsync<EncryptionModel>().Wait();
+            _connection.CreateTableAsync<RecipeModel>().Wait();
         }
 
         public void DeleteUserTable()
@@ -78,7 +79,6 @@ namespace SalusMobileApp.Data
                 _connection.DeleteAllAsync<UserProfileModel>();
             }
             _connection.InsertAsync(profileModel);
-            
         }
 
         public UserProfileModel GetLocalUserProfileData()
@@ -101,9 +101,14 @@ namespace SalusMobileApp.Data
             return new ObservableCollection<UserProfileModel>(_connection.Table<UserProfileModel>().ToListAsync().Result);
         }
 
-        public ObservableCollection<RecipeModel> GetRecipe()
+        public ObservableCollection<RecipeModel> GetFavouriteRecipes()
         {
-            throw new Exception();
+            return new ObservableCollection<RecipeModel>(_connection.Table<RecipeModel>().ToListAsync().Result);
+        }
+
+        public void SaveRecipeToLocalDatabase(RecipeModel recipe)
+        {
+            _connection.InsertAsync(recipe);
         }
 
         public void DeleteAll()

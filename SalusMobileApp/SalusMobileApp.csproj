@@ -57,8 +57,13 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\salusicon.png" />
+	  <None Remove="Resources\Images\deleteicon.png" />
+	  <None Remove="Resources\Images\editicon.png" />
+	  <None Remove="Resources\Images\exiticon.png" />
 	  <None Remove="Resources\Images\eyeactive.png" />
 	  <None Remove="Resources\Images\eyeinactive.png" />
+	  <None Remove="Resources\Images\favouriteicon.png" />
+	  <None Remove="Resources\Images\refreshicon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -110,6 +115,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Login-Signup\Tabs\RegistrationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\MainMenu\SocialPages\SelectedUserProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainMenu\Tabs\NutritionPage.xaml">

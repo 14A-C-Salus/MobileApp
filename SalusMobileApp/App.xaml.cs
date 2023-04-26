@@ -20,9 +20,11 @@ public partial class App : Application
 	public static string userId;
 	public static UserProfileModel _userProfile;
 	public static RecipeModel mostRecentRecipe = new RecipeModel("", 0, 0, 0, 0);
-	public static List<int> currentAddedIngredientIds = new List<int>();
+    public static RecipeModel saveLocalRecipe = new RecipeModel();
+    public static List<int> currentAddedIngredientIds = new List<int>();
 	public static List<int> currentAddedIngredientGrams = new List<int>();
-	public static LocalDatabase database
+    public static List<string> currentAddedIngredientNames = new List<string>();
+    public static LocalDatabase database
 	{
 		get
 		{

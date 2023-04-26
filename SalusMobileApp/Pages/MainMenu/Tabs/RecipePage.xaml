@@ -1,30 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SalusMobileApp.ViewModels"
              x:Class="SalusMobileApp.Pages.MainMenu.Tabs.RecipePage"
              Title="RecipePage" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
-    <ScrollView>
+    <ContentPage.BindingContext>
+        <viewmodels:GetRecipeByAuthIdViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView Margin="5, 0, 0, 0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <HorizontalStackLayout Grid.Row="0" Margin="0, 0, 0, 5">
-                <Entry x:Name="Search" Margin="0, 0, 5, 0" Placeholder="Search"/>
+                <Entry x:Name="searchEntry" Margin="0, 0, 5, 0" Placeholder="Search"/>
                 <Button x:Name="searchButton" Clicked="searchButton_Clicked" Text="Search"/>
             </HorizontalStackLayout>
             
             <HorizontalStackLayout Grid.Row="1" Margin="0, 0, 0, 5">
-                <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Margin="0, 0, 5, 0" Text="Add recipe" HeightRequest="40" WidthRequest="60"/>
-                <Button x:Name="filterByFavourites" Clicked="filterByFavourites_Clicked" Margin="0, 0, 5, 0" Text="Show favourites" HeightRequest="40" WidthRequest="60"/>
-                <Button x:Name="reloadButton" Clicked="reloadButton_Clicked" Margin="0, 0, 5, 0" Text="Reload page" HeightRequest="40" WidthRequest="60"/>
+                <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Margin="0, 0, 5, 0" Text="Add" HeightRequest="40" WidthRequest="60"/>
+                <ImageButton x:Name="filterByFavourites" Clicked="filterByFavourites_Clicked" Margin="0, 0, 5, 0" Source="favouriteicon.png" HeightRequest="40" WidthRequest="40" BackgroundColor="White" CornerRadius="5"/>
+                <ImageButton x:Name="reloadButton" Clicked="reloadButton_Clicked" Margin="0, 0, 5, 0" Source="refreshicon.png" HeightRequest="40" WidthRequest="40" BackgroundColor="White" CornerRadius="5"/>
             </HorizontalStackLayout>
 
-            <ListView Grid.Row="2">
+            <Label Grid.Row="2" Text="Your recipes:"/>
+            <ListView x:Name="recipeList" HasUnevenRows="True" ItemsSource="{Binding Recipes}" Grid.Row="3">
                 <ListView.ItemTemplate>
                     <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
+                                <HorizontalStackLayout Grid.Row="0">
+                                    <Label Text="{Binding name}"/>
+                                    <ImageButton x:Name="favouriteRecipeButton" Clicked="favouriteRecipeButton_Clicked" Source="favouriteicon.png" BackgroundColor="White" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
+                                    <ImageButton x:Name="editRecipe" Clicked="editRecipe_Clicked" Source="editicon.png" BackgroundColor="White" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
+                                    <ImageButton x:Name="deleteRecipe" Clicked="deleteRecipe_Clicked" Source="deleteicon.png" BackgroundColor="Red" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Grid.Row="1">
+                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                        <Label Text="Kcal:"/>
+                                        <Label Text="{Binding kcal}"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                        <Label Text="Fat:"/>
+                                        <Label Text="{Binding fat}"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                        <Label Text="Carbs:"/>
+                                        <Label Text="{Binding carbohydrate}"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                        <Label Text="Protein:"/>
+                                        <Label Text="{Binding protein}"/>
+                                    </HorizontalStackLayout>
+                                </HorizontalStackLayout>
+                                
+                            </Grid>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

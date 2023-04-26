@@ -16,7 +16,7 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
         BindingContext = viewModel;
-        viewModel.GetUserProfileFromViewModel();
+        viewModel.GetUserProfileFromViewModel(int.Parse(App.userId));
         viewModel.UserProfileLoaded += (sender, e) =>
         BindableLayout.SetItemsSource(userProfileBindableLayout, viewModel.UserProfile);
     }

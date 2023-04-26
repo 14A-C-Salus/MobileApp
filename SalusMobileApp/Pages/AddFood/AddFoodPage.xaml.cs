@@ -7,7 +7,7 @@ public partial class AddFoodPage : ContentPage
 {
     private bool AdvancedCreation = false;
     private string CreateErrorMessage = "Something went wrong, please make sure that you filled out everything correctly!";
-    private string CreateSuccessMessage = "Your new recipe has been successfully created! Do you wish to save it to your favourites?";
+    private string CreateSuccessMessage = "Your new recipe has been successfully created! Do you wish to add it to your favourites?";
 
     public AddFoodPage(string name = "", string kcal = "", string protein = "", string fat = "", string carbohydrate = "")
 	{
@@ -22,13 +22,6 @@ public partial class AddFoodPage : ContentPage
             showAdvancedButton.IsVisible = false;
             showAdvancedButton.IsEnabled = false;
             foodIsScanned.IsVisible = true;
-        }
-        if(App.currentAddedIngredientIds.Count > 0)
-        {
-            foreach (var ingredient in App.currentAddedIngredientIds)
-            {
-                ingredientListLabel.Text += App.currentAddedIngredientIds[ingredient] + App.currentAddedIngredientGrams[ingredient] + "\n";
-            }
         }
     }
 
@@ -56,7 +49,7 @@ public partial class AddFoodPage : ContentPage
                 {
                     if(await DisplayAlert("Success", CreateSuccessMessage, "Yes", "No"))
                     {
-
+                        App.database.SaveRecipeToLocalDatabase(App.saveLocalRecipe);
                     }
                     await Navigation.PopAsync();
                 }
@@ -72,7 +65,7 @@ public partial class AddFoodPage : ContentPage
                 {
                     if(await DisplayAlert("Success", CreateSuccessMessage, "Yes", "No"))
                     {
-
+                        App.database.SaveRecipeToLocalDatabase(App.saveLocalRecipe);
                     }
                     await Navigation.PopAsync();
                 }
@@ -88,12 +81,26 @@ public partial class AddFoodPage : ContentPage
 
     private void showAdvancedButton_Clicked(object sender, EventArgs e)
     {
-        cookingMethodLayout.IsVisible = true;
-        cookingTimeLayout.IsVisible = true;
-        descriptionLayout.IsVisible = true;
-        oilLayout.IsVisible = true;
-        ingredientList.IsVisible = true;
-        AdvancedCreation = true;
+        if(cookingMethodLayout.IsVisible && cookingTimeLayout.IsVisible && descriptionLayout.IsVisible && oilLayout.IsVisible && ingredientList.IsVisible && AdvancedCreation)
+        {
+            cookingMethodLayout.IsVisible = false;
+            cookingTimeLayout.IsVisible = false;
+            descriptionLayout.IsVisible = false;
+            oilLayout.IsVisible = false;
+            ingredientList.IsVisible = false;
+            AdvancedCreation = false;
+            showAdvancedButton.BackgroundColor = Colors.Gray;
+        }
+        else
+        {
+            cookingMethodLayout.IsVisible = true;
+            cookingTimeLayout.IsVisible = true;
+            descriptionLayout.IsVisible = true;
+            oilLayout.IsVisible = true;
+            ingredientList.IsVisible = true;
+            AdvancedCreation = true;
+            showAdvancedButton.BackgroundColor = Colors.Green;
+        }
     }
 
     private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -116,5 +123,27 @@ public partial class AddFoodPage : ContentPage
     private void oilPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
         oilErrorMessage.IsVisible = false;
+    }
+
+    private void viewIngredients_Clicked(object sender, EventArgs e)
+    {
+        ingredientListLabel.Text = string.Empty;
+        if (App.currentAddedIngredientIds.Count > 0)
+        {
+            for (int i = 0; i < App.currentAddedIngredientIds.Count; i++)
+            {
+                ingredientListLabel.Text += App.currentAddedIngredientNames[i] + " " + App.currentAddedIngredientGrams[i] + "g\n";
+
+            }
+        }
+    }
+
+    private async void cancelButton_Clicked(object sender, EventArgs e)
+    {
+        App.mostRecentRecipe = new RecipeModel("", 0, 0, 0, 0);
+        App.currentAddedIngredientIds.Clear();
+        App.currentAddedIngredientGrams.Clear();
+        App.currentAddedIngredientNames.Clear();
+        await Navigation.PopAsync();
     }
 }

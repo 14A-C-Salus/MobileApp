@@ -20,10 +20,11 @@ namespace SalusMobileApp.Models
         public string name { get; set; }
         public int? method { get; set; }
         public int? oilId { get; set; }
+        public int[] ingredients { get; set; }
         public int[] ingredientIds { get; set; }
         public int[] ingredientPortionGramm { get; set; }
         public bool generateDescription { get; set; }
-        public AuthorModel author { get; set; }
+        public AuthorModel userProfile { get; set; }
         public int[] usersWhoLiked { get; set; }
         public int[] tags { get; set; }
         public int? last24h { get; set; }
