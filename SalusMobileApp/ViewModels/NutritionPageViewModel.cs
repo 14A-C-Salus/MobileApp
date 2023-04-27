@@ -12,11 +12,11 @@ namespace SalusMobileApp.ViewModels
 {
     public class NutritionPageViewModel
     {
-        public ObservableCollection<Recipe> ConsumedMeals { get; set; }
+        public ObservableCollection<ComplexLast24hModel> ConsumedMeals { get; set; }
         public event EventHandler MealsLoaded;
         public NutritionPageViewModel()
         {
-            ConsumedMeals = new ObservableCollection<Recipe>();
+            ConsumedMeals = new ObservableCollection<ComplexLast24hModel>();
         }
 
         public async void GetConsumedMealsFromViewModelAsync(DateTime? date)
@@ -25,15 +25,16 @@ namespace SalusMobileApp.ViewModels
             {
                 var data = await RestServices.GetLast24h(date);
                 //var results = data.SelectToken("$.[*].recipes[*].name");
-                ObservableCollection<Recipe> meals = new ObservableCollection<Recipe>();
-                var results = data.SelectToken("$.[*].recipes");
-                if (results != null)
-                {
-                    meals = results.ToObject<ObservableCollection<Recipe>>();
-                }
+                //var results = data.SelectToken("$.[*].recipe");
+                //var results = data.SelectToken("recipe");
+                //ObservableCollection<Recipe> meals = new ObservableCollection<Recipe>();
+                //if (results != null)
+                //{
+                //    meals = results.ToObject<ObservableCollection<Recipe>>();
+                //}
                 if (data != null)
                 {
-                    ConsumedMeals = new ObservableCollection<Recipe>(meals);
+                    ConsumedMeals = new ObservableCollection<ComplexLast24hModel>(data);
                     if (MealsLoaded != null)
                     {
                         MealsLoaded(this, EventArgs.Empty);

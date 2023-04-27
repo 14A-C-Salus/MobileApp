@@ -71,7 +71,7 @@ namespace SalusMobileApp.Data
         {
             _connection.DeleteAllAsync<EncryptionModel>();
         }
-
+        // ------------------------------------ Profile START ------------------------------------------------------------------------
         public void SaveLocalUserProfileData(UserProfileModel profileModel)
         {
             if(App.database.GetLocalUserProfileData() != null)
@@ -100,7 +100,7 @@ namespace SalusMobileApp.Data
         {
             return new ObservableCollection<UserProfileModel>(_connection.Table<UserProfileModel>().ToListAsync().Result);
         }
-
+        // ------------------------------------ Profile END ------------------------------------------------------------------------
         public ObservableCollection<RecipeModel> GetFavouriteRecipes()
         {
             return new ObservableCollection<RecipeModel>(_connection.Table<RecipeModel>().ToListAsync().Result);
@@ -110,12 +110,17 @@ namespace SalusMobileApp.Data
         {
             _connection.InsertAsync(recipe);
         }
+        public void DeleteFavouriteRecipes()
+        {
+            _connection.DeleteAllAsync<RecipeModel>();
+        }
 
         public void DeleteAll()
         {
             App.database.DeleteLoginData();
             App.database.DeleteEncryptionData();
             App.database.DeleteUserTable();
+            App.database.DeleteFavouriteRecipes();
         }
     }
 }

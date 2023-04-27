@@ -14,10 +14,10 @@ namespace SalusMobileApp.Models
         public int protein { get; set; }
         public int fat { get; set; }
         public int carbohydrate { get; set; }
-        public int liquidInDl { get; set; }
+        public int? liquidInDl { get; set; }
         public DateTime time { get; set; }
         public int userProfileId { get; set; }
-        public Recipe[] recipes { get; set; }
+        public Recipe recipe { get; set; }
     }
 
     public class Recipe
@@ -34,12 +34,10 @@ namespace SalusMobileApp.Models
         public string description { get; set; }
         public string name { get; set; }
         public int method { get; set; }
-        public Userprofile userProfile { get; set; }
         public object ingredients { get; set; }
         public object usersWhoLiked { get; set; }
         public object oilId { get; set; }
         public object oil { get; set; }
-        public object[] recipes { get; set; }
         public object[] tags { get; set; }
     }
 
@@ -56,7 +54,13 @@ namespace SalusMobileApp.Models
         public int eyesIndex { get; set; }
         public int mouthIndex { get; set; }
     }
-
+    public class NewMeal
+    {
+        public bool isLiquid { get; set; } = false;
+        public int recipeId { get; set; }
+        public int portion { get; set; }
+        public int dl { get; set; } = 0;
+    }
 
 
 

@@ -15,7 +15,7 @@ namespace SalusMobileApp.Models
         public string passwordSalt { get; set; }
         public bool isAdmin { get; set; }
         public string verificationToken { get; set; }
-        public DateTime date { get; set; }
+        public DateTime? date { get; set; }
         public object passwordResetToken { get; set; }
         public object resetTokenExpires { get; set; }
         public AuthorModel userProfile { get; set; }

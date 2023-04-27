@@ -34,6 +34,7 @@ namespace SalusMobileApp.Data
 
         private static string _getAllLast24hUri = "Last24h/get-all";
         private static string _getLast24hByDateUri = "Last24h/get-all?date=";
+        private static string _postLast24hUri = "Last24h/add-new-recipe";
 
         private static string _getRecipeByNameUri = "Recipe/get-recipes-by-name?name=";
         private static string _getAllRecipeByAuthIdUri = "Recipe/get-all-recipe-by-auth-id?authId=";
@@ -411,7 +412,7 @@ namespace SalusMobileApp.Data
             return true;
         }
 
-        public static async Task<bool> CreateRecipe(int[] igredientIds, int[] ingredientPortionGram, int method, int oilId, int oilPortionMl, int timeInMinutes, string name, bool generateDescription, string description, int fat, int protein, int kcal, int  carbohydrate)
+        public static async Task<bool> CreateRecipe(int[] igredientIds, int[] ingredientPortionGram, int method, int oilId, int oilPortionMl, int timeInMinutes, string name, bool generateDescription, string description)
         {
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
@@ -431,10 +432,6 @@ namespace SalusMobileApp.Data
                 name = name,
                 description = descriptionValue,
                 generateDescription = generateDescription,
-                fat = fat,
-                protein = protein,
-                kcal = kcal,
-                carbohydrate = carbohydrate
             };
             
             string requestUri = _uri + _createNewFood;
@@ -458,21 +455,21 @@ namespace SalusMobileApp.Data
             }
             var returnedData = await response.Content.ReadAsStringAsync();
             var result = (JObject)JsonConvert.DeserializeObject(returnedData);
-            var localRecipe = new RecipeModel
-            {
-                method = method,
-                oilId = oilId,
-                oilPortionMl = oilPortionMl,
-                timeInMinutes = timeInMinutes,
-                name = name,
-                description = result.SelectToken("description").ToString(),
-                fat = fat,
-                protein = protein,
-                kcal = kcal,
-                carbohydrate = carbohydrate,
-                ingredientsString = ingredientsString
-            };
-            App.saveLocalRecipe = localRecipe;
+            //var localRecipe = new RecipeModel
+            //{
+            //    method = method,
+            //    oilId = oilId,
+            //    oilPortionMl = oilPortionMl,
+            //    timeInMinutes = timeInMinutes,
+            //    name = name,
+            //    description = result.SelectToken("description").ToString(),
+            //    fat = fat,
+            //    protein = protein,
+            //    kcal = kcal,
+            //    carbohydrate = carbohydrate,
+            //    ingredientsString = ingredientsString
+            //};
+            //App.saveLocalRecipe = localRecipe;
             return true;
         }
 
@@ -540,7 +537,8 @@ namespace SalusMobileApp.Data
             return true;
         }
         // ------------------------------------ Recipe END ------------------------------------------------------------------------
-        public static async Task<JArray> GetLast24h(DateTime? date = null)
+        // ------------------------------------ Last24h START ------------------------------------------------------------------------
+        public static async Task<List<ComplexLast24hModel>> GetLast24h(DateTime? date = null)
         {
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
@@ -561,9 +559,30 @@ namespace SalusMobileApp.Data
                 return null;
             }
             var returnedData = await response.Content.ReadAsStringAsync();
-            //var result = JsonConvert.DeserializeObject<List<ComplexLast24hModel>>(returnedData);
-            var result = (JArray)JsonConvert.DeserializeObject(returnedData);
+            var result = JsonConvert.DeserializeObject<List<ComplexLast24hModel>>(returnedData);
+            //var result = (JArray)JsonConvert.DeserializeObject(returnedData);
             return result;
         }
+
+        public static async Task<bool> PostLast24h(NewMeal meal)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri + _postLast24hUri;
+
+            var json = JsonConvert.SerializeObject(meal);
+            var content = new StringContent(json, Encoding.UTF8, _contentType);
+            var response = await _client.PutAsync(requestUri, content);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var returnedData = await response.Content.ReadAsStringAsync();
+            //var result = (JArray)JsonConvert.DeserializeObject(returnedData);
+            return true;
+        }
+
+        // ------------------------------------ Last24h END ------------------------------------------------------------------------
     }
 }

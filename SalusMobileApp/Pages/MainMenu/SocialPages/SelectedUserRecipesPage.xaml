@@ -12,11 +12,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <CollectionView x:Name="recipesList" ItemsSource="{Binding Recipes}" Grid.Row="0">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
+            <ListView x:Name="recipesList" ItemsSource="{Binding Recipes}" Grid.Row="0">
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Grid>
@@ -60,8 +57,8 @@
                             
                         </ViewCell>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </ScrollView>
 </ContentPage>
