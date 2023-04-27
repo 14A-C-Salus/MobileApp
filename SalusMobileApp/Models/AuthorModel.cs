@@ -8,6 +8,7 @@ namespace SalusMobileApp.Models
 {
     public class AuthorModel
     {
+        public int id { get; set; }
         public decimal weight { get; set; }
         public decimal height { get; set; }
         public string birthDate { get; set; }

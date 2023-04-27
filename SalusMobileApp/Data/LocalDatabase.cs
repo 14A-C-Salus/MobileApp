@@ -119,7 +119,7 @@ namespace SalusMobileApp.Data
         {
             App.database.DeleteLoginData();
             App.database.DeleteEncryptionData();
-            App.database.DeleteUserTable();
+            App.database.DeleteLocalUserProfile();
             App.database.DeleteFavouriteRecipes();
         }
     }

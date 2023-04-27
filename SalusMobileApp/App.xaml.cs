@@ -18,7 +18,7 @@ public partial class App : Application
 	public static long tokenExpires;
 	public static string userProfileExists;
 	public static string userId;
-	public static UserProfileModel _userProfile;
+    public static UserProfileModel _userProfile;
 	public static RecipeModel mostRecentRecipe = new RecipeModel("", 0, 0, 0, 0);
     public static RecipeModel saveLocalRecipe = new RecipeModel();
     public static List<int> currentAddedIngredientIds = new List<int>();
@@ -42,9 +42,7 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		//database.DeleteLoginData();
-		//database.DeleteEncryptionData();
-		//database.DeleteLocalUserProfile();
+		//database.DeleteAll();
 
 		MainPage = new NavigationPage(new SplashScreenPage());
     }

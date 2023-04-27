@@ -35,7 +35,7 @@ public partial class SocialPage : ContentPage
             if(profilesListView.SelectedItem != null)
             {
                 var selected = (UserDataModel)profilesListView.SelectedItem;
-                var selectedId = selected.id;
+                var selectedId = selected.userProfile.id;
                 await Navigation.PushAsync(new SelectedUserProfilePage(selectedId));
             }
             else

@@ -9,6 +9,7 @@ namespace SalusMobileApp.Models
 {
     public class UserProfileModel
     {
+        public int id { get; set; }
         public int weight { get; set; }
         public int height { get; set; }
         public string birthDate { get; set; }

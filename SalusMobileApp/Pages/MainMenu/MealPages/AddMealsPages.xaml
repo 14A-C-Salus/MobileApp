@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SalusMobileApp.Pages.MainMenu.MealPages.AddMealsPages"
-             Title="AddMealsPages">
+             Title="AddMealsPages" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <ScrollView Margin="5, 0, 0, 0" WidthRequest="270">
         <Grid>
             <Grid.RowDefinitions>
