@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:SalusMobileApp.ViewModels"
              x:Class="SalusMobileApp.Pages.MainMenu.SocialPages.SelectedUserProfilePage"
-             Title="SelectedUserProfilePage" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+             Title="SelectedUserProfilePage" NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewmodels:ProfilePageViewModel/>
     </ContentPage.BindingContext>

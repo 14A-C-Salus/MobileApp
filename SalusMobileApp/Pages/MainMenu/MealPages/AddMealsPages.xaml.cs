@@ -63,6 +63,7 @@ public partial class AddMealsPages : ContentPage
                     if(postMeal)
                     {
                         await DisplayAlert("Success", "You have successfully added a new meal!", "Ok");
+                        await Navigation.PushAsync(new MainMenuPage());
                     }
                     else
                     {

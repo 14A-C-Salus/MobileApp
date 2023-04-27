@@ -1,3 +1,5 @@
+using SalusMobileApp.Data;
+using SalusMobileApp.Models;
 using SalusMobileApp.Pages.AddFood;
 using SalusMobileApp.Pages.MainMenu.MealPages;
 using SalusMobileApp.ViewModels;
@@ -60,5 +62,34 @@ public partial class NutritionPage : ContentPage
             viewModel.MealsLoaded += (sender, e) =>
             todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
         }
+    }
+
+    private async void todaysMealsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        var selected = (ComplexLast24hModel)todaysMealsListView.SelectedItem;
+        if(selected != null)
+        {
+            string choice = await DisplayActionSheet("What do you want to do with this meal?", "Cancel", "Delete", "Half portion", "Third portion", "Quarter portion", "Double portion");
+            switch (choice)
+            {
+                case "Cancel":
+                    break;
+                case "Delete":
+                    await RestServices.DeleteLast24hById(selected.id);
+                    break;
+                default:
+                    await RestServices.PortionModifier(selected.id, choice);
+                    todaysMealsListView.SelectedItem = null;
+                    break;
+            }
+        }
+        todaysMealsListView.SelectedItem = null;
+    }
+
+    private void reloadButton_Clicked(object sender, EventArgs e)
+    {
+        viewModel.GetConsumedMealsFromViewModelAsync(DateTime.Today);
+        viewModel.MealsLoaded += (sender, e) =>
+        todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
     }
 }

@@ -31,9 +31,10 @@
             <HorizontalStackLayout Margin="15, 0, 0, 0">
                 <Button x:Name="searchButton" Margin="0, 5, 10, 0" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Search"/>
                 <Button x:Name="addNewButton" Clicked="addNewButton_Clicked" Margin="0, 5, 0, 0" FontSize="14" WidthRequest="100" HeightRequest="35" HorizontalOptions="Start" Text="Add new"/>
+                <ImageButton x:Name="reloadButton" Clicked="reloadButton_Clicked" Margin="0, 0, 5, 0" Source="refreshicon.png" HeightRequest="40" WidthRequest="40" BackgroundColor="White" CornerRadius="5"/>
             </HorizontalStackLayout>
 
-            <ListView x:Name="todaysMealsListView" ItemsSource="{Binding ConsumedMeals}" HasUnevenRows="True">
+            <ListView x:Name="todaysMealsListView" ItemSelected="todaysMealsListView_ItemSelected" ItemsSource="{Binding ConsumedMeals}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

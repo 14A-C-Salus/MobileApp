@@ -3,7 +3,7 @@ using Android.Runtime;
 
 namespace SalusMobileApp;
 
-[Application(UsesCleartextTraffic = true)]
+[Application]
 public class MainApplication : MauiApplication
 {
 	public MainApplication(IntPtr handle, JniHandleOwnership ownership)

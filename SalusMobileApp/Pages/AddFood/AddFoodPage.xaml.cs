@@ -35,7 +35,7 @@ public partial class AddFoodPage : ContentPage
                 if(!createRecipe)
                 {
                     await DisplayAlert("Error", CreateErrorMessage, "Ok");
-                    if (oilPicker.SelectedItem.ToString() == "Frying")
+                    if (oilPicker.SelectedItem != null && oilPicker.SelectedItem.ToString() == "Frying")
                     {
                         oilErrorMessage.IsVisible = true;
                     }

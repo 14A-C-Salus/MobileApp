@@ -17,14 +17,14 @@ public partial class RecipePage : ContentPage
     {
         base.OnAppearing();
         BindingContext = viewModel;
-        viewModel.GetRecipeById(Convert.ToInt32(App.userId));
+        viewModel.GetRecipeById(Convert.ToInt32(App._userProfile.id));
         viewModel.RecipeLoaded += (sender, e) =>
         recipeList.ItemsSource = viewModel.Recipes;
     }
 
     private void searchButton_Clicked(object sender, EventArgs e)
     {
-        viewModel.GetRecipeById(Convert.ToInt32(App.userId));
+        viewModel.GetRecipeById(Convert.ToInt32(App._userProfile.id));
         viewModel.RecipeLoaded += (sender, e) =>
         recipeList.ItemsSource = viewModel.Recipes.Where(s => s.name.Contains(searchEntry.Text));
     }
@@ -43,7 +43,7 @@ public partial class RecipePage : ContentPage
 
     private void reloadButton_Clicked(object sender, EventArgs e)
     {
-        viewModel.GetRecipeById(Convert.ToInt32(App.userId));
+        viewModel.GetRecipeById(Convert.ToInt32(App._userProfile.id));
         viewModel.RecipeLoaded += (sender, e) =>
         recipeList.ItemsSource = viewModel.Recipes;
     }

@@ -15,7 +15,8 @@ namespace SalusMobileApp.Data
     public class RestServices
     {
         static HttpClient _client;
-        private static string _uri = "http://salushl-001-site1.dtempurl.com/api/";
+        private static string _uri = "https://salus.azurewebsites.net/api/";
+        
         //private static string _uri = "https://localhost:7138/api/";
 
         private static string _contentType = "application/json";
@@ -35,12 +36,17 @@ namespace SalusMobileApp.Data
         private static string _getAllLast24hUri = "Last24h/get-all";
         private static string _getLast24hByDateUri = "Last24h/get-all?date=";
         private static string _postLast24hUri = "Last24h/add-new-recipe";
+        private static string _halfPortionUri = "Last24h/half-portion?id=";
+        private static string _thirdPortionUri = "Last24h/third-portion?id=";
+        private static string _quarterPortionUri = "Last24h/quarter-portion?id=";
+        private static string _doublePortionUri = "Last24h/double-portion?id=";
+        private static string _deleteLast24ByIdUri = "Last24h/delete?id=";
 
         private static string _getRecipeByNameUri = "Recipe/get-recipes-by-name?name=";
-        private static string _getAllRecipeByAuthIdUri = "Recipe/get-all-recipe-by-auth-id?authId=";
-        private static string _createNewFoodSimple = "Recipe/create-simple";
-        private static string _createNewFood = "Recipe/create";
-        private static string _deleteFood = "Recipe/delete?id=";
+        private static string _getAllRecipeByAuthIdUri = "Recipe/get-all-recipe-by-user-id?userProfileId=";
+        private static string _createNewFoodSimpleUri = "Recipe/create-simple";
+        private static string _createNewFoodUri = "Recipe/create";
+        private static string _deleteFoodUri = "Recipe/delete?id=";
 
         private static string _writeCommentUri = "SocialMedia/write-comment";
         private static string _getCommentsByEmailUri = "SocialMedia/get-all-comment-by-authenticated-email";
@@ -134,6 +140,7 @@ namespace SalusMobileApp.Data
             var result = (JObject)JsonConvert.DeserializeObject(returnedData);
             var saveProfileData = new UserProfileModel
             {
+                id = int.Parse(result.SelectToken("id").ToString()),
                 weight = int.Parse(result.SelectToken("weight").ToString()),
                 height = int.Parse(result.SelectToken("height").ToString()),
                 birthDate = result.SelectToken("birthDate").ToString(),
@@ -398,7 +405,7 @@ namespace SalusMobileApp.Data
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var recipe = new RecipeModel(name, kcal, protein, fat, carbohydrate);
-            string requestUri = _uri + _createNewFoodSimple;
+            string requestUri = _uri + _createNewFoodSimpleUri;
             
             var json = JsonConvert.SerializeObject(recipe);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
@@ -434,7 +441,7 @@ namespace SalusMobileApp.Data
                 generateDescription = generateDescription,
             };
             
-            string requestUri = _uri + _createNewFood;
+            string requestUri = _uri + _createNewFoodUri;
 
             var json = JsonConvert.SerializeObject(recipe);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
@@ -526,7 +533,7 @@ namespace SalusMobileApp.Data
         {
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
-            string requestUri = _uri + _deleteFood + id.ToString();
+            string requestUri = _uri + _deleteFoodUri + id.ToString();
 
             var response = await _client.DeleteAsync(requestUri);
             _client.Dispose();
@@ -580,6 +587,54 @@ namespace SalusMobileApp.Data
             }
             var returnedData = await response.Content.ReadAsStringAsync();
             //var result = (JArray)JsonConvert.DeserializeObject(returnedData);
+            return true;
+        }
+
+        public static async Task<bool> PortionModifier(int id, string portion)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri;
+            switch (portion)
+            {
+                case "Half portion":
+                    requestUri += _halfPortionUri;
+                    break;
+                case "Third portion":
+                    requestUri += _thirdPortionUri;
+                    break;
+                case "Quarter portion":
+                    requestUri += _quarterPortionUri;
+                    break;
+                case "Double portion":
+                    requestUri += _doublePortionUri;
+                    break;
+                default:
+                    break;
+            }
+            requestUri += id.ToString();
+            var json = JsonConvert.SerializeObject(id);
+            var content = new StringContent(json, Encoding.UTF8, _contentType);
+            var response = await _client.PatchAsync(requestUri, content);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static async Task<bool> DeleteLast24hById(int id)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri + _deleteLast24ByIdUri + id.ToString();
+            var response = await _client.DeleteAsync(requestUri);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
             return true;
         }
 
