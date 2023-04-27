@@ -23,12 +23,6 @@
                         <DatePicker x:Name="datePicker" DateSelected="datePicker_DateSelected"/>
                         <Button x:Name="incrementDateButton" Clicked="incrementDateButton_Clicked" Text=">" FontAttributes="Bold"/>
                     </HorizontalStackLayout>
-
-                    <HorizontalStackLayout>
-                        <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="30"/>
-                        <ImageButton x:Name="filterByTagsButton" Source="tagsicon.png" BackgroundColor="White" CornerRadius="5" HeightRequest="40" WidthRequest="40" Margin="0, 0, 10, 0"/>
-                    </HorizontalStackLayout>
-                    
                 </VerticalStackLayout>
                 
 
@@ -47,11 +41,13 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
+
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
 
                                 <HorizontalStackLayout Grid.Row="0" Margin="0, 0, 3, 0">
                                     <Label Text="Name: "/>
-                                    <Label Text="{Binding name}"/>
+                                    <Label Text="{Binding recipe.name}"/>
                                 </HorizontalStackLayout>
 
                                 <HorizontalStackLayout Grid.Row="1" Margin="0, 0, 3, 0">
@@ -59,6 +55,11 @@
                                     <Label Text="{Binding kcal}"/>
                                 </HorizontalStackLayout>
                                 
+                                <HorizontalStackLayout Grid.Row="2" Margin="0, 0, 3, 0">
+                                    <Label Text="Portion: "/>
+                                    <Label Text="{Binding gramm}"/>
+                                </HorizontalStackLayout>
+
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

@@ -16,13 +16,8 @@ public partial class AddFoodPage : ContentPage
         kcalEntry.Text = kcal.ToString();
         proteinEntry.Text = protein.ToString();
         fatEntry.Text = fat.ToString();
-        carbohydrateEntry.Text = carbohydrate.ToString();
-        if(name != "" && kcal != "" && protein != "" && fat != "" &&  carbohydrate != "")
-        {
-            showAdvancedButton.IsVisible = false;
-            showAdvancedButton.IsEnabled = false;
-            foodIsScanned.IsVisible = true;
-        }
+        showAdvancedButton.IsEnabled = true;
+        showAdvancedButton.IsVisible = true;
     }
 
     private async void enableScannerButton_Clicked(object sender, EventArgs e)
@@ -36,7 +31,7 @@ public partial class AddFoodPage : ContentPage
         {
             if(AdvancedCreation && !foodIsScanned.IsVisible)
             {
-                var createRecipe = await RestServices.CreateRecipe(App.currentAddedIngredientIds.ToArray(), App.currentAddedIngredientGrams.ToArray(), methodPicker.SelectedIndex, oilPicker.SelectedIndex,Convert.ToInt32(oilMlEntry.Text), Convert.ToInt32(cookingTimeEntry.Text), nameEntry.Text, generateDescriptionIsChecked.IsChecked, descriptionEntry.Text, Convert.ToInt32(fatEntry.Text), Convert.ToInt32(proteinEntry.Text), Convert.ToInt32(kcalEntry.Text), Convert.ToInt32(carbohydrateEntry.Text));
+                var createRecipe = await RestServices.CreateRecipe(App.currentAddedIngredientIds.ToArray(), App.currentAddedIngredientGrams.ToArray(), methodPicker.SelectedIndex, oilPicker.SelectedIndex, Convert.ToInt32(oilMlEntry.Text), Convert.ToInt32(cookingTimeEntry.Text), nameEntry.Text, generateDescriptionIsChecked.IsChecked, descriptionEntry.Text);
                 if(!createRecipe)
                 {
                     await DisplayAlert("Error", CreateErrorMessage, "Ok");
@@ -81,7 +76,7 @@ public partial class AddFoodPage : ContentPage
 
     private void showAdvancedButton_Clicked(object sender, EventArgs e)
     {
-        if(cookingMethodLayout.IsVisible && cookingTimeLayout.IsVisible && descriptionLayout.IsVisible && oilLayout.IsVisible && ingredientList.IsVisible && AdvancedCreation)
+        if (cookingMethodLayout.IsVisible && cookingTimeLayout.IsVisible && descriptionLayout.IsVisible && oilLayout.IsVisible && ingredientList.IsVisible && AdvancedCreation)
         {
             cookingMethodLayout.IsVisible = false;
             cookingTimeLayout.IsVisible = false;

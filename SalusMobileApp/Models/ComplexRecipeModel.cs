@@ -13,7 +13,7 @@ namespace SalusMobileApp.Models
         public int kcal { get; set; }
         public int protein { get; set; }
         public int carbohydrate { get; set; }
-        public int verified { get; set; }
+        public bool verified { get; set; }
         public int timeInMinutes { get; set; }
         public int? oilPortionMl { get; set; }
         public string description { get; set; }
@@ -26,7 +26,7 @@ namespace SalusMobileApp.Models
         public bool generateDescription { get; set; }
         public AuthorModel userProfile { get; set; }
         public int[] usersWhoLiked { get; set; }
-        public int[] tags { get; set; }
+        public Tags[] tags { get; set; }
         //public Last24h last24h { get; set; }
         //public class Last24h
         //{
@@ -37,5 +37,10 @@ namespace SalusMobileApp.Models
         //    public int fat { get; set; }
         //    public int carbohydrate { get; set; }
         //}
+    }
+    public class Tags
+    {
+        public int recipeId { get; set; }
+        public int tagId { get; set; }
     }
 }

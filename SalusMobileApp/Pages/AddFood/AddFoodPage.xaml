@@ -11,9 +11,9 @@
                 <RowDefinition/>
                 
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="120"/>
                 
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
 
                 <RowDefinition/>
@@ -57,12 +57,12 @@
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="4" Grid.Column="0" Margin="0, 0, 0, 15">
+            <HorizontalStackLayout Grid.Row="4" HeightRequest="80" Grid.Column="0" Margin="0, 0, 0, 15">
                 <VerticalStackLayout>
                     <Label Text="Carbohydrate:"/>
-                    <Entry x:Name="carbohydrateEntry" Keyboard="Numeric"/>
-                    <Label x:Name="foodIsScanned" Text="You have successfully scanned your product!" IsVisible="False"/>
-                    <Button x:Name="showAdvancedButton" Clicked="showAdvancedButton_Clicked" IsVisible="True" IsEnabled="True" BackgroundColor="Gray" Text="Advanced options" Margin="0, 30, 0, 0"/>
+                    <Entry x:Name="carbohydrateEntry" Keyboard="Numeric" Margin="0, 0, 0, 5"/>
+                    <Label x:Name="foodIsScanned" Text="You have successfully scanned your product!" IsVisible="False" Margin="0, 0, 0, 10"/>
+                    <Button x:Name="showAdvancedButton" Clicked="showAdvancedButton_Clicked" BackgroundColor="Gray" Text="Advanced options" Margin="0, 0, 0, 0"/>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 

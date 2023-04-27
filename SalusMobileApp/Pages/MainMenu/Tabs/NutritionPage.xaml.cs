@@ -1,4 +1,5 @@
 using SalusMobileApp.Pages.AddFood;
+using SalusMobileApp.Pages.MainMenu.MealPages;
 using SalusMobileApp.ViewModels;
 
 namespace SalusMobileApp.Pages.MainMenu.Tabs;
@@ -18,7 +19,7 @@ public partial class NutritionPage : ContentPage
 
     private async void addNewButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddFoodPage());
+        await Navigation.PushAsync(new AddMealsPages());
     }
 
     private void datePicker_DateSelected(object sender, DateChangedEventArgs e)

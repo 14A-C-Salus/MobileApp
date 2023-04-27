@@ -27,6 +27,10 @@ namespace SalusMobileApp.ViewModels
                 if (data != null)
                 {
                     Recipes = new ObservableCollection<ComplexRecipeModel>(data);
+                    //if(Recipes != null)
+                    //{
+                    //    return true;
+                    //}
                     if (RecipeLoaded != null)
                     {
                         RecipeLoaded(this, EventArgs.Empty);
