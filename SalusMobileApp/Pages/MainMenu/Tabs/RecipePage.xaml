@@ -39,7 +39,7 @@
 
                                 <HorizontalStackLayout Grid.Row="0">
                                     <Label Text="{Binding name}"/>
-                                    <ImageButton x:Name="favouriteRecipeButton" Clicked="favouriteRecipeButton_Clicked" Source="favouriteicon.png" BackgroundColor="White" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
+                                    <Button x:Name="favouriteRecipeButton" Clicked="favouriteRecipeButton_Clicked" Text="Favorites" BackgroundColor="White" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
                                     <ImageButton x:Name="editRecipe" Clicked="editRecipe_Clicked" Source="editicon.png" BackgroundColor="White" CornerRadius="5" WidthRequest="30" HeightRequest="30"/>
                                     <ImageButton x:Name="deleteRecipe" Clicked="deleteRecipe_Clicked" Source="deleteicon.png" BackgroundColor="Red" CornerRadius="5" WidthRequest="30" HeightRequest="30"/>
                                 </HorizontalStackLayout>

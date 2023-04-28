@@ -23,8 +23,8 @@ public partial class SelectedUserProfilePage : ContentPage
         await Navigation.PushAsync(new SelectedUserRecipesPage(id));
     }
 
-    private void userComments_Clicked(object sender, EventArgs e)
+    private async void userComments_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new SelectedUserPostsPage(id));
     }
 }

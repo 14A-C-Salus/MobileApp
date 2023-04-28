@@ -114,13 +114,15 @@
                 <VerticalStackLayout>
                     <Label x:Name="oilErrorMessage" Text="You must select an oil if the cooking method is frying." IsVisible="False" TextColor="Red"/>
                     <Label Text="Oil:"/>
-                    <Picker x:Name="oilPicker" Title="Pick oil" Margin="0, 0, 0, 5" SelectedIndexChanged="oilPicker_SelectedIndexChanged">
-                        <Picker.Items>
-                            <x:String></x:String>
-                            <x:String>Olive oil</x:String>
-                            <x:String>Peanut oil</x:String>
-                        </Picker.Items>
-                    </Picker>
+                    <Frame>
+                        <Picker x:Name="oilPicker" Title="Pick oil" Margin="0, 0, 0, 5" SelectedIndexChanged="oilPicker_SelectedIndexChanged">
+                            <Picker.Items>
+                                <x:String></x:String>
+                                <x:String>Olive oil</x:String>
+                                <x:String>Peanut oil</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Frame>
                     <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
                         <Entry x:Name="oilMlEntry" Placeholder="Amount of oil in Ml"/>
                     </Frame>

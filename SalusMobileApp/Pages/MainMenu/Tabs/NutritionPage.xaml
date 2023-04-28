@@ -20,9 +20,12 @@
                 <VerticalStackLayout>
                     <HorizontalStackLayout Margin="0, 0, 0, 5">
                         <Button x:Name="decrementDateButton" Clicked="decrementDateButton_Clicked" Text="&lt;" FontAttributes="Bold"/>
-                        <DatePicker x:Name="datePicker" DateSelected="datePicker_DateSelected"/>
+                        <Frame CornerRadius="5">
+                            <DatePicker x:Name="datePicker" DateSelected="datePicker_DateSelected"/>
+                        </Frame>
                         <Button x:Name="incrementDateButton" Clicked="incrementDateButton_Clicked" Text=">" FontAttributes="Bold"/>
                     </HorizontalStackLayout>
+                    <Label BindingContext="{Binding DailyCalories}"/>
                 </VerticalStackLayout>
                 
 
