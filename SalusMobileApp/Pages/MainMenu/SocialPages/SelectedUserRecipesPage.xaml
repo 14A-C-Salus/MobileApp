@@ -18,21 +18,21 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
 
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    
-                                    <RowDefinition/>
-                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
 
                                 <HorizontalStackLayout Grid.Row="0">
                                     <Label Text="Name: "/>
                                     <Label Text="{Binding name}"/>
                                     <Label Text=" Likes: "/>
-                                    <Label Text="{Binding usersWhoLiked.Length}"/>
+                                    <Label Text="{Binding usersWhoLiked.Count}"/>
                                 </HorizontalStackLayout>
                                 
                                 <HorizontalStackLayout Grid.Row="1">

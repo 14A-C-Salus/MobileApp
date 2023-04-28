@@ -22,7 +22,6 @@ namespace SalusMobileApp.Data
         private static string _contentType = "application/json";
         private static string _registerUri = "Auth/register";
         private static string _loginUri = "Auth/login";
-        //private static string _userDataUri = "Auth/get-auth?authId=";
         private static string _userProfileDataUri = "Auth/get-userprofile?authId=";
         private static string _userDataUri = "Auth/get-auth?authId=";
         private static string _forgotPasswordUri = "Auth/forgot-password?email=";
@@ -54,6 +53,7 @@ namespace SalusMobileApp.Data
         private static string _getCommentsByIdUri = "SocialMedia/get-all-comment-by-userprofile-id?userprofileId=";
 
         private static string _getFoodInformationByBarcodeUri = "https://world.openfoodfacts.org/api/v2/product/";
+        // ------------------------------------ User START ------------------------------------------------------------------------
         public static async Task<bool> RegistrationPut(string username, string email, string password, string confirmPassword)
         {
             _client = new HttpClient();
@@ -108,25 +108,6 @@ namespace SalusMobileApp.Data
             var expires = long.Parse(tokenContentList[2].Value);
             App.tokenExpires = expires;
         }
-
-        //public static async Task<bool> GetUserData(int id)
-        //{
-        //    _client = new HttpClient();
-
-        //    string requestUri = _uri + _userDataUri + id.ToString();
-        //    var response = await _client.GetAsync(requestUri);
-        //    _client.Dispose();
-        //    if(!response.IsSuccessStatusCode)
-        //    {
-        //        return false;
-        //    }
-        //    var returnedData = await response.Content.ReadAsStringAsync();
-        //    var result = JsonConvert.DeserializeObject(returnedData);
-        //    string keyWord = "userProfile";
-        //    App.userProfileExists = ReturnElementFromJson(result.ToString(), keyWord);
-        //    return true;
-        //}
-
         public static async Task<bool> GetUserProfileData(int id)
         {
             _client = new HttpClient();
@@ -153,8 +134,8 @@ namespace SalusMobileApp.Data
             if (saveProfileData != null && App.database.GetLoginData != null)
             {
                 App.database.SaveLocalUserProfileData(saveProfileData);
-                App._userProfile = saveProfileData;
             }
+            App._userProfile = saveProfileData;
             return true;
         }
 
@@ -213,47 +194,8 @@ namespace SalusMobileApp.Data
             {
                 return false;
             }
-            // Ez itt végleges változatban nem kell:
-            var returnedData = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject(returnedData);
-            string keyWord = "passwordResetToken";
-            App.passwordResetToken = ReturnElementFromJson(result.ToString(), keyWord);
-            // --------------------------------------------------------------------------
             return true;
         }
-
-        private static string ReturnElementFromJson(string source, string keyWord)
-        {
-            //var regex = new Regex(@"""" + keyWord + @"""\s*:\s*""([^""]+)""");
-            var regex = new Regex(@"""" + keyWord + @""":\s*(\d+)");
-            //var regex = new Regex(@"""passwordResetToken""\s*:\s*""([^""]+)""");
-            //var regex = new Regex(regexText);
-            return regex.Match(source).Groups[1].Value;
-        }
-        // Ez itt végleges változatban nem kell:
-        public static async Task<bool> PasswordResetPatch(string token, string password, string confirmPassword)
-        {
-            _client = new HttpClient();
-            var resetPassword = new PasswordResetModel 
-            {
-                token = token,
-                password= password,
-                confirmPassword= confirmPassword
-            };
-            string requestUri = _uri + _passwordResetUri;
-
-            var json = JsonConvert.SerializeObject(resetPassword);
-            var content = new StringContent(json, Encoding.UTF8, _contentType);
-            var response = await _client.PatchAsync(requestUri, content);
-            _client.Dispose();
-            if (!response.IsSuccessStatusCode)
-            {
-                return false;
-            }
-            App.passwordResetToken = null;
-            return true;
-        }
-        // ----------------------------------------------------------------------------------------------------------------
         public static async Task<bool> EditProfile(bool doesExist, int weight, int height, DateTime birthDate, int gender, string genderString, int goalWeight)
         {
             _client = new HttpClient();
@@ -339,7 +281,7 @@ namespace SalusMobileApp.Data
             var result = JsonConvert.DeserializeObject<List<UserDataModel>>(returnedData);
             return result;
         }
-
+        // ------------------------------------ User END ------------------------------------------------------------------------
         // ------------------------------------ Comment START ------------------------------------------------------------------------
         public static async Task<bool> SaveComment(string email, string body)
         {

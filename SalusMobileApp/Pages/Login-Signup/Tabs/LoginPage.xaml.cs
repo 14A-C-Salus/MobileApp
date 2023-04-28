@@ -110,14 +110,10 @@ public partial class LoginPage : ContentPage
     {
         if (!doesProfileExist)
         {
-            //await Shell.Current.GoToAsync(nameof(EditProfilePage));
             await Navigation.PushAsync(new EditProfilePage());
         }
         else
         {
-            UserProfileModel userProfile = App.database.GetLocalUserProfileData();
-            App._userProfile = userProfile;
-            //await Shell.Current.GoToAsync(nameof(MainMenuPage));
             await Navigation.PushAsync(new MainMenuPage());
         }
     }

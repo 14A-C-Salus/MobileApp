@@ -49,7 +49,7 @@
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Margin="0, 0, 5, 0">
                                     <Label Text="Likes: " FontSize="8"/>
-                                    <Label Text="{Binding usersWhoLiked.Length}" FontSize="8"/>
+                                    <Label Text="{Binding usersWhoLiked.Count}" FontSize="8"/>
                                 </HorizontalStackLayout>
                             </HorizontalStackLayout>
                         </ViewCell>

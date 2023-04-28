@@ -23,7 +23,9 @@
             
             <VerticalStackLayout Grid.Row="1" Margin="0, 0, 0, 20">
                 <Label Text="Search:"/>
-                <Entry x:Name="searchIngredientsEntry"/>
+                <Frame>
+                    <Entry x:Name="searchIngredientsEntry" Placeholder="Search"/>
+                </Frame>
             </VerticalStackLayout>
 
             <HorizontalStackLayout Grid.Row="2" HeightRequest="40">
@@ -45,7 +47,7 @@
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Margin="0, 0, 5, 0">
                                     <Label Text="Likes: " FontSize="8"/>
-                                    <Label Text="{Binding usersWhoLiked.Length}" FontSize="8"/>
+                                    <Label Text="{Binding usersWhoLiked.Count}" FontSize="8"/>
                                 </HorizontalStackLayout>
                             </HorizontalStackLayout>
                         </ViewCell>

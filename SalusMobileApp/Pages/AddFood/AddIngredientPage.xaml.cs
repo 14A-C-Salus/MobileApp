@@ -36,7 +36,7 @@ public partial class AddIngredientPage : ContentPage
     {
         if(ingredientList.SelectedItem != null) 
         {
-            var gramPerPortion = await DisplayPromptAsync("Add ingredient", "How much of this ingredient is in 1 portion?", "Add", "Cancel", "Answer in grams", 5 , keyboard: Keyboard.Numeric);
+            var gramPerPortion = await DisplayPromptAsync("Add ingredient", "How much of this ingredient is in 1 portion?", "Add", "Cancel", "Answer in grams", 5);
             if (gramPerPortion != null)
             {
                 ComplexRecipeModel selected = (ComplexRecipeModel)ingredientList.SelectedItem;
@@ -48,6 +48,7 @@ public partial class AddIngredientPage : ContentPage
                 addedIngredientNames.Add(selected.name);
             }
         }
+        ingredientList.SelectedItem = null;
     }
 
     private async void completeAddingIngredients_Clicked(object sender, EventArgs e)
