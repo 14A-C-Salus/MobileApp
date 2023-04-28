@@ -22,10 +22,10 @@ namespace SalusMobileApp.ViewModels
         {
             if (ServiceValidation.InternetConnectionValidator())
             {
-                var data = await RestServices.GetCommentsByEmail(id);
+                var data = await RestServices.GetCommentsById(id);
                 if (data != null)
                 {
-                    Comments = new ObservableCollection<CommentModel>(data);
+                    Comments = new ObservableCollection<CommentModel>();
                     if (CommentsLoaded != null)
                     {
                         CommentsLoaded(this, EventArgs.Empty);
