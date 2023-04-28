@@ -25,7 +25,7 @@ namespace SalusMobileApp.Models
         public int[] ingredientPortionGramm { get; set; }
         public bool generateDescription { get; set; }
         public AuthorModel userProfile { get; set; }
-        public int[] usersWhoLiked { get; set; }
+        public List<UsersWhoLiked> usersWhoLiked { get; set; }
         public Tags[] tags { get; set; }
         //public Last24h last24h { get; set; }
         //public class Last24h
@@ -42,5 +42,11 @@ namespace SalusMobileApp.Models
     {
         public int recipeId { get; set; }
         public int tagId { get; set; }
+    }
+    public class UsersWhoLiked
+    {
+        public DateTime date { get; set; }
+        public int userId { get; set; }
+        public int recipeId { get; set; }
     }
 }

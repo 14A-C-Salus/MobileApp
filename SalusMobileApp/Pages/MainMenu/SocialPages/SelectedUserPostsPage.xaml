@@ -4,14 +4,23 @@
              x:Class="SalusMobileApp.Pages.MainMenu.SocialPages.SelectedUserPostsPage"
              Title="Posts">
     <ScrollView>
-        <ListView x:Name="postsListView">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <HorizontalStackLayout Grid.Row="0">
+                <Button Text="Write comment"/>
+            </HorizontalStackLayout>
+            <ListView x:Name="postsListView" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </ScrollView>
 </ContentPage>

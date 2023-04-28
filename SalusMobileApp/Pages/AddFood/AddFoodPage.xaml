@@ -4,7 +4,17 @@
              
              x:Class="SalusMobileApp.Pages.AddFood.AddFoodPage"
              Title="AddFoodPage" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
-    <ScrollView WidthRequest="400">
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="HeightRequest" Value="42"/>
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="WidthRequest" Value="150"/>
+            <Setter Property="HeightRequest" Value="40"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView Margin="10, 10, 0, 0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -29,47 +39,57 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <!--Column 0 entries-->
-            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Margin="0, 0, 0, 15">
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True" Frame="">
                 <VerticalStackLayout>
                     <Label Text="Name:"/>
-                    <Entry x:Name="nameEntry"/>
+                    <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
+                        <Entry x:Name="nameEntry" Placeholder="Recipe name"/>
+                    </Frame>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Margin="0, 0, 0, 15">
+            <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True">
                 <VerticalStackLayout>
                     <Label Text="Protein:"/>
-                    <Entry x:Name="proteinEntry" Keyboard="Numeric"/>
+                    <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
+                        <Entry x:Name="proteinEntry" Placeholder="Protein in grams"/>
+                    </Frame>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Margin="0, 0, 0, 15">
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True">
                 <VerticalStackLayout>
                     <Label Text="Kcal:"/>
-                    <Entry x:Name="kcalEntry" Keyboard="Numeric"/>
+                    <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
+                        <Entry x:Name="kcalEntry" Placeholder="Kcal in 100g"/>
+                    </Frame>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Margin="0, 0, 0, 15">
+            <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True">
                 <VerticalStackLayout>
                     <Label Text="Fat:"/>
-                    <Entry x:Name="fatEntry" Keyboard="Numeric"/>
+                    <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
+                        <Entry x:Name="fatEntry" Placeholder="Protein in grams"/>
+                    </Frame>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="4" HeightRequest="80" Grid.Column="0" Margin="0, 0, 0, 15">
+            <HorizontalStackLayout Grid.Row="4" HeightRequest="80" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True">
                 <VerticalStackLayout>
                     <Label Text="Carbohydrate:"/>
-                    <Entry x:Name="carbohydrateEntry" Keyboard="Numeric" Margin="0, 0, 0, 5"/>
+                    <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
+                        <Entry x:Name="carbohydrateEntry" Margin="0, 0, 0, 5" Placeholder="Carbs in grams"/>
+                    </Frame>
                     <Label x:Name="foodIsScanned" Text="You have successfully scanned your product!" IsVisible="False" Margin="0, 0, 0, 10"/>
-                    <Button x:Name="showAdvancedButton" Clicked="showAdvancedButton_Clicked" BackgroundColor="Gray" Text="Advanced options" Margin="0, 0, 0, 0"/>
+                    <Button x:Name="showAdvancedButton" Clicked="showAdvancedButton_Clicked" BackgroundColor="Gray" IsEnabled="True" Text="Advanced options" Margin="0, 0, 0, 0"/>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout x:Name="cookingMethodLayout" Grid.Row="5" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="False">
+            <HorizontalStackLayout x:Name="cookingMethodLayout" Grid.Row="5" Grid.Column="0" Margin="0, 15, 0, 15" IsVisible="False">
                 <VerticalStackLayout>
                     <Label Text="Cooking method:"/>
-                    <Picker x:Name="methodPicker">
+                    <Picker x:Name="methodPicker" Title="Pick method">
                         <Picker.Items>
                             <x:String> </x:String>
                             <x:String>Baking</x:String>
@@ -84,7 +104,9 @@
             <HorizontalStackLayout x:Name="cookingTimeLayout" Grid.Row="6" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="False">
                 <VerticalStackLayout>
                     <Label Text="Cooking time:"/>
-                    <Entry x:Name="cookingTimeEntry" Keyboard="Numeric" Placeholder="Time in minutes"/>
+                    <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
+                        <Entry x:Name="cookingTimeEntry" Placeholder="Time in minutes"/>
+                    </Frame>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
@@ -92,21 +114,25 @@
                 <VerticalStackLayout>
                     <Label x:Name="oilErrorMessage" Text="You must select an oil if the cooking method is frying." IsVisible="False" TextColor="Red"/>
                     <Label Text="Oil:"/>
-                    <Picker x:Name="oilPicker" Margin="0, 0, 0, 5" SelectedIndexChanged="oilPicker_SelectedIndexChanged">
+                    <Picker x:Name="oilPicker" Title="Pick oil" Margin="0, 0, 0, 5" SelectedIndexChanged="oilPicker_SelectedIndexChanged">
                         <Picker.Items>
                             <x:String></x:String>
                             <x:String>Olive oil</x:String>
                             <x:String>Peanut oil</x:String>
                         </Picker.Items>
                     </Picker>
-                    <Entry x:Name="oilMlEntry" Keyboard="Numeric" Placeholder="Amount of oil in Ml"/>
+                    <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
+                        <Entry x:Name="oilMlEntry" Placeholder="Amount of oil in Ml"/>
+                    </Frame>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout x:Name="descriptionLayout" Grid.Row="8" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="False">
                 <VerticalStackLayout>
                     <Label Text="Description:"/>
-                    <Entry x:Name="descriptionEntry" HeightRequest="100" WidthRequest="200" Placeholder="You can further describe your recipe here"/>
+                    <Frame InputTransparent="True" HeightRequest="100" WidthRequest="200" BackgroundColor="Transparent" BorderColor="DarkOliveGreen">
+                        <Editor x:Name="descriptionEntry" HeightRequest="40" WidthRequest="200" Placeholder="You can further describe your recipe here" VerticalOptions="Start"/>
+                    </Frame>
                     <HorizontalStackLayout>
                         <CheckBox x:Name="generateDescriptionIsChecked" IsChecked="False" CheckedChanged="CheckBox_CheckedChanged"/>
                         <Label Text="Auto-generate description" FontSize="8" Margin="2, 0, 0, 0"/>
@@ -127,11 +153,11 @@
             </VerticalStackLayout>
 
 
-            <HorizontalStackLayout Grid.Row="10" Grid.Column="0" HorizontalOptions="FillAndExpand" Margin="0, 0, 0, 15">
+            <HorizontalStackLayout Grid.Row="10" Grid.Column="0" HorizontalOptions="Center" Margin="0, 0, 0, 15">
                 <Button x:Name="addFoodButton" Clicked="addFoodButton_Clicked" Text="Save food" WidthRequest="100" HeightRequest="40" Margin="0, 0, 10, 0"/>
                 <Button x:Name="enableScannerButton" Clicked="enableScannerButton_Clicked" Text="Scan barcode" WidthRequest="125" HeightRequest="40"/>
             </HorizontalStackLayout>
-            <Button x:Name="cancelButton" Clicked="cancelButton_Clicked" Grid.Row="11" Text="Cancel"/>
+            <Button x:Name="cancelButton" Clicked="cancelButton_Clicked" Grid.Row="11" Text="Cancel" BackgroundColor="Red" TextColor="White"/>
         </Grid>
         
     </ScrollView>

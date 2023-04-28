@@ -16,8 +16,16 @@ public partial class AddFoodPage : ContentPage
         kcalEntry.Text = kcal.ToString();
         proteinEntry.Text = protein.ToString();
         fatEntry.Text = fat.ToString();
-        showAdvancedButton.IsEnabled = true;
-        showAdvancedButton.IsVisible = true;
+        if(name != "" && kcal != "" && protein != "" && fat != "" && carbohydrate != "")
+        {
+            showAdvancedButton.IsEnabled = false;
+            foodIsScanned.IsVisible = true;
+        }
+        else
+        {
+            showAdvancedButton.IsEnabled = true;
+            foodIsScanned.IsVisible = false;
+        }
     }
 
     private async void enableScannerButton_Clicked(object sender, EventArgs e)

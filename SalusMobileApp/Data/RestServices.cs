@@ -51,6 +51,7 @@ namespace SalusMobileApp.Data
 
         private static string _writeCommentUri = "SocialMedia/write-comment";
         private static string _getCommentsByEmailUri = "SocialMedia/get-all-comment-by-authenticated-email";
+        private static string _getCommentsByIdUri = "SocialMedia/get-all-comment-by-userprofile-id?userprofileId=";
 
         private static string _getFoodInformationByBarcodeUri = "https://world.openfoodfacts.org/api/v2/product/";
         public static async Task<bool> RegistrationPut(string username, string email, string password, string confirmPassword)
@@ -371,6 +372,20 @@ namespace SalusMobileApp.Data
             }
             return true;
         }
+
+        public static async Task<bool> GetCommentsById(int id)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri + _getCommentsByIdUri + id.ToString();
+            var response = await _client.GetAsync(requestUri);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
+        }
         // ------------------------------------ Comment END ------------------------------------------------------------------------
 
         // ------------------------------------ Recipe START ------------------------------------------------------------------------
@@ -394,11 +409,18 @@ namespace SalusMobileApp.Data
         {
             var result = (JObject)JsonConvert.DeserializeObject(returnedData);
             var name = result.SelectToken("product.ecoscore_data.agribalyse.name_en").ToString();
-            var kcal = Convert.ToInt32(result.SelectToken("product.nutriments.energy-kcal_100g").ToString());
-            var protein = Convert.ToInt32(result.SelectToken("product.nutriments.proteins_100g").ToString());
-            var carbohydrate = Convert.ToInt32(result.SelectToken("product.nutriments.carbohydrates_100g").ToString());
-            var fat = Convert.ToInt32(result.SelectToken("product.nutriments.fat_100g").ToString());
+            var kj = ReturnIntFromBarcodeToken(result.SelectToken("product.nutriments.energy-kj_100g").ToString());
+            int kcal = Convert.ToInt32(Math.Ceiling((decimal)kj / 4));
+            var protein = ReturnIntFromBarcodeToken(result.SelectToken("product.nutriments.proteins_100g").ToString());
+            var carbohydrate = ReturnIntFromBarcodeToken(result.SelectToken("product.nutriments.carbohydrates_100g").ToString());
+            var fat = ReturnIntFromBarcodeToken(result.SelectToken("product.nutriments.fat_100g").ToString());
             App.mostRecentRecipe = new RecipeModel(name, kcal, protein, fat, carbohydrate);
+        }
+
+        private static int ReturnIntFromBarcodeToken(string data)
+        {
+            decimal dataInDecimal = Convert.ToDecimal(data);
+            return Convert.ToInt32(Math.Ceiling(dataInDecimal));
         }
 
         public static async Task<bool> CreateRecipeSimple(string name, int kcal, int protein, int fat, int carbohydrate)
