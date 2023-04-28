@@ -9,6 +9,7 @@ namespace SalusMobileApp.Pages.MainMenu.Tabs;
 public partial class NutritionPage : ContentPage
 {
     NutritionPageViewModel viewModel;
+    private string noInternetErrorMessage = "This action requires internet connection.";
 	public NutritionPage()
 	{
 		InitializeComponent();
@@ -72,11 +73,35 @@ public partial class NutritionPage : ContentPage
                 case "Cancel":
                     break;
                 case "Delete":
-                    await RestServices.DeleteLast24hById(selected.id);
+                    if(ServiceValidation.InternetConnectionValidator())
+                    {
+                        var delete = await RestServices.DeleteLast24hById(selected.id);
+                        if (delete)
+                        {
+                            viewModel.GetConsumedMealsFromViewModelAsync(DateTime.Today);
+                            viewModel.MealsLoaded += (sender, e) =>
+                            todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
+                        }
+                        else
+                        {
+                            await DisplayAlert("Error", "Couldn't delete the selected meal.", "Ok");
+                        }
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", noInternetErrorMessage, "Ok");
+                    }
                     break;
                 default:
-                    await RestServices.PortionModifier(selected.id, choice);
-                    todaysMealsListView.SelectedItem = null;
+                    if(ServiceValidation.InternetConnectionValidator())
+                    {
+                        await RestServices.PortionModifier(selected.id, choice);
+                        todaysMealsListView.SelectedItem = null;
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", noInternetErrorMessage, "Ok");
+                    }
                     break;
             }
         }

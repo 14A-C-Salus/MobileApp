@@ -5,6 +5,6 @@
              x:Class="SalusMobileApp.Pages.AddFood.FoodScannerPage"
              Title="FoodScannerPage" NavigationPage.HasBackButton="False">
     <VerticalStackLayout>
-        <zxing:CameraBarcodeReaderView x:Name="barcodeReader" Scale="2" IsDetecting="True" IsTorchOn="False" BarcodesDetected="barcodeReader_BarcodesDetected"/>
+        <zxing:CameraBarcodeReaderView x:Name="barcodeReader" Scale="2" IsDetecting="True" IsTorchOn="True" BarcodesDetected="barcodeReader_BarcodesDetected"/>
     </VerticalStackLayout>
 </ContentPage>

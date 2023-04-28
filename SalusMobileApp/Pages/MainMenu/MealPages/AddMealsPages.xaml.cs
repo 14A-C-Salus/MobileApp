@@ -76,7 +76,7 @@ public partial class AddMealsPages : ContentPage
 
     private async void recipeListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        var portion = await DisplayPromptAsync("Select", "How much did you eat?", "Add", "Cancel", "Answer in grams", keyboard: Keyboard.Numeric);
+        var portion = await DisplayPromptAsync("Select", "How much did you eat?", "Add", "Cancel", "Answer in grams", 5);
         if (portion != null)
         {
             if(recipeListView.SelectedItem != null)
@@ -87,6 +87,7 @@ public partial class AddMealsPages : ContentPage
                 selectedRecipePortion = Convert.ToInt32(portion);
             }
         }
+        recipeListView.SelectedItem = null;
     }
 
     private void isLiquidCheckbox_CheckedChanged(object sender, CheckedChangedEventArgs e)

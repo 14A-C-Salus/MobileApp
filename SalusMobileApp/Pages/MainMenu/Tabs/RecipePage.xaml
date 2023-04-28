@@ -33,31 +33,31 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
 
                                 <HorizontalStackLayout Grid.Row="0">
                                     <Label Text="{Binding name}"/>
                                     <ImageButton x:Name="favouriteRecipeButton" Clicked="favouriteRecipeButton_Clicked" Source="favouriteicon.png" BackgroundColor="White" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
-                                    <ImageButton x:Name="editRecipe" Clicked="editRecipe_Clicked" Source="editicon.png" BackgroundColor="White" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
-                                    <ImageButton x:Name="deleteRecipe" Clicked="deleteRecipe_Clicked" Source="deleteicon.png" BackgroundColor="Red" CornerRadius="5" WidthRequest="50" HeightRequest="30"/>
+                                    <ImageButton x:Name="editRecipe" Clicked="editRecipe_Clicked" Source="editicon.png" BackgroundColor="White" CornerRadius="5" WidthRequest="30" HeightRequest="30"/>
+                                    <ImageButton x:Name="deleteRecipe" Clicked="deleteRecipe_Clicked" Source="deleteicon.png" BackgroundColor="Red" CornerRadius="5" WidthRequest="30" HeightRequest="30"/>
                                 </HorizontalStackLayout>
 
                                 <HorizontalStackLayout Grid.Row="1">
-                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                    <HorizontalStackLayout Margin="0, 0, 5, 0">
                                         <Label Text="Kcal:"/>
                                         <Label Text="{Binding kcal}"/>
                                     </HorizontalStackLayout>
-                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                    <HorizontalStackLayout Margin="0, 0, 5, 0">
                                         <Label Text="Fat:"/>
                                         <Label Text="{Binding fat}"/>
                                     </HorizontalStackLayout>
-                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                    <HorizontalStackLayout Margin="0, 0, 5, 0">
                                         <Label Text="Carbs:"/>
                                         <Label Text="{Binding carbohydrate}"/>
                                     </HorizontalStackLayout>
-                                    <HorizontalStackLayout Margin="0, 0, 2, 0">
+                                    <HorizontalStackLayout Margin="0, 0, 5, 0">
                                         <Label Text="Protein:"/>
                                         <Label Text="{Binding protein}"/>
                                     </HorizontalStackLayout>
