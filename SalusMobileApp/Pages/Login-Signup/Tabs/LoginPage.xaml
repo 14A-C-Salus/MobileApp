@@ -6,11 +6,11 @@
              NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <StackLayout MaximumWidthRequest="250">
         <Label Text="E-mail:"/>
-        <Entry x:Name="emailEntry" TextChanged="emailEntry_TextChanged"/>
+        <Entry x:Name="emailEntry" Text="moskfarm001@gmail.com" TextChanged="emailEntry_TextChanged"/>
         <Label x:Name="emailErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
         <Label Text="Password:" Margin="0, 10, 0, 0"/>
         <HorizontalStackLayout>
-            <Entry x:Name="passwordEntry" IsPassword="True" TextChanged="passwordEntry_TextChanged" WidthRequest="220" Margin="0, 0, 5, 0"/>
+            <Entry x:Name="passwordEntry" Text="fghfghfgh" IsPassword="True" TextChanged="passwordEntry_TextChanged" WidthRequest="220" Margin="0, 0, 5, 0"/>
             <ImageButton x:Name="passwordVisibleButton" CornerRadius="7" Source="eyeinactive.png" BackgroundColor="White" Clicked="passwordVisibleButton_Clicked" WidthRequest="25" HeightRequest="25"/>
         </HorizontalStackLayout>
         <Label x:Name="passwordErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
