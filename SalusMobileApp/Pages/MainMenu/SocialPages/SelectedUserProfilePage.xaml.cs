@@ -1,3 +1,4 @@
+using SalusMobileApp.Data;
 using SalusMobileApp.ViewModels;
 
 namespace SalusMobileApp.Pages.MainMenu.SocialPages;

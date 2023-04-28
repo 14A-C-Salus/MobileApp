@@ -53,12 +53,10 @@ public partial class SocialPage : ContentPage
     {
         if (isAdminChecked)
         {
-            viewModel.UserProfilesLoaded += (sender, e) =>
             profilesListView.ItemsSource = viewModel.UserProfiles.Where(u => u.isAdmin == true);
         }
         else
         {
-            viewModel.UserProfilesLoaded += (sender, e) =>
             profilesListView.ItemsSource = viewModel.UserProfiles;
         }
     }
