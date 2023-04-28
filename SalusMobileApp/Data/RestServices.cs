@@ -47,6 +47,7 @@ namespace SalusMobileApp.Data
         private static string _createNewFoodSimpleUri = "Recipe/create-simple";
         private static string _createNewFoodUri = "Recipe/create";
         private static string _deleteFoodUri = "Recipe/delete?id=";
+        private static string _likeUnlikeRecipeUri = "Recipe/like-unlike?recipeId=";
 
         private static string _writeCommentUri = "SocialMedia/write-comment";
         private static string _getCommentsByEmailUri = "SocialMedia/get-all-comment-by-authenticated-email";
@@ -543,6 +544,24 @@ namespace SalusMobileApp.Data
             }
             return true;
         }
+
+        public static async Task<bool> RecipeLikeUnlike(int id)
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
+            string requestUri = _uri + _likeUnlikeRecipeUri + id.ToString();
+
+            var json = JsonConvert.SerializeObject(id);
+            var content = new StringContent(json, Encoding.UTF8, _contentType);
+            var response = await _client.PatchAsync(requestUri, content);
+            _client.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
+        }
+
         // ------------------------------------ Recipe END ------------------------------------------------------------------------
         // ------------------------------------ Last24h START ------------------------------------------------------------------------
         public static async Task<List<ComplexLast24hModel>> GetLast24h(DateTime? date = null)

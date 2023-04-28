@@ -63,6 +63,7 @@
 	  <None Remove="Resources\Images\eyeactive.png" />
 	  <None Remove="Resources\Images\eyeinactive.png" />
 	  <None Remove="Resources\Images\favouriteicon.png" />
+	  <None Remove="Resources\Images\likeicon.png" />
 	  <None Remove="Resources\Images\refreshicon.png" />
 	</ItemGroup>
 

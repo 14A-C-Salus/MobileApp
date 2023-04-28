@@ -26,7 +26,6 @@ public partial class AddMealsPages : ContentPage
         if (ServiceValidation.InternetConnectionValidator())
         {
             viewModel.GetRecipeByName(searchRecipesEntry.Text);
-            viewModel.RecipeLoaded += (sender, e) =>
             recipeListView.ItemsSource = viewModel.Recipes;
         }
     }
@@ -100,5 +99,10 @@ public partial class AddMealsPages : ContentPage
         {
             dlEntry.IsEnabled = false;
         }
+    }
+
+    private async void exitButton_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 }

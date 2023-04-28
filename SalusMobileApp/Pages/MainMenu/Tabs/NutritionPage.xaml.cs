@@ -34,7 +34,6 @@ public partial class NutritionPage : ContentPage
         else
         {
             viewModel.GetConsumedMealsFromViewModelAsync(datePicker.Date);
-            viewModel.MealsLoaded += (sender, e) =>
             todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
         }
     }
@@ -43,7 +42,6 @@ public partial class NutritionPage : ContentPage
     {
         datePicker.Date = datePicker.Date.AddDays(-1);
         viewModel.GetConsumedMealsFromViewModelAsync(datePicker.Date);
-        viewModel.MealsLoaded += (sender, e) =>
         todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
     }
 
@@ -59,7 +57,6 @@ public partial class NutritionPage : ContentPage
         {
             
             viewModel.GetConsumedMealsFromViewModelAsync(datePicker.Date);
-            viewModel.MealsLoaded += (sender, e) =>
             todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
         }
     }

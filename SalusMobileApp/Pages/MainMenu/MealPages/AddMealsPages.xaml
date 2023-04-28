@@ -31,6 +31,7 @@
             <HorizontalStackLayout Grid.Row="2" HeightRequest="40">
                 <Button x:Name="searchRecipesButton" HeightRequest="40" Margin="0, 0, 10, 0" Clicked="searchRecipesButton_Clicked" Text="Search"/>
                 <Button x:Name="addMealButton" HeightRequest="40" Margin="0, 0, 10, 0" Clicked="addMealButton_Clicked" Text="Add"/>
+                <ImageButton x:Name="exitButton" Source="exiticon.png" CornerRadius="5" BackgroundColor="White" HeightRequest="40" WidthRequest="30" Clicked="exitButton_Clicked"/>
             </HorizontalStackLayout>
             <ListView x:Name="recipeListView" Grid.Row="3" RowHeight="30" ItemSelected="recipeListView_ItemSelected" ItemsSource="{Binding Recipes}" Margin="0, 10, 0, 0">
                 <ListView.ItemTemplate>

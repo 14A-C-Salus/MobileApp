@@ -7,7 +7,7 @@
     <ContentPage.BindingContext>
         <viewmodels:GetRecipeByAuthIdViewModel/>
     </ContentPage.BindingContext>
-    <ScrollView>
+    <ScrollView Margin="5, 0, 0, 0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -31,6 +31,8 @@
                                 <HorizontalStackLayout Grid.Row="0">
                                     <Label Text="Name: "/>
                                     <Label Text="{Binding name}"/>
+                                    <Label Text=" Likes: "/>
+                                    <Label Text="{Binding usersWhoLiked.Length}"/>
                                 </HorizontalStackLayout>
                                 
                                 <HorizontalStackLayout Grid.Row="1">
@@ -51,6 +53,8 @@
                                 <HorizontalStackLayout Grid.Row="4">
                                     <Label Text="Protein: "/>
                                     <Label Text="{Binding protein}"/>
+                                    <Label Text=" "/>
+                                    <ImageButton x:Name="likeRecipeButton" Clicked="likeRecipeButton_Clicked" Source="likeicon.png" BackgroundColor="White" HeightRequest="40" WidthRequest="40"/>
                                 </HorizontalStackLayout>
                                 
                             </Grid>

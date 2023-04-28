@@ -1,18 +1,20 @@
+using SalusMobileApp.Data;
 using SalusMobileApp.Models;
 using SalusMobileApp.Pages.AddFood;
 using SalusMobileApp.ViewModels;
 using System.Security.Cryptography;
+using System.Windows.Input;
 
 namespace SalusMobileApp.Pages.MainMenu.Tabs;
 
 public partial class RecipePage : ContentPage
 {
     GetRecipeByAuthIdViewModel viewModel;
-	public RecipePage()
+    public RecipePage()
 	{
 		InitializeComponent();
         viewModel = new GetRecipeByAuthIdViewModel();
-	}
+    }
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -105,6 +107,19 @@ public partial class RecipePage : ContentPage
         if (recipeList.SelectedItem == null)
         {
             await DisplayAlert("Error", "Please select a recipe by tapping it first!", "Ok");
+        }
+        else
+        {
+            var selected = (ComplexRecipeModel)recipeList.SelectedItem;
+            var delete = await RestServices.DeleteRecipe(selected.id);
+            if(delete)
+            {
+                await DisplayAlert("Success", "Recipe successfully deleted.", "Ok");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Something went wrong.", "Ok");
+            }
         }
     }
 }
