@@ -125,6 +125,7 @@
         <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Secondary}}" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="InputTransparent" Value="True" />
+        <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
 
     <Style TargetType="ImageButton">
