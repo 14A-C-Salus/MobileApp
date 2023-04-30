@@ -14,7 +14,7 @@ namespace SalusMobileApp.Data
 {
     public class RestServices
     {
-        static HttpClient _client;
+        private readonly static HttpClient _client = new HttpClient();
         private static string _uri = "https://salus.azurewebsites.net/api/";
         
         //private static string _uri = "https://localhost:7138/api/";
@@ -56,7 +56,7 @@ namespace SalusMobileApp.Data
         // ------------------------------------ User START ------------------------------------------------------------------------
         public static async Task<bool> RegistrationPut(string username, string email, string password, string confirmPassword)
         {
-            _client = new HttpClient();
+             
             var registration = new RegistrationModel
             {
                 username = username,
@@ -69,7 +69,7 @@ namespace SalusMobileApp.Data
             var json = JsonConvert.SerializeObject(registration);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             HttpResponseMessage response = await _client.PutAsync(requestUri, content);
-            _client.Dispose();
+             
             if(!response.IsSuccessStatusCode) 
             {
                 return false;
@@ -78,14 +78,14 @@ namespace SalusMobileApp.Data
         }
         public static async Task<bool> LoginPost(string email, string password)
         {
-            _client = new HttpClient();
+             
             var login = new LoginModel(email, password);
 
             string requestUri = _uri + _loginUri;
             var json = JsonConvert.SerializeObject(login);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PostAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -110,11 +110,11 @@ namespace SalusMobileApp.Data
         }
         public static async Task<bool> GetUserProfileData(int id)
         {
-            _client = new HttpClient();
+             
 
             string requestUri = _uri + _userProfileDataUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -141,11 +141,11 @@ namespace SalusMobileApp.Data
 
         public static async Task<object> GetProfileData(int id)
         {
-            _client = new HttpClient();
+             
 
             string requestUri = _uri + _userDataUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return null;
@@ -157,11 +157,11 @@ namespace SalusMobileApp.Data
 
         public static async Task<UserProfileModel> GetUserProfileDataAsObject(int id)
         {
-            _client = new HttpClient();
+             
 
             string requestUri = _uri + _userProfileDataUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if(!response.IsSuccessStatusCode)
             {
                 return null;
@@ -182,14 +182,14 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetResetToken(string email)
         { 
-            _client = new HttpClient();
+             
             string emailUri = email.Replace("@", "%40");
             string requestUri = _uri + _forgotPasswordUri + emailUri;
 
             var json = JsonConvert.SerializeObject(email);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PatchAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -198,7 +198,7 @@ namespace SalusMobileApp.Data
         }
         public static async Task<bool> EditProfile(bool doesExist, int weight, int height, DateTime birthDate, int gender, string genderString, int goalWeight)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string isoBirthDateString = birthDate.ToString("o");
             var newUserProfile = new UserProfileModel(weight, height, isoBirthDateString, gender, goalWeight);
@@ -234,7 +234,7 @@ namespace SalusMobileApp.Data
                 }
             }
             
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -244,7 +244,7 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> SetProfilePicture(int hair, int skin, int eyes, int mouth)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var profilePicture = new ProfilePictureModel
             {
@@ -258,7 +258,7 @@ namespace SalusMobileApp.Data
             var json = JsonConvert.SerializeObject(profilePicture);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PatchAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -268,11 +268,11 @@ namespace SalusMobileApp.Data
 
         public static async Task<List<UserDataModel>> GetUserProfileByName(string name)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getUserProfilesByNameUri + name;
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return null;
@@ -285,7 +285,7 @@ namespace SalusMobileApp.Data
         // ------------------------------------ Comment START ------------------------------------------------------------------------
         public static async Task<bool> SaveComment(string email, string body)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var comment = new CommentModel(email, body);
             string requestUri = _uri + _writeCommentUri;
@@ -293,7 +293,7 @@ namespace SalusMobileApp.Data
             var json = JsonConvert.SerializeObject(comment);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PutAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -303,11 +303,11 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetCommentsByEmail()
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getCommentsByEmailUri;
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -317,11 +317,11 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetCommentsById(int id)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getCommentsByIdUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -334,10 +334,10 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetFoodInformationByBarcode(string barcode)
         {
-            _client = new HttpClient();
+             
             string requestUri = _getFoodInformationByBarcodeUri + barcode;
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -367,7 +367,7 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> CreateRecipeSimple(string name, int kcal, int protein, int fat, int carbohydrate)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var recipe = new RecipeModel(name, kcal, protein, fat, carbohydrate);
             string requestUri = _uri + _createNewFoodSimpleUri;
@@ -375,7 +375,7 @@ namespace SalusMobileApp.Data
             var json = JsonConvert.SerializeObject(recipe);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PutAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -386,7 +386,7 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> CreateRecipe(int[] igredientIds, int[] ingredientPortionGram, int method, int oilId, int oilPortionMl, int timeInMinutes, string name, bool generateDescription, string description)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var descriptionValue = " ";
             if(description != null)
@@ -411,7 +411,7 @@ namespace SalusMobileApp.Data
             var json = JsonConvert.SerializeObject(recipe);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PutAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -447,12 +447,12 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetAllRecipeByAuthId(int id)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getAllRecipeByAuthIdUri + id.ToString();
 
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -462,12 +462,12 @@ namespace SalusMobileApp.Data
 
         public static async Task<List<ComplexRecipeModel>> GetAllRecipeByAuthIdAsList(int id)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getAllRecipeByAuthIdUri + id.ToString();
 
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return null;
@@ -479,12 +479,12 @@ namespace SalusMobileApp.Data
 
         public static async Task<List<ComplexRecipeModel>> GetRecipeByName(string name)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getRecipeByNameUri + name;
 
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return null;
@@ -496,12 +496,12 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> DeleteRecipe(int id)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _deleteFoodUri + id.ToString();
 
             var response = await _client.DeleteAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -511,14 +511,14 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> RecipeLikeUnlike(int id)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _likeUnlikeRecipeUri + id.ToString();
 
             var json = JsonConvert.SerializeObject(id);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PatchAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -530,7 +530,7 @@ namespace SalusMobileApp.Data
         // ------------------------------------ Last24h START ------------------------------------------------------------------------
         public static async Task<List<ComplexLast24hModel>> GetLast24h(DateTime? date = null)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = "";
             if (date != null)
@@ -543,7 +543,7 @@ namespace SalusMobileApp.Data
             }
 
             var response = await _client.GetAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return null;
@@ -556,14 +556,14 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> PostLast24h(NewMeal meal)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _postLast24hUri;
 
             var json = JsonConvert.SerializeObject(meal);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PutAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -575,7 +575,7 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> PortionModifier(int id, string portion)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri;
             switch (portion)
@@ -599,7 +599,7 @@ namespace SalusMobileApp.Data
             var json = JsonConvert.SerializeObject(id);
             var content = new StringContent(json, Encoding.UTF8, _contentType);
             var response = await _client.PatchAsync(requestUri, content);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -609,11 +609,11 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> DeleteLast24hById(int id)
         {
-            _client = new HttpClient();
+             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _deleteLast24ByIdUri + id.ToString();
             var response = await _client.DeleteAsync(requestUri);
-            _client.Dispose();
+             
             if (!response.IsSuccessStatusCode)
             {
                 return false;
