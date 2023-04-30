@@ -315,18 +315,19 @@ namespace SalusMobileApp.Data
             return true;
         }
 
-        public static async Task<bool> GetCommentsById(int id)
+        public static async Task<List<CommentModel>> GetCommentsById(int id)
         {
              
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getCommentsByIdUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
-             
+            var returnedData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<CommentModel>>(returnedData);
             if (!response.IsSuccessStatusCode)
             {
-                return false;
+                return result;
             }
-            return true;
+            return result;
         }
         // ------------------------------------ Comment END ------------------------------------------------------------------------
 

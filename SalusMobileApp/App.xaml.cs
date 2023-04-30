@@ -24,6 +24,7 @@ public partial class App : Application
     public static List<int> currentAddedIngredientIds = new List<int>();
 	public static List<int> currentAddedIngredientGrams = new List<int>();
     public static List<string> currentAddedIngredientNames = new List<string>();
+	public static string selectedPersonEmail;
     public static LocalDatabase database
 	{
 		get

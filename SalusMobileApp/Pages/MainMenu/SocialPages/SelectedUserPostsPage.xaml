@@ -14,13 +14,13 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <HorizontalStackLayout Grid.Row="0">
-                <Button Text="Write comment"/>
+                <Button Text="Write comment" Clicked="Button_Clicked"/>
             </HorizontalStackLayout>
             <ListView x:Name="postsListView" ItemsSource="{Binding Comments}" Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding body}"/>
+                            <Label Text="{Binding body}" HeightRequest="40" WidthRequest="100"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

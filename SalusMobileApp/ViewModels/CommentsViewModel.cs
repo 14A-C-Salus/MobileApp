@@ -25,7 +25,7 @@ namespace SalusMobileApp.ViewModels
                 var data = await RestServices.GetCommentsById(id);
                 if (data != null)
                 {
-                    Comments = new ObservableCollection<CommentModel>();
+                    Comments = new ObservableCollection<CommentModel>(data);
                     if (CommentsLoaded != null)
                     {
                         CommentsLoaded(this, EventArgs.Empty);

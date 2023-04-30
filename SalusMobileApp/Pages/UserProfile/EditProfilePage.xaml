@@ -4,15 +4,19 @@
              x:Class="SalusMobileApp.Pages.UserProfile.EditProfilePage"
              Title="EditProfilePage" NavigationPage.HasBackButton="False">
 
-    <VerticalStackLayout>
+    <VerticalStackLayout WidthRequest="250">
         <Label Text="To get started, set up your profile first!" VerticalOptions="Center" HorizontalOptions="Center" />
 
         <Label Text="Weight:"/>
-        <Entry x:Name="weightEntry" TextChanged="weightEntry_TextChanged" Placeholder="Your weight in kilograms"/>
+        <Frame>
+            <Entry x:Name="weightEntry" TextChanged="weightEntry_TextChanged" Placeholder="Your weight in kilograms"/>
+        </Frame>
         <Label x:Name="weightErrorMessage" Text="Must be between 20 and 1000!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
 
         <Label Text="Height:"/>
-        <Entry x:Name="heightEntry" TextChanged="heightEntry_TextChanged" Placeholder="Your height in centimeters"/>
+        <Frame>
+            <Entry x:Name="heightEntry" TextChanged="heightEntry_TextChanged" Placeholder="Your height in centimeters"/>
+        </Frame>
         <Label x:Name="heightErrorMessage" Text="Must be between 40 and 250!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
 
         <Label Text="Birthdate:"/>
@@ -32,7 +36,9 @@
 
         <Label Text="Goal weight:"/>
         <Label Text="If you don't have a goal weight then we will calculate your ideal weight for you based on the data you've provided." FontSize="4"/>
-        <Entry x:Name="goalWeightEntry" TextChanged="goalWeightEntry_TextChanged" Placeholder="Your goal weight in kilograms"/>
+        <Frame>
+            <Entry x:Name="goalWeightEntry" TextChanged="goalWeightEntry_TextChanged" Placeholder="Your goal weight in kilograms"/>
+        </Frame>
         <Label x:Name="goalWeightErrorMessage" Text="Must be between 20 and 1000!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
 
         <HorizontalStackLayout>
