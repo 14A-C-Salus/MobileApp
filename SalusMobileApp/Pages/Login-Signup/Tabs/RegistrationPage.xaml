@@ -4,19 +4,28 @@
              xmlns:local="clr-namespace:SalusMobileApp.Pages"
              x:Class="SalusMobileApp.Pages.RegistrationPage"
              NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
-    <StackLayout MaximumWidthRequest="250">
+    <StackLayout WidthRequest="300">
         <Label Text="E-mail:"/>
-        <Entry x:Name="emailEntry" Margin="0, 0, 0, 5"/>
+        <Frame >
+            <Entry x:Name="emailEntry" Margin="0, 0, 0, 5"/>
+        </Frame>
+        
         <Label Text="Username:"/>
-        <Entry x:Name="usernameEntry" Margin="0, 0, 0, 5"/>
+        <Frame>
+            <Entry x:Name="usernameEntry" Margin="0, 0, 0, 5"/>
+        </Frame>
         <Label Text="Password:"/>
         <HorizontalStackLayout Margin="0, 0, 0, 5">
-            <Entry x:Name="passwordEntry" IsPassword="True" WidthRequest="230" Margin="0, 0, 5, 0"/>
-            <ImageButton x:Name="passwordVisibleButton" CornerRadius="7" Source="eyeinactive.png" BackgroundColor="White" Clicked="passwordVisibleButton_Clicked" WidthRequest="25" HeightRequest="25"/>
+            <Frame Margin="0, 0, 5, 0">
+                <Entry x:Name="passwordEntry" IsPassword="True" WidthRequest="100"/>
+            </Frame>
+            <ImageButton x:Name="passwordVisibleButton" WidthRequest="40" HeightRequest="40" CornerRadius="7" Source="eyeinactive.png" BackgroundColor="White" Clicked="passwordVisibleButton_Clicked"/>
         </HorizontalStackLayout>
         
         <Label Text="Confirm password:"/>
-        <Entry x:Name="confirmPasswordEntry" IsPassword="True" Margin="0, 0, 0, 5"/>
+        <Frame Margin="0, 0, 5, 10">
+            <Entry x:Name="confirmPasswordEntry" IsPassword="True" Margin="0, 0, 0, 5"/>
+        </Frame>
         <Button x:Name="registerButton" Clicked="registerButton_Clicked" Text="Sign up" IsEnabled="True"/>
     </StackLayout>
 </ContentPage>

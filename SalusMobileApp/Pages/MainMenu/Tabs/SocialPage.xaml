@@ -17,8 +17,8 @@
             </Grid.RowDefinitions>
             
             <HorizontalStackLayout Grid.Row="0">
-                <Entry x:Name="searchEntry" Placeholder="Search" WidthRequest="170" HeightRequest="40" Margin="0, 0, 5, 0"/>
-                <Button x:Name="searchButton" Clicked="searchButton_Clicked" Text="Search" Margin="0, 0, 5, 0"/>
+                <SearchBar x:Name="searchEntry" TextChanged="searchButton_Clicked" Placeholder="Search" WidthRequest="170" HeightRequest="40" Margin="0, 0, 5, 0"/>
+                <Button x:Name="searchButton"  Text="Search" Margin="0, 0, 5, 0"/>
                 <Button x:Name="ownProfile" Clicked="ownProfile_Clicked" Text="My posts"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout Grid.Row="1">

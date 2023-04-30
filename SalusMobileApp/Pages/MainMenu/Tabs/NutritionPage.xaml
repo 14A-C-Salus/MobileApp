@@ -21,7 +21,7 @@
                     <HorizontalStackLayout Margin="0, 0, 0, 5">
                         <Button x:Name="decrementDateButton" Clicked="decrementDateButton_Clicked" Text="&lt;" FontAttributes="Bold"/>
                         <Frame CornerRadius="5">
-                            <DatePicker x:Name="datePicker" DateSelected="datePicker_DateSelected"/>
+                            <DatePicker x:Name="datePicker" DateSelected="datePicker_DateSelected" HeightRequest="40" BackgroundColor="Transparent"/>
                         </Frame>
                         <Button x:Name="incrementDateButton" Clicked="incrementDateButton_Clicked" Text=">" FontAttributes="Bold"/>
                     </HorizontalStackLayout>

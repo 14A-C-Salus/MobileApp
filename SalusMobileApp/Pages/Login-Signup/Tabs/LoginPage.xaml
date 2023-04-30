@@ -6,21 +6,23 @@
              NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <StackLayout MaximumWidthRequest="250">
         <Label Text="E-mail:"/>
-        <Frame>
-            <Entry x:Name="emailEntry" Text="moskfarm001@gmail.com" TextChanged="emailEntry_TextChanged"/>
+        <Frame HeightRequest="60">
+            <Entry x:Name="emailEntry" HeightRequest="50" Text="moskfarm001@gmail.com" TextChanged="emailEntry_TextChanged"/>
         </Frame>
         <Label x:Name="emailErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
         <Label Text="Password:" Margin="0, 10, 0, 0"/>
         <HorizontalStackLayout>
-            <Frame WidthRequest="220">
-                <Entry x:Name="passwordEntry" Text="fghfghfgh" IsPassword="True" TextChanged="passwordEntry_TextChanged" WidthRequest="220" Margin="0, 0, 5, 0"/>
+            <Frame WidthRequest="270" HeightRequest="60">
+                <Entry x:Name="passwordEntry" Text="fghfghfgh" IsPassword="True" TextChanged="passwordEntry_TextChanged" WidthRequest="220" HeightRequest="50" Margin="0, 0, 5, 0"/>
             </Frame>
-            <ImageButton x:Name="passwordVisibleButton" CornerRadius="7" Source="eyeinactive.png" BackgroundColor="White" Clicked="passwordVisibleButton_Clicked" WidthRequest="25" HeightRequest="25"/>
+            <ImageButton x:Name="passwordVisibleButton" CornerRadius="7" Source="eyeinactive.png" BackgroundColor="White" Clicked="passwordVisibleButton_Clicked" Margin="5, 0, 0, 0" WidthRequest="40" HeightRequest="40"/>
         </HorizontalStackLayout>
         <Label x:Name="passwordErrorMessage" Text="Please fill in this field correctly!" TextColor="Red" FontSize="Micro" IsVisible="false"/>
         <Button x:Name="passwordForgotten" Clicked="passwordForgotten_Clicked" BorderColor="Transparent" BackgroundColor="Transparent" Text="Did you forget your password?" FontSize="8" VerticalOptions="End" Margin="0, 3, 0, 7" WidthRequest="150" HorizontalOptions="Start" IsEnabled="True"/>
-        <Button x:Name="loginButton" Clicked="loginButton_Clicked" Text="Log in" IsEnabled="True"/>
-        <Label Text="Remember me:"/>
-        <CheckBox x:Name="rememberPassword" IsChecked="False"/>
+        <Button x:Name="loginButton" Clicked="loginButton_Clicked" WidthRequest="120" HeightRequest="50" Text="Log in" IsEnabled="True" Margin="0, 0, 0, 5"/>
+        <HorizontalStackLayout>
+            <Label Text="Remember me:"/>
+            <CheckBox x:Name="rememberPassword" IsChecked="False"/>
+        </HorizontalStackLayout>
     </StackLayout>
 </ContentPage>
