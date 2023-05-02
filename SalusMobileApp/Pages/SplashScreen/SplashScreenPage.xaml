@@ -4,6 +4,6 @@
              x:Class="SalusMobileApp.Pages.SplashScreen.SplashScreenPage"
              NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Image x:Name="logoImage" Source="saluslogotransparentbg.png" WidthRequest="256" HeightRequest="256"/>
+        <Image x:Name="logoImage" Source="salusicon.png" WidthRequest="256" HeightRequest="256"/>
     </VerticalStackLayout>
 </ContentPage>
