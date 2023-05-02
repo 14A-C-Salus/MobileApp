@@ -18,7 +18,7 @@ public static class MauiProgram
 			});
 		builder.Services.AddSingleton<RestServices>();
 		builder.Services.AddSingleton<LoginSignupPage>();
-
-		return builder.Build();
+        builder.Services.AddSingleton<Pages.AddFood.AddFoodPage>();
+        return builder.Build();
 	}
 }

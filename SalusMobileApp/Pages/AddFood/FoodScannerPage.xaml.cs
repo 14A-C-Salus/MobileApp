@@ -16,7 +16,7 @@ public partial class FoodScannerPage : ContentPage
         var doesBarcodeExist = await RestServices.GetFoodInformationByBarcode(barcode);
         if(doesBarcodeExist)
         {
-            await Navigation.PushAsync(new AddFoodPage(App.mostRecentRecipe.name, App.mostRecentRecipe.kcal.ToString(), App.mostRecentRecipe.protein.ToString(), App.mostRecentRecipe.fat.ToString(), App.mostRecentRecipe.carbohydrate.ToString()));
+            await Navigation.PushAsync(new AddFoodPage(/*App.mostRecentRecipe.name, App.mostRecentRecipe.kcal.ToString(), App.mostRecentRecipe.protein.ToString(), App.mostRecentRecipe.fat.ToString(), App.mostRecentRecipe.carbohydrate.ToString()*/));
         }
         else
         {
