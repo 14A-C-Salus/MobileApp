@@ -12,6 +12,7 @@
         <Style TargetType="Entry">
             <Setter Property="WidthRequest" Value="150"/>
             <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         </Style>
     </ContentPage.Resources>
     <ScrollView Margin="10, 10, 0, 0">
@@ -38,7 +39,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <!--Column 0 entries-->
             <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True" Frame="">
                 <VerticalStackLayout>
                     <Label Text="Name:"/>
@@ -114,15 +114,13 @@
                 <VerticalStackLayout>
                     <Label x:Name="oilErrorMessage" Text="You must select an oil if the cooking method is frying." IsVisible="False" TextColor="Red"/>
                     <Label Text="Oil:"/>
-                    <Frame>
-                        <Picker x:Name="oilPicker" Title="Pick oil" Margin="0, 0, 0, 5" SelectedIndexChanged="oilPicker_SelectedIndexChanged">
+                    <Picker x:Name="oilPicker" Title="Pick oil" Margin="0, 0, 0, 5" SelectedIndexChanged="oilPicker_SelectedIndexChanged">
                             <Picker.Items>
                                 <x:String></x:String>
                                 <x:String>Olive oil</x:String>
                                 <x:String>Peanut oil</x:String>
                             </Picker.Items>
-                        </Picker>
-                    </Frame>
+                    </Picker>
                     <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
                         <Entry x:Name="oilMlEntry" Placeholder="Amount of oil in Ml"/>
                     </Frame>

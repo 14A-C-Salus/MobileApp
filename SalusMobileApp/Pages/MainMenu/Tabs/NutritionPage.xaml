@@ -25,7 +25,13 @@
                         </Frame>
                         <Button x:Name="incrementDateButton" Clicked="incrementDateButton_Clicked" Text=">" FontAttributes="Bold"/>
                     </HorizontalStackLayout>
-                    <Label BindingContext="{Binding DailyCalories}"/>
+                    <Frame BackgroundColor="Red" Margin="0, 20, 0, 0">
+                        <HorizontalStackLayout>
+                            <Label x:Name="caloriesTodaySum" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+                            <Label Text=" / " VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+                            <Label x:Name="dailyCaloriesLabel" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+                        </HorizontalStackLayout>
+                    </Frame>
                 </VerticalStackLayout>
                 
 

@@ -65,10 +65,10 @@
 	  <None Remove="Resources\Images\favouriteicon.png" />
 	  <None Remove="Resources\Images\likeicon.png" />
 	  <None Remove="Resources\Images\refreshicon.png" />
+	  <None Remove="Resources\Images\salusicon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\SalusLogoTransparentBg.png" />
 	  <None Remove="Resources\Images\tagsicon.png" />
 	</ItemGroup>
 

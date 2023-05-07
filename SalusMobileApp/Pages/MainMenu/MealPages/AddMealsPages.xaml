@@ -3,6 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SalusMobileApp.Pages.MainMenu.MealPages.AddMealsPages"
              Title="AddMealsPages" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        </Style>
+    </ContentPage.Resources>
     <ScrollView Margin="5, 0, 0, 0" WidthRequest="270">
         <Grid>
             <Grid.RowDefinitions>
