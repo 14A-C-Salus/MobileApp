@@ -18,6 +18,7 @@ public partial class NutritionPage : ContentPage
         viewModel.GetConsumedMealsFromViewModelAsync(DateTime.Today);
         viewModel.MealsLoaded += (sender, e) =>
         todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
+        RefreshDataOnPage();
 	}
 
     private async void addNewButton_Clicked(object sender, EventArgs e)
@@ -36,6 +37,7 @@ public partial class NutritionPage : ContentPage
         {
             viewModel.GetConsumedMealsFromViewModelAsync(datePicker.Date);
             todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
+            RefreshDataOnPage();
         }
     }
 
@@ -44,6 +46,7 @@ public partial class NutritionPage : ContentPage
         datePicker.Date = datePicker.Date.AddDays(-1);
         viewModel.GetConsumedMealsFromViewModelAsync(datePicker.Date);
         todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
+        RefreshDataOnPage();
     }
 
     private void incrementDateButton_Clicked(object sender, EventArgs e)
@@ -59,6 +62,7 @@ public partial class NutritionPage : ContentPage
             
             viewModel.GetConsumedMealsFromViewModelAsync(datePicker.Date);
             todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
+            RefreshDataOnPage();
         }
     }
 
@@ -81,6 +85,7 @@ public partial class NutritionPage : ContentPage
                             viewModel.GetConsumedMealsFromViewModelAsync(DateTime.Today);
                             viewModel.MealsLoaded += (sender, e) =>
                             todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
+                            RefreshDataOnPage();
                         }
                         else
                         {
@@ -113,5 +118,14 @@ public partial class NutritionPage : ContentPage
         viewModel.GetConsumedMealsFromViewModelAsync(DateTime.Today);
         viewModel.MealsLoaded += (sender, e) =>
         todaysMealsListView.ItemsSource = viewModel.ConsumedMeals;
+        RefreshDataOnPage();
+    }
+
+    private void RefreshDataOnPage()
+    {
+        viewModel.DailyIdealCalorieIntake();
+        dailyCaloriesLabel.Text = viewModel.DailyCalories;
+        viewModel.MealsLoaded += (sender, e) => 
+        caloriesTodaySum.Text = viewModel.DailyCaloriesSum.ToString();
     }
 }
