@@ -18,7 +18,6 @@ public partial class AddMealsPages : ContentPage
     {
         base.OnAppearing();
         BindingContext = viewModel;
-        recipeListView.ItemsSource = viewModel.Recipes;
     }
 
     private void searchRecipesButton_Clicked(object sender, EventArgs e)

@@ -39,7 +39,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True" Frame="">
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Margin="0, 0, 0, 15" IsVisible="True">
                 <VerticalStackLayout>
                     <Label Text="Name:"/>
                     <Frame InputTransparent="True" BackgroundColor="Transparent" BorderColor="DarkOliveGreen" CornerRadius="5">
