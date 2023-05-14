@@ -23,9 +23,9 @@ public partial class SocialPage : ContentPage
         }
     }
 
-    private void ownProfile_Clicked(object sender, EventArgs e)
+    private async void ownProfile_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new SelectedUserPostsPage(App._userProfile.id));
     }
 
     private async void commentListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

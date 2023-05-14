@@ -16,7 +16,7 @@
             <HorizontalStackLayout Grid.Row="0">
                 <Button Text="Write comment" Clicked="Button_Clicked"/>
             </HorizontalStackLayout>
-            <ListView x:Name="postsListView" ItemsSource="{Binding Comments}" Grid.Row="1">
+            <ListView x:Name="postsListView" ItemsSource="{Binding Comments}" ItemTapped="postsListView_ItemTapped" Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
