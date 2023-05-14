@@ -139,10 +139,8 @@ namespace SalusMobileApp.Data
             return true;
         }
 
-        public static async Task<object> GetProfileData(int id)
+        public static async Task<JObject> GetProfileData(int id)
         {
-             
-
             string requestUri = _uri + _userDataUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
              
@@ -157,8 +155,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<UserProfileModel> GetUserProfileDataAsObject(int id)
         {
-             
-
             string requestUri = _uri + _userProfileDataUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
              
@@ -182,7 +178,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetResetToken(string email)
         { 
-             
             string emailUri = email.Replace("@", "%40");
             string requestUri = _uri + _forgotPasswordUri + emailUri;
 
@@ -198,7 +193,6 @@ namespace SalusMobileApp.Data
         }
         public static async Task<bool> EditProfile(bool doesExist, int weight, int height, DateTime birthDate, int gender, string genderString, int goalWeight)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string isoBirthDateString = birthDate.ToString("o");
             var newUserProfile = new UserProfileModel(weight, height, isoBirthDateString, gender, goalWeight);
@@ -244,7 +238,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> SetProfilePicture(int hair, int skin, int eyes, int mouth)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var profilePicture = new ProfilePictureModel
             {
@@ -268,7 +261,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<List<UserDataModel>> GetUserProfileByName(string name)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getUserProfilesByNameUri + name;
             var response = await _client.GetAsync(requestUri);
@@ -303,7 +295,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetCommentsByEmail()
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getCommentsByEmailUri;
             var response = await _client.GetAsync(requestUri);
@@ -317,7 +308,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<List<CommentModel>> GetCommentsById(int id)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getCommentsByIdUri + id.ToString();
             var response = await _client.GetAsync(requestUri);
@@ -335,7 +325,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetFoodInformationByBarcode(string barcode)
         {
-             
             string requestUri = _getFoodInformationByBarcodeUri + barcode;
             var response = await _client.GetAsync(requestUri);
              
@@ -368,7 +357,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> CreateRecipeSimple(string name, int kcal, int protein, int fat, int carbohydrate)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var recipe = new RecipeModel(name, kcal, protein, fat, carbohydrate);
             string requestUri = _uri + _createNewFoodSimpleUri;
@@ -387,7 +375,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> CreateRecipe(int[] igredientIds, int[] ingredientPortionGram, int method, int oilId, int oilPortionMl, int timeInMinutes, string name, bool generateDescription, string description)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             var descriptionValue = " ";
             if(description != null)
@@ -448,7 +435,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<bool> GetAllRecipeByAuthId(int id)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getAllRecipeByAuthIdUri + id.ToString();
 
@@ -463,7 +449,6 @@ namespace SalusMobileApp.Data
 
         public static async Task<List<ComplexRecipeModel>> GetAllRecipeByAuthIdAsList(int id)
         {
-             
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", App.jwtToken);
             string requestUri = _uri + _getAllRecipeByAuthIdUri + id.ToString();
 

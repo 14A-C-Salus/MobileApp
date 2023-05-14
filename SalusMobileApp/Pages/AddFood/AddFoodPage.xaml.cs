@@ -1,5 +1,6 @@
 using SalusMobileApp.Data;
 using SalusMobileApp.Models;
+using SalusMobileApp.Pages.MainMenu;
 
 namespace SalusMobileApp.Pages.AddFood;
 
@@ -9,23 +10,23 @@ public partial class AddFoodPage : ContentPage
     private string CreateErrorMessage = "Something went wrong, please make sure that you filled out everything correctly!";
     private string CreateSuccessMessage = "Your new recipe has been successfully created! Do you wish to add it to your favourites?";
 
-    public AddFoodPage()
+    public AddFoodPage(string name = "", string kcal = "", string protein = "", string fat = "", string carbohydrate = "")
 	{
 		InitializeComponent();
-        //nameEntry.Text = name;
-        //kcalEntry.Text = kcal.ToString();
-        //proteinEntry.Text = protein.ToString();
-        //fatEntry.Text = fat.ToString();
-        //if(name != "" && kcal != "" && protein != "" && fat != "" && carbohydrate != "")
-        //{
-        //    showAdvancedButton.IsEnabled = false;
-        //    foodIsScanned.IsVisible = true;
-        //}
-        //else
-        //{
-        //    showAdvancedButton.IsEnabled = true;
-        //    foodIsScanned.IsVisible = false;
-        //}
+        nameEntry.Text = name;
+        kcalEntry.Text = kcal.ToString();
+        proteinEntry.Text = protein.ToString();
+        fatEntry.Text = fat.ToString();
+        if (name != "" && kcal != "" && protein != "" && fat != "" && carbohydrate != "")
+        {
+            showAdvancedButton.IsEnabled = false;
+            foodIsScanned.IsVisible = true;
+        }
+        else
+        {
+            showAdvancedButton.IsEnabled = true;
+            foodIsScanned.IsVisible = false;
+        }
     }
 
     private async void enableScannerButton_Clicked(object sender, EventArgs e)
@@ -147,6 +148,6 @@ public partial class AddFoodPage : ContentPage
         App.currentAddedIngredientIds.Clear();
         App.currentAddedIngredientGrams.Clear();
         App.currentAddedIngredientNames.Clear();
-        await Navigation.PopAsync();
+        await Navigation.PushAsync(new MainMenuPage());
     }
 }

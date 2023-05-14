@@ -1,3 +1,4 @@
+using SalusMobileApp.Data;
 using SalusMobileApp.Pages.Login_Signup;
 using System.Formats.Asn1;
 
@@ -13,6 +14,10 @@ public partial class ErrorPage : ContentPage
 
     private async void backToLoginButton_Clicked(object sender, EventArgs e)
     {
-		await Navigation.PushAsync(new LoginSignupPage());
+		App.database.DeleteAll();
+		if (ServiceValidation.IsEverythingDeleted())
+		{
+			await Navigation.PushAsync(new LoginSignupPage());
+		}
     }
 }
