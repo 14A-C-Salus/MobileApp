@@ -37,7 +37,14 @@ public partial class SocialPage : ContentPage
                 var selected = (UserDataModel)profilesListView.SelectedItem;
                 var selectedId = selected.userProfile.id;
                 App.selectedPersonEmail = selected.email;
-                await Navigation.PushAsync(new SelectedUserProfilePage(selectedId));
+                try
+                {
+                    await Navigation.PushAsync(new SelectedUserProfilePage(selectedId));
+                }
+                catch(Exception ex)
+                {
+                    await DisplayAlert("Error", "This person doesn't have a confirmed profile yet, you can't view it", "Cancel");
+                }
             }
             else
             {
